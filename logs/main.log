@@ -1,1 +1,78 @@
 2021-01-13 18:19:28 INFO  Bot:34 - Получили новый update: Update{updateId=258910960, message=Message{messageId=990, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610529568, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 18:22:07 INFO  Bot:34 - Получили новый update: Update{updateId=258910961, message=Message{messageId=991, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610529727, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 18:22:10 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание на 2021-01-14 (Четверг):
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Разработка прогр. модулей	|	51	|	Иванов А.А.
+		-	IV	|	Математич. моделирование	|	29	|	Лямина О.С.
+		-	V	|	Проектир. и разраб. веб-прилож.	|	55	|	Юн Р.Е.
+		-	VI	|	-	|	-	|	-
+--------------------------
+Группа: ИСИП-18-1				Неделя: <b>верхняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 18:22:10 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 18:22:12 INFO  Bot:34 - Получили новый update: Update{updateId=258910962, message=Message{messageId=994, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610529732, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='2', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 18:22:15 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание для группы <b>ИСИП-18-1</b>:
+--------------------------
+Понедельник:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Основы проектир.БД	|	55	|	Юн Р.Е.
+		-	IV	|	Графич. дизайн	|	56	|	Подойницына Н.С.
+		-	V	|	Разработка прогр. модулей	|	51	|	Иванов А.А.
+		-	VI	|	Компьютерные сети	|	55	|	Юн Р.Е.
+--------------------------
+Вторник:
+		-	I	|	-	|	-	|	-
+		-	II	|	Технология разработки ПО	|	51	|	Иванов А.А.
+		-	III	|	Численные методы в програм.	|	22	|	Ленская Н.В.
+		-	IV	|	Физ. культура	|	-	|	Раздобреев И.С.
+		-	V	|	Основы проектир.БД	|	55	|	Юн Р.Е.
+--------------------------
+Среда:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Графич. дизайн	|	56	|	Подойницына Н.С.
+		-	IV	|	Основы проектир.БД	|	55	|	Юн Р.Е.
+		-	V	|	Иностранный язык	|	29	|	Туркова С.В., Набокова Е.В.
+		-	VI	|	Техн. разработки ПО	|	51	|	Иванов А.А.
+--------------------------
+Четверг:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Разработка прогр. модулей	|	51	|	Иванов А.А.
+		-	IV	|	Математич. моделирование	|	29	|	Лямина О.С.
+		-	V	|	Проектир. и разраб. веб-прилож.	|	55	|	Юн Р.Е.
+		-	VI	|	-	|	-	|	-
+--------------------------
+Пятница:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	-	|	-	|	-
+		-	IV	|	Проектир. и разраб. веб-прилож.	|	55	|	Юн Р.Е.
+		-	V	|	Математич. моделирование	|	29	|	Лямина О.С.
+		-	VI	|	Стандарт., сертиф.	|	54	|	Горбунов А.В.
+--------------------------
+Неделя: <b>верхняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 18:22:15 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 18:22:20 INFO  Bot:34 - Получили новый update: Update{updateId=258910963, message=Message{messageId=997, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610529739, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='3', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 18:22:21 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='<b>Твой данные</b>:
+		<b>ChatId</b> - 977606227
+		<b>Роль</b> - STUDENT
+		<b>Группа</b> - ИСИП-18-1
+<b>Бот</b>:
+		<b>BotUserName</b> - chtotibBot
+<b>Разработчик</b>: @karmanchik999
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 18:22:21 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
