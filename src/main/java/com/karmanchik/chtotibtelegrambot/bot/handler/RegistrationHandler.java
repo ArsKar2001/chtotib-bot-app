@@ -111,10 +111,12 @@ public class RegistrationHandler implements Handler {
     List<PartialBotApiMethod<? extends Serializable>> switchRole(User user, String message) {
         if (message.equalsIgnoreCase(SELECT_ROLE_STUDENT)) {
             user.setUserState(State.SELECT_COURSE);
-            user.setRoleName(Role.STUDENT.toString());
+            user.setRoleName(Role.STUDENT.name());
             userRepository.save(user);
             return createSelectCourseButtonsPanel(user);
         } else if (message.equalsIgnoreCase(SELECT_ROLE_TEACHER)) {
+            user.setRoleName(Role.TEACHER.name());
+            userRepository.save(user);
             return inputTeacherName(user);
         }
         return Collections.emptyList();
