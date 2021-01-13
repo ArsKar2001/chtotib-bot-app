@@ -150,7 +150,8 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonsPanel(User user) {
-        List<String> values = (List<String>) COURSES.values();
+        List<String> values = new ArrayList<>(COURSES.keySet());
+        Collections.sort(values);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(values);
