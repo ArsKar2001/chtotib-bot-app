@@ -23,7 +23,8 @@ import static java.lang.Integer.parseInt;
 public class RegistrationHandler implements Handler {
 
     public static final String ACCEPT = "сохранить";
-    public static final String CANCEL = "изменить";
+    public static final String CHANGE = "изменить";
+    public static final String CANCEL = "назад";
 
     private static final String SELECT_ROLE_STUDENT = Role.STUDENT.getValue().toUpperCase();
     private static final String SELECT_ROLE_TEACHER = Role.TEACHER.getValue().toUpperCase();
@@ -64,7 +65,7 @@ public class RegistrationHandler implements Handler {
                 case SELECT_OPTION:
                     if (message.equalsIgnoreCase(ACCEPT))
                         return accept(user);
-                    if (message.equalsIgnoreCase(CANCEL))
+                    if (message.equalsIgnoreCase(CHANGE))
                         return cancel(user);
                 case ENTER_NAME:
                     return createSelectTeacherButtonsPanel(user, message);
@@ -82,7 +83,7 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        if (message.equalsIgnoreCase(CANCEL)) {
+        if (message.equalsIgnoreCase(CHANGE)) {
             user.setUserState(State.ENTER_NAME);
             userRepository.save(user);
             return inputTeacherName(user);
@@ -99,6 +100,7 @@ public class RegistrationHandler implements Handler {
                 SELECT_ROLE_TEACHER
         ));
         markup.setKeyboard(List.of(keyboardRow));
+        markup.setOneTimeKeyboard(true);
 
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -168,7 +170,7 @@ public class RegistrationHandler implements Handler {
         userRepository.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
-        KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CANCEL.toUpperCase()));
+        KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
         markup.setKeyboard(List.of(keyboardRow));
 
         if (user.getRoleName().equalsIgnoreCase(Role.STUDENT.name())) {
@@ -208,16 +210,22 @@ public class RegistrationHandler implements Handler {
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
         String outMessage;
 
-        ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
+        InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
+        markup1.setKeyboard(TelegramUtil.createTeacherListInlineKeyboardButton(teacherList, 3));
+
+        ReplyKeyboardMarkup markup2 = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(CANCEL.toUpperCase()));
-        markup.setKeyboard(List.of(keyboardRow));
+        markup2.setKeyboard(List.of(keyboardRow));
 
         if (!teacherList.isEmpty()) {
-            outMessage = "Это Вы?";
+            outMessage = "Это Вы...";
             return List.of(
                     TelegramUtil.createMessageTemplate(user)
                             .setText(outMessage)
-                            .setReplyMarkup(markup)
+                            .setReplyMarkup(markup1),
+                    TelegramUtil.createMessageTemplate(user)
+                            .setText("...?")
+                            .setReplyMarkup(markup2)
             );
         } else {
             outMessage = "Не смог вас определить :(";
@@ -295,8 +303,9 @@ public class RegistrationHandler implements Handler {
         stringList.add(SELECT_ROLE_TEACHER);
         stringList.addAll(COURSES.keySet());
         stringList.addAll(groupRepository.findAllTeachers());
-        stringList.add(ACCEPT.toUpperCase());
-        stringList.add(CANCEL.toUpperCase());
+        stringList.add(ACCEPT);
+        stringList.add(CHANGE);
+        stringList.add(CANCEL);
         return stringList;
     }
 }

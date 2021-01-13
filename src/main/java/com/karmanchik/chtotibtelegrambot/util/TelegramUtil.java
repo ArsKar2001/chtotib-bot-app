@@ -37,14 +37,14 @@ public class TelegramUtil {
 
     public static SendMessage createMessageTemplate(User user) {
         return createMessageTemplate(String.valueOf(user.getChatId()))
-                .enableMarkdown(true)
+                .enableMarkdown(false)
                 .setParseMode(ParseMode.HTML);
     }
 
     public static SendMessage createMessageTemplate(String chatId) {
         return new SendMessage()
                 .setChatId(chatId)
-                .enableMarkdown(true);
+                .enableMarkdown(false);
     }
 
     public static List<List<InlineKeyboardButton>> createGroupListInlineKeyboardButton(List<Group> groupList, Integer countButtonInRow) {
