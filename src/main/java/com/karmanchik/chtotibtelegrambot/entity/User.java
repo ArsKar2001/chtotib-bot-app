@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends AbstractBaseEntity {
-    private static final Integer GROUP_NONE_ID = 100000;
+    private static final Integer GROUP_NONE_ID = 100;
 
     @Column(name = "chat_id", unique = true, nullable = false)
     @NotNull

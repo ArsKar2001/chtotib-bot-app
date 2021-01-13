@@ -3,7 +3,7 @@ bot:
   token: '1561541329:AAFr495joT5WNwzbx3vRPKHOGg7p__LhTKw'
 spring:
   datasource:
-    url: jdbc:postgresql://ec2-34-192-122-0.compute-1.amazonaws.com:5432/d12ajcuv0858s?user=kwdggruqsaufbb&password=44c58f6b9b38548700169038dd38b029bed09a47b51118b01e7c79b1ceb9b891
+    url: jdbc:postgresql://ec2-34-200-158-205.compute-1.amazonaws.com:5432/d4l15ha0q7fik6?user=fbjfnxqsalkevb&password=60529efc8c3ca43e7ed398776fc98c3978e6c8c194c7c1f58b0eb66634f3f78c&stringtype=unspecified
     driver-class-name: org.postgresql.Driver
     initialization-mode: never
   jpa:

@@ -28,7 +28,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             nativeQuery = true,
             value = "select " +
                     "data.teacher " +
-                    "from get_json_fields_from_text() as data " +
+                    "from get_fields_from_json() as data " +
                     "where lower(data.teacher) like '%'||:teacher||'%' " +
                     "group by data.teacher")
     List<String> getListTeachersByName(@Param("teacher") @NotNull String teacher);
@@ -37,81 +37,81 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             nativeQuery = true,
             value = "select " +
                     "data.teacher " +
-                    "from get_json_fields_from_text() as data " +
+                    "from get_fields_from_json() as data " +
                     "group by data.teacher")
     List<String> findAllTeachers();
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
-            "data.group_name as groupName, " +
+            "data.groupname as groupName, " +
             "data.teacher as teacher, " +
             "data.discipline as discipline, " +
-            "data.day_of_week as dayOfWeek, " +
-            "data.lesson_number as lessonNumber, " +
-            "data.week_type as weekType " +
-            "from get_json_fields_from_text() as data " +
-            "where data.group_name = :groupName " +
-            "order by data.day_of_week, data.lesson_number")
+            "data.dayofweek as dayOfWeek, " +
+            "data.lessonnumber as lessonNumber, " +
+            "data.weektype as weekType " +
+            "from get_fields_from_json() as data " +
+            "where data.groupname = :groupName " +
+            "order by data.dayofweek, data.lessonnumber")
     Optional<List<Lesson>> getListLessonByGroupName(@Param("groupName") @NotNull String groupName);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
-            "data.group_name as groupName, " +
+            "data.groupname as groupName, " +
             "data.teacher as teacher, " +
             "data.discipline as discipline, " +
-            "data.day_of_week as dayOfWeek, " +
-            "data.lesson_number as lessonNumber, " +
-            "data.week_type as weekType " +
-            "from get_json_fields_from_text() as data " +
-            "where data.group_name = :groupName and data.week_type in (:weekType, 'NONE')" +
-            "order by data.day_of_week, data.lesson_number")
+            "data.dayofweek as dayOfWeek, " +
+            "data.lessonnumber as lessonNumber, " +
+            "data.weektype as weekType " +
+            "from get_fields_from_json() as data " +
+            "where data.groupname = :groupName and data.weektype in (:weekType, 'NONE')" +
+            "order by data.dayofweek, data.lessonnumber")
     List<Lesson> getListLessonByGroupNameAndWeekType(
             @Param("groupName") @NotNull String groupName,
             @Param("weekType") @NotNull String weekType);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
-            "data.group_name as groupName, " +
+            "data.groupname as groupName, " +
             "data.teacher as teacher, " +
             "data.discipline as discipline, " +
-            "data.day_of_week as dayOfWeek, " +
-            "data.lesson_number as lessonNumber, " +
-            "data.week_type as weekType " +
-            "from get_json_fields_from_text() as data " +
-            "where lower(data.teacher) like '%'||:teacher||'%' and data.week_type in (:weekType, 'NONE')" +
-            "order by data.day_of_week, data.lesson_number")
+            "data.dayofweek as dayOfWeek, " +
+            "data.lessonnumber as lessonNumber, " +
+            "data.weektype as weekType " +
+            "from get_fields_from_json() as data " +
+            "where lower(data.teacher) like '%'||:teacher||'%' and data.weektype in (:weekType, 'NONE')" +
+            "order by data.dayofweek, data.lessonnumber")
     List<Lesson> getListLessonByTeacherAndWeekType(
             @Param("teacher") @NotNull String teacher,
 
             @Param("weekType") @NotNull String weekType);
 
     @Query(nativeQuery = true, value = "select " +
-            "data.day_of_week " +
-            "from get_json_fields_from_text() as data " +
-            "where data.group_name = :groupName " +
-            "group by data.day_of_week")
+            "data.dayofweek " +
+            "from get_fields_from_json() as data " +
+            "where data.groupname = :groupName " +
+            "group by data.dayofweek")
     List<Integer> getListDaysOfWeekByGroupName(@Param("groupName") @NotNull String groupName);
 
     @Query(nativeQuery = true, value = "select " +
-            "data.day_of_week " +
-            "from get_json_fields_from_text() as data " +
+            "data.dayofweek " +
+            "from get_fields_from_json() as data " +
             "where data.teacher like '%'||:teacher||'%' " +
-            "group by data.day_of_week")
+            "group by data.dayofweek")
     List<Integer> getListDaysOfWeekByTeacher(@Param("teacher") @NotNull String teacher);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
-            "data.group_name as groupName, " +
+            "data.groupname as groupName, " +
             "data.teacher as teacher, " +
             "data.discipline as discipline, " +
-            "data.day_of_week as dayOfWeek, " +
-            "data.lesson_number as lessonNumber, " +
-            "data.week_type as weekType " +
-            "from get_json_fields_from_text() as data " +
-            "where data.group_name = :groupName " +
-            "and data.week_type in (:weekType, 'NONE') " +
-            "and data.day_of_week = ''||:dayOfWeek " +
-            "order by data.day_of_week, data.lesson_number")
+            "data.dayofweek as dayOfWeek, " +
+            "data.lessonnumber as lessonNumber, " +
+            "data.weektype as weekType " +
+            "from get_fields_from_json() as data " +
+            "where data.groupname = :groupName " +
+            "and data.weektype in (:weekType, 'NONE') " +
+            "and data.dayofweek = ''||:dayOfWeek " +
+            "order by data.dayofweek, data.lessonnumber")
     List<Lesson> findAllByGroupNameAndDayOfWeek(
             @Param("groupName") @NotNull String groupName,
             @Param("dayOfWeek") @NotNull Integer dayOfWeek,
@@ -119,17 +119,17 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
-            "data.group_name as groupName, " +
+            "data.groupname as groupName, " +
             "data.teacher as teacher, " +
             "data.discipline as discipline, " +
-            "data.day_of_week as dayOfWeek, " +
-            "data.lesson_number as lessonNumber, " +
-            "data.week_type as weekType " +
-            "from get_json_fields_from_text() as data " +
+            "data.dayofweek as dayOfWeek, " +
+            "data.lessonnumber as lessonNumber, " +
+            "data.weektype as weekType " +
+            "from get_fields_from_json() as data " +
             "where lower(data.teacher) like '%'||:teacher||'%' " +
-            "and data.week_type in (:weekType, 'NONE') " +
-            "and data.day_of_week = ''||:dayOfWeek " +
-            "order by data.day_of_week, data.lesson_number")
+            "and data.weektype in (:weekType, 'NONE') " +
+            "and data.dayofweek = ''||:dayOfWeek " +
+            "order by data.dayofweek, data.lessonnumber")
     List<Lesson> findAllByTeacherAndDayOfWeek(
             @Param("teacher") @NotNull String teacher,
             @Param("dayOfWeek") @NotNull Integer dayOfWeek,

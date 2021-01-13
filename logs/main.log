@@ -269,3 +269,877 @@
 3	-	Справочное сообщение
 4	-	Изменить профиль
 ', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 23:36:21 INFO  Bot:34 - �������� ����� update: Update{updateId=258911007, message=Message{messageId=1076, from=User{id=977606227, firstName='�������', isBot=false, lastName='��������', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610548510, chat=Chat{id=977606227, type='private', title='null', firstName='�������', lastName='��������', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 23:36:23 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='���������� �� 2021-01-14 (�������):
+		-	I	|	�����	|	306	|	������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	�����������	|	26,56	|	���������� �.�., ����������� �.�.
+		-	IV	|	�������� ���	|	23	|	�������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+������: ����-20-3�				������: <b>������</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 23:36:23 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='1	-	���������� �� ������
+2	-	��� ����������
+3	-	���������� ���������
+4	-	�������� �������
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 23:36:23 INFO  Bot:34 - �������� ����� update: Update{updateId=258911008, message=Message{messageId=1077, from=User{id=977606227, firstName='�������', isBot=false, lastName='��������', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610548517, chat=Chat{id=977606227, type='private', title='null', firstName='�������', lastName='��������', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='2', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 23:36:26 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='���������� ��� ������ <b>����-20-3�</b>:
+--------------------------
+�����������:
+		-	I	|	���. ��������	|	-	|	���������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	����������	|	23	|	������ �.�.
+		-	IV	|	��������������	|	23	|	������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	����������.	|	23	|	������� �.�.
+		-	II	|	������. ����	|	23	|	�������� �.�., ������� �.�.
+		-	III	|	������	|	23	|	������ �.�., �������� �.�
+		-	IV	|	-	|	-	|	-
+--------------------------
+�����:
+		-	I	|	������� ����	|	23	|	��������� �.�.
+		-	II	|	������	|	23	|	������ �.�.
+		-	III	|	���	|	23	|	�������� �.�.
+		-	IV	|	�������	|	23	|	������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	�����	|	306	|	������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	�����������	|	26,56	|	���������� �.�., ����������� �.�.
+		-	IV	|	�������� ���	|	23	|	�������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	���. �����.	|		|	���������� �.�.
+		-	II	|	������	|	23	|	������ �.�.
+		-	III	|	����������	|	23	|	��������� �.�.
+		-	IV	|	����������	|	23	|	��������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+������: <b>������</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 23:36:26 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='1	-	���������� �� ������
+2	-	��� ����������
+3	-	���������� ���������
+4	-	�������� �������
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 23:36:32 INFO  Bot:34 - �������� ����� update: Update{updateId=258911009, message=Message{messageId=1082, from=User{id=977606227, firstName='�������', isBot=false, lastName='��������', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610548591, chat=Chat{id=977606227, type='private', title='null', firstName='�������', lastName='��������', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='2', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 23:36:35 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='���������� ��� ������ <b>����-20-3�</b>:
+--------------------------
+�����������:
+		-	I	|	���. ��������	|	-	|	���������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	����������	|	23	|	������ �.�.
+		-	IV	|	��������������	|	23	|	������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	����������.	|	23	|	������� �.�.
+		-	II	|	������. ����	|	23	|	�������� �.�., ������� �.�.
+		-	III	|	������	|	23	|	������ �.�., �������� �.�
+		-	IV	|	-	|	-	|	-
+--------------------------
+�����:
+		-	I	|	������� ����	|	23	|	��������� �.�.
+		-	II	|	������	|	23	|	������ �.�.
+		-	III	|	���	|	23	|	�������� �.�.
+		-	IV	|	�������	|	23	|	������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	�����	|	306	|	������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	�����������	|	26,56	|	���������� �.�., ����������� �.�.
+		-	IV	|	�������� ���	|	23	|	�������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+�������:
+		-	I	|	���. �����.	|		|	���������� �.�.
+		-	II	|	������	|	23	|	������ �.�.
+		-	III	|	����������	|	23	|	��������� �.�.
+		-	IV	|	����������	|	23	|	��������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+������: <b>������</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 23:36:35 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='1	-	���������� �� ������
+2	-	��� ����������
+3	-	���������� ���������
+4	-	�������� �������
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-13 23:36:39 INFO  Bot:34 - �������� ����� update: Update{updateId=258911010, message=Message{messageId=1085, from=User{id=977606227, firstName='�������', isBot=false, lastName='��������', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610548598, chat=Chat{id=977606227, type='private', title='null', firstName='�������', lastName='��������', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-13 23:36:41 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='���������� �� 2021-01-14 (�������):
+		-	I	|	�����	|	306	|	������� �.�.
+		-	II	|	����������	|	23	|	������ �.�.
+		-	III	|	�����������	|	26,56	|	���������� �.�., ����������� �.�.
+		-	IV	|	�������� ���	|	23	|	�������� �.�.
+		-	V	|	-	|	-	|	-
+--------------------------
+������: ����-20-3�				������: <b>������</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-13 23:36:41 INFO  Bot:43 - ����� ������ ��� ��������: SendMessage{chatId='977606227', text='1	-	���������� �� ������
+2	-	��� ����������
+3	-	���������� ���������
+4	-	�������� �������
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:15:04 INFO  Bot:34 - Получили новый update: Update{updateId=258911013, message=Message{messageId=1090, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554503, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:15:18 INFO  Bot:34 - Получили новый update: Update{updateId=258911014, message=Message{messageId=1091, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554517, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='3', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:17:17 INFO  Bot:34 - Получили новый update: Update{updateId=258911015, message=Message{messageId=1092, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554636, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:17:20 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Привет!
+Меня зовут chtotibBot :D
+Я был создан для работы со студентами и педагогами ЧТОТиБ.', parseMode='null', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 01:17:20 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Выбери роль', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=СТУДЕНТ, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=ПЕДАГОГ, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:17:28 INFO  Bot:34 - Получили новый update: Update{updateId=258911016, message=Message{messageId=1095, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554647, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='СТУДЕНТ', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:17:30 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Выбери курс', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=I, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=II, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=III, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=IV, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:17:33 INFO  Bot:34 - Получили новый update: Update{updateId=258911017, message=Message{messageId=1097, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554652, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='IV', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:17:35 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Выбери группу', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}
+2021-01-14 01:17:39 INFO  Bot:34 - Получили новый update: Update{updateId=258911018, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786776775363734', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1098, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554654, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100056', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:19:56 INFO  Bot:34 - Получили новый update: Update{updateId=258911019, message=Message{messageId=1099, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554795, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='IV', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:19:58 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Выбери группу', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}
+2021-01-14 01:20:02 INFO  Bot:34 - Получили новый update: Update{updateId=258911020, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786773649793941', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:24:02 INFO  Bot:34 - Получили новый update: Update{updateId=258911021, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786774177933050', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:27:00 INFO  Bot:34 - Получили новый update: Update{updateId=258911022, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786774346446266', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:27:18 INFO  Bot:34 - Получили новый update: Update{updateId=258911023, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786775497014237', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:32:00 INFO  Bot:34 - Получили новый update: Update{updateId=258911024, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786773901727644', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:51:18 INFO  Bot:34 - Получили новый update: Update{updateId=258911025, message=null, inlineQuery=null, chosenInlineQuery=null, callbackQuery=CallbackQuery{id='4198786775800779750', from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, message=Message{messageId=1100, from=User{id=1561541329, firstName='ЧТОТиБ Бот - Помощник', isBot=true, lastName='null', userName='chtotibBot', languageCode='null', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610554798, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='Выбери группу', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=InlineKeyboardMarkup{inline_keyboard=[[InlineKeyboardButton{text='АРХ-17-1', url='null', callbackData='100050', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-1', url='null', callbackData='100051', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СЭЗС-17-2', url='null', callbackData='100052', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='СД-17-1', url='null', callbackData='100053', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='УМД-17-1', url='null', callbackData='100054', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='КС-17-1', url='null', callbackData='100055', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ИСИП-17-1', url='null', callbackData='100056', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТТО-17-1', url='null', callbackData='100057', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='ТОРА-17-1', url='null', callbackData='100058', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}], [InlineKeyboardButton{text='ТОРА-17-2к', url='null', callbackData='100059', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}, InlineKeyboardButton{text='СДМ-17-1', url='null', callbackData='100060', callbackGame=null, switchInlineQuery='null', switchInlineQueryCurrentChat='null', pay=null, loginUrl=null}]]}}, inlineMessageId='null', data='100050', gameShortName='null', chatInstance='-528861712963590394'}, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:51:23 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Твои данные:
+ роль: студент
+ группа: АРХ-17-1', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=СОХРАНИТЬ, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=ИЗМЕНИТЬ, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:51:29 INFO  Bot:34 - Получили новый update: Update{updateId=258911026, message=Message{messageId=1102, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610556688, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='СОХРАНИТЬ', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:51:31 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:51:33 INFO  Bot:34 - Получили новый update: Update{updateId=258911027, message=Message{messageId=1104, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610556692, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:51:35 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Ошибка: could not extract ResultSet; SQL [n/a]; nested exception is org.hibernate.exception.SQLGrammarException: could not extract ResultSet', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 01:51:35 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:54:01 INFO  Bot:34 - Получили новый update: Update{updateId=258911028, message=Message{messageId=1107, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610556840, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:54:06 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание на 2021-01-15 (Пятница):
+		-	I	|	-	|	-	|	-
+		-	I	|	История	|	31	|	Турчина Т.С.
+		-	I	|	Обществознание	|	48	|	Насибулин С.А.
+		-	I	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	I	|	-	|	-	|	-
+		-	I	|	Биология	|	308	|	Воронецкая А.И.
+		-	I	|	-	|	-	|	-
+		-	I	|	Архитект. аппар. средств	|	55	|	Юн Р.Е.
+		-	I	|	-	|	-	|	-
+		-	I	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	I	|	Русский язык	|	206	|	Журавлева Л.Б.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Инж. графика	|	45	|	Лончаков С.В., Шевкун А.В.
+		-	I	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	I	|	Обществознание	|	49	|	Лапшакова И.С.
+		-	I	|	Физика	|	312	|	Кисель С.Д., Ковалева В.В.
+		-	I	|	Информ.	|	26	|	Ведерников И.К.
+		-	I	|	-	|	-	|	-
+		-	I	|	Математика	|	214	|	Никифорова Е.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Тех мех.	|	314	|	Лебедева Т.Ю.
+		-	I	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	I	|	Прим. стр. материалов	|	311	|	Серова Л.В.
+		-	I	|	Литература	|	303	|	Соломинова И.В.
+		-	I	|	Коммуникативный практикум	|	202	|	Леонова Н.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	Эл и элек IIп	|	17	|	Рыбас И.А.
+		-	I	|	Физ. культ.	|		|	Раздобреев И.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Картограф. IIп	|	302	|	Щербакова И.П.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	ОБЖ	|	200	|	Бабикова Н.А.
+		-	I	|	Инж. графика IIп.	|	25	|	Покатилов Е.Н.
+		-	I	|	-	|	-	|	-
+		-	I	|	Астрономия	|	39	|	Федорова Н.Г.
+		-	I	|	Математика	|	53	|	Цымпилова Б.Д.
+		-	I	|	Вычисл. техн Iп.	|	54	|	Горбунов А.В.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Элем высшей матем.	|	22	|	Лямина О.С.
+		-	I	|	Химия	|	306	|	Швецова Д.О.
+		-	I	|	-	|	-	|	-
+		-	I	|	Осн алг. IIп	|	52	|	Смирнова Т.М.
+		-	I	|	-	|	-	|	-
+		-	I	|	Математика	|	208	|	Гильфанова Л.А.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Иностр. язык	|	64	|	Павлов А.М., Гурулева Н.Ю.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	Иностр. язык	|	53	|	Назарова А.А., Туркова С.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	II	|	-	|	-	|	-
+		-	II	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	Физика	|	23	|	Кисель С.Д.
+		-	II	|	-	|	-	|	-
+		-	II	|	Обществознание	|	312	|	Насибулин С.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Теория электр. цепей	|	58	|	Рыбас И.А.
+		-	II	|	Биология	|	216	|	Воронецкая А.И.
+		-	II	|	Математика	|	203	|	Цымпилова Б.Д.
+		-	II	|	Иностр. язык	|	208	|	Чернецкая В.Н., Толстоногова А.А.
+		-	II	|	Химия	|	306	|	Швецова Д.О.
+		-	II	|	Информатика	|	22	|	Никифорова Е.С.
+		-	II	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	II	|	Физика	|	308	|	Ковалева В.В.
+		-	II	|	Обществознание	|	206	|	Турчина Т.С.
+		-	II	|	Биология	|	215	|	Максимова И.Н.
+		-	II	|	-	|	-	|	-
+		-	II	|	Иностр. язык	|	32	|	Павлов А.М., Гурулева Н.Ю.
+		-	II	|	Физ. культура	|		|	Раздобреев И.С.
+		-	II	|	Основы геодезии	|	314	|	Щербакова И.П.
+		-	II	|	Тех мех.	|	202	|	Лебедева Т.Ю.
+		-	II	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	II	|	Прим. стр. материалов	|	311	|	Серова Л.В.
+		-	II	|	ЭДМ	|	310	|	Мартьянов А.Н.
+		-	II	|	Обществозн.	|	214	|	Лапшакова И.С.
+		-	II	|	Математика	|	28	|	Гильфанова Л.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Основы инж. графики	|	43,46	|	Щербакова Е.Л.., Покатилов Е.Н.
+		-	II	|	Физ.культура	|	-	|	Деньченко А.В.
+		-	II	|	ИТ	|	55	|	Юн Р.Е.
+		-	II	|	Архитект. аппар. средств	|	54	|	Горбунов А.В.
+		-	II	|	ОБЖ	|	48	|	Бабикова Н.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Основы дизайна и композиции	|	56	|	Подойницына Н.С.
+		-	II	|	Прикладное ПО II п.	|	57	|	Теплякова А.Н.
+		-	II	|	-	|	-	|	-
+		-	II	|	Информатика	|	26	|	Ведерников И.К.
+		-	II	|	Статистика	|	302	|	Артюкова Д.А.
+		-	II	|	Литература	|	200	|	Соломинова И.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	Материаловедение	|	17	|	Рощупкина Г.И.
+		-	II	|	Математика	|	212	|	Лямина О.С.
+		-	II	|	Инж. графика	|	45	|	Лончаков С.В., Шевкун А.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	Литература	|	31	|	Журавлева Л.Б.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Математика	|	216	|	Никифорова Е.С.
+		-	III	|	Физ.культура	|	-	|	Селин А.И.
+		-	III	|	Операц. системы	|	56	|	Степанова Э.П.
+		-	III	|	ОСП	|	13	|	Гулевская Е.В.
+		-	III	|	-	|	-	|	-
+		-	III	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	III	|	Разр.пр.реш Iп ║ ОПП IIп	|	24║110	|	Комнатная С.В.║Баловнева О.Н.
+		-	III	|	История	|	33	|	Турчина Т.С.
+		-	III	|	Литература	|	48	|	Соломинова И.В.
+		-	III	|	Микропроцессорные системы	|	51	|	Иванов А.А.
+		-	III	|	ОБЖ	|	312	|	Бабикова Н.А.
+		-	III	|	Физ. культура	|	-	|	Травкин В.Н.
+		-	III	|	Электрорадиоизмерения	|	Чит.зал	|	Виблый С.Г.
+		-	III	|	Информатика	|	26,29	|	ВедерниковИ.К.,
+		-	III	|	Иностр. язык	|	58	|	Назарова А.А., Туркова С.В.
+		-	III	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	III	|	Литература	|	23	|	Журавлева Л.Б.
+		-	III	|	БЖ	|	45	|	Каргин П.А.
+		-	III	|	Психология общения	|	300	|	Барвинская Т.В.
+		-	III	|	Правов. обесп. проф. деят.	|	317	|	Шведченко А.В.
+		-	III	|	Техн.экспл.инженерных сетей	|	204	|	Истомина Е.В.
+		-	III	|	Чертежи предпр. авто.	|	53	|	Валова И.А.
+		-	III	|	ПМ 01.Управ.зем-имущ.компл.	|	38	|	Кузнецова М.Ю.
+		-	III	|	Физ. Культура	|	-	|	Раздобреев И.С.
+		-	III	|	Иностр. язык	|	302	|	Павлов А.М., Гурулева Н.Ю.
+		-	III	|	МДК 01.02Организ., принц. постр.	|	22	|	Ленская Н.В.
+		-	III	|	ИТ в ПД Iп. || Арх.-план. реш.IIп.	|	57||315	|	Теплякова А.Н.|| Серова Л.В.
+		-	III	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	III	|	Физика	|	31	|	Кисель С.Д.
+		-	III	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	III	|	Электрот. и электр	|	17	|	Рыбас И.А.
+		-	III	|	Инж. геол. исслед.	|	202	|	Щербакова И.П.
+		-	III	|	Физика	|	49	|	Ковалева В.В.
+		-	III	|	Математика	|	200	|	Лямина О.С.
+		-	III	|	Коммуникативный практикум	|	314	|	Леонова Н.С.
+		-	III	|	Экономика организ.	|	10	|	Бухвалов А.В.
+		-	III	|	Основы геодезии	|	311	|	Лебедева Т.Ю.
+		-	III	|	История архитектуры	|	24в	|	Деринг Э.К.
+		-	III	|	История	|	215	|	Лапшакова И.С.
+		-	III	|	Технол. и организ работ по ТО	|	Лаб.1	|	Прокопьева М.А.
+		-	III	|	-	|	-	|	-
+		-	III	|	ПДСМ	|	310	|	Хазиахметов А.М.
+		-	III	|	Экономика организации	|	316	|	Левенец М.А.
+		-	III	|	ПБДД	|	15	|	Батуев Б.Н.
+		-	III	|	Химия	|	206	|	Швецова Д.О.
+		-	III	|	Устр. и прин. дейст. авто.	|	212	|	Мартьянов А.Н.
+		-	III	|	Сварка и резка материал.	|	28	|	Рощупкина Г.И.
+		-	III	|	Иностранный язык	|	214	|	Чернецкая В.Н., Толстоногова А.А.
+		-	III	|	Физ.культура	|	-	|	Деньченко А.В.
+		-	III	|	Обществознание	|	64	|	Насибулин С.А.
+		-	III	|	МДК 01.04 Монтаж и экспл. систем видеонабл.	|	54	|	Горбунов А.В.
+		-	III	|	Основы инж. графики	|	43,46	|	Щербакова Е.Л.., Покатилов Е.Н.
+		-	III	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	III	|	Менеджмент	|	52	|	Артюкова Д.А.
+		-	III	|	Математика	|	308	|	Цымпилова Б.Д.
+		-	III	|	Основы предприн. деят.	|	Уч.ком.общ.2	|	Смородникова Л.В.
+		-	III	|	ИТ	|	55	|	Юн Р.Е.
+		-	III	|	Математика	|	306	|	Гильфанова Л.А.
+		-	III	|	Биология	|	208	|	Воронецкая А.И.
+		-	IV	|	Иностранный язык	|	312	|	Назарова А.А.,Туркова С.В.
+		-	IV	|	Физика	|	203	|	Кисель С.Д.
+		-	IV	|	ОБЖ	|	303	|	Воронецкая А.И.
+		-	IV	|	Астрономия	|	39	|	Федорова Н.Г.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Информатика	|	50	|	Никифорова Е.С.
+		-	IV	|	Физ. культура	|		|	Раздобреев И.С.
+		-	IV	|	История	|	200	|	Турчина Т.С.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Обществознание	|	214	|	Лапшакова И.С.
+		-	IV	|	Литература	|	23	|	Журавлева Л.Б.
+		-	IV	|	Математика	|	58	|	Лямина О.С.
+		-	IV	|	Физ. культура	|	-	|	Деньченко А.В.
+		-	IV	|	Литература	|	208	|	Соломинова И.В.
+		-	IV	|	Математика	|	306	|	Гильфанова Л.А.
+		-	IV	|	Иностр. язык	|	308	|	Чернецкая В.Н., Толстоногова А.А.
+		-	IV	|	Физика	|	206	|	Ковалева В.В.
+		-	IV	|	Химия	|	215	|	Швецова Д.О.
+		-	IV	|	История архитектуры	|	24в	|	Деринг Э.К.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	История	|	202	|	Насибулин С.А.
+		-	IV	|	Тех мех.	|	311	|	Лебедева Т.Ю.
+		-	IV	|	Геология и грунт.	|	310	|	Щербакова И.П.
+		-	IV	|	Психология общения	|	28	|	Барвинская Т.В.
+		-	IV	|	Осн. тех. хар. (типология)	|	33	|	Серова Л.В.
+		-	IV	|	Осн алгоритм. IIп	|	52	|	Смирнова Т.М.
+		-	IV	|	Операц. системы	|	56	|	Степанова Э.П.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	БЖ	|	Чит.зал	|	Каргин П.А.
+		-	IV	|	Инж. графика I п.|| Информатика IIп.	|	46 ||26	|	Покатилов Е.Н. || Ведерников И.К.
+		-	IV	|	Экон. недвижимости	|	302	|	Смородникова Л.В.
+		-	IV	|	Математика	|	17	|	Цымпилова Б.Д.
+		-	IV	|	Электрон. и электр	|	212	|	Рыбас И.А.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Разр.пр.реш Iп ║ ОПП IIп	|	24║110	|	Комнатная С.В.║Баловнева О.Н.
+		-	IV	|	Иностранный язык	|	315	|	Павлов А.М., Гурулева Н.Ю.
+		-	IV	|	Проектир. АД и аэродромов	|	53	|	Хазиахметов А.М., Перебоева Д.А.
+		-	IV	|	Технолог. рем.общ имущ.	|	25	|	Нагина А.В.
+		-	IV	|	Этика ПД	|	6	|	Циглер Е.В.
+		-	IV	|	Численные методы в програм.	|	22	|	Ленская Н.В.
+		-	IV	|	МДК 02.02 Монтаж и обслуж.оптич. систем	|	54	|	Горбунов А.В.
+		-	IV	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	IV	|	ПМ 01.Упр.зем-имущ.компл.	|	38	|	Кузнецова М.Ю.
+		-	IV	|	Физ. культура	|	-	|	Селин А.И.
+		-	IV	|	Технолог. и организ.работ по ТО	|	8	|	Прокопьева М.А.
+		-	IV	|	ТЭДМ	|	7	|	Мартьянов А.Н.
+		-	IV	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	IV	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	IV	|	ОСП	|	13	|	Гулевская Е.В.
+		-	IV	|	Ценообразование	|	316	|	Левенец М.А.
+		-	IV	|	Экономика организ.	|	10	|	Бухвалов А.В.
+		-	IV	|	ПОПД	|	204	|	Шведченко А.В.
+		-	IV	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+		-	IV	|	МДК 01.03 Разраб.мобильн.приложен.	|	29	|	-
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Восстан. и тех. рем.	|	Лаб.1	|	Рощупкина Г.И.
+		-	IV	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	IV	|	ПБДД	|	15	|	Батуев Б.Н.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+		-	V	|	Осн алг. Iп	|	52	|	Смирнова Т.М.
+		-	V	|	-	|	-	|	-
+		-	V	|	История	|	33	|	Насибулин С.А.
+		-	V	|	-	|	-	|	-
+		-	V	|	МДК 01.01 Разработка ПМ	|	55	|	Степанова Э.П.
+		-	V	|	-	|	-	|	-
+		-	V	|	История	|	310	|	Лапшакова И.С.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Математич. моделирование	|	29	|	Лямина О.С.
+		-	V	|	-	|	-	|	-
+		-	V	|	Литература	|	215	|	Соломинова И.В.
+		-	V	|	Классный час	|	206	|	Журавлева Л.Б.
+		-	V	|	Правов. обесп. проф. деят.	|	317	|	Шведченко А.В.
+		-	V	|	Физ. культура	|	-	|	Селин А.И.
+		-	V	|	ПБДД	|	Лаб.1	|	Батуев Б.Н.
+		-	V	|	Подбор и прим. автом. экспл. матер.	|	8	|	Рощупкина Г.И.
+		-	V	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	V	|	МДК 02.01Монтаж и обслуж. ИС	|	55	|	-
+		-	V	|	Иностранный язык	|	7	|	Туркова С.В., Набокова Е.В.
+		-	V	|	-	|	-	|	-
+		-	V	|	ТЭДМ	|	ЗабГУ	|	???
+		-	V	|	Основы философии	|	312	|	Турчина Т.С.
+		-	V	|	Этика ПД	|	6	|	Циглер Е.В.
+		-	V	|	Физика	|	306	|	Кисель С.Д.
+		-	V	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+		-	V	|	Внутридом. инжен. оборуд.	|	25	|	Гулевская Е.В.
+		-	V	|	Физика IIп.	|	58	|	Ковалева В.В.
+		-	V	|	ТЭЗ	|	13	|	Истомина Е.В.
+		-	V	|	Проектир. АД и аэродромов	|	53	|	Хазиахметов А.М., Перебоева Д.А.
+		-	V	|	Арх.-план. реш.Iп.|| ИТ в ПД  IIп.	|	315||57	|	Серова Л.В. || Теплякова А.Н
+		-	V	|	Физ. культура	|	-	|	Раздобреев И.С.
+		-	V	|	1C-Предприятие	|	23	|	Смородникова Л.В., Кубасова Г.В.
+		-	V	|	Рисунок и живопись	|	24,24в	|	Комнатная С.В., Деринг Э.К.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Эконом. организ.	|	10	|	Бухвалов А.В.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Содерж. тарифной политикив ЖКХ	|	204	|	Левенец М.А.
+		-	V	|	Монтаж и экспл. компьют. сетей	|	22	|	Ленская Н.В.
+		-	VI	|	БЖ	|	312	|	Каргин П.А.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Стандарт., сертиф.	|	54	|	Горбунов А.В.
+		-	VI	|	ТЭДМ	|	ЗабГУ	|	???
+		-	VI	|	ПОПД	|	10	|	Шведченко А.В.
+		-	VI	|	Иностранный язык	|	6	|	Чернецкая В.Н., Толстоногова А.А.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Иностранный язык	|	205	|	Набокова Е.В.
+		-	VI	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+		-	VI	|	Сод. и методы орг. работ IIп.	|	25	|	Сушкова М.В.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Проектир. АД и аэродромов	|	45	|	Хазиахметов А.М.
+		-	VI	|	Физ. культура	|	-	|	Раздобреев И.С.
+		-	VI	|	Содерж. тарифной политикив ЖКХ	|	204	|	Левенец М.А.
+		-	VI	|	Организ. деят. структурн. подразд.	|	13	|	Гулевская Е.В.
+		-	VI	|	Прикладное ПО I п.	|	57	|	Теплякова А.Н.
+		-	VI	|	ОПСК	|	315	|	Лебедева Т.Ю.
+		-	VI	|	Физ. культура	|	-	|	Селин А.И.
+		-	VI	|	ПБДД	|	Лаб.1	|	Батуев Б.Н.
+		-	VI	|	Этика ПД	|	8	|	Варфоломеева А.С.
+		-	VI	|	Регулир.правов.отнош.	|	316	|	Нестеров А.В.
+		-	VI	|	Рисунок и живопись	|	24,24в	|	Комнатная С.В., Деринг Э.К.
+		-	VI	|	Разраб.технол.проц.	|	15	|	Рощупкина Г.И.
+		-	VI	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+--------------------------
+Группа: АРХ-17-1				Неделя: <b>нижняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 01:54:06 ERROR Bot:50 - Error sending message
+org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException: Error sending message: [400] Bad Request: message is too long
+	at org.telegram.telegrambots.meta.api.methods.send.SendMessage.deserializeResponse(SendMessage.java:180)
+	at org.telegram.telegrambots.meta.api.methods.send.SendMessage.deserializeResponse(SendMessage.java:24)
+	at org.telegram.telegrambots.bots.DefaultAbsSender.sendApiMethod(DefaultAbsSender.java:725)
+	at org.telegram.telegrambots.meta.bots.AbsSender.execute(AbsSender.java:47)
+	at com.karmanchik.chtotibtelegrambot.bot.Bot.executeWithExceptionCheck(Bot.java:45)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at com.karmanchik.chtotibtelegrambot.bot.Bot.onUpdateReceived(Bot.java:37)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.telegram.telegrambots.meta.generics.LongPollingBot.onUpdatesReceived(LongPollingBot.java:27)
+	at org.telegram.telegrambots.updatesreceivers.DefaultBotSession$HandlerThread.run(DefaultBotSession.java:312)
+2021-01-14 01:54:06 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 01:55:35 INFO  Bot:34 - Получили новый update: Update{updateId=258911029, message=Message{messageId=1109, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610556934, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 01:55:40 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание на 2021-01-15 (Пятница):
+		-	I	|	-	|	-	|	-
+		-	I	|	История	|	31	|	Турчина Т.С.
+		-	I	|	Обществознание	|	48	|	Насибулин С.А.
+		-	I	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	I	|	-	|	-	|	-
+		-	I	|	Биология	|	308	|	Воронецкая А.И.
+		-	I	|	-	|	-	|	-
+		-	I	|	Архитект. аппар. средств	|	55	|	Юн Р.Е.
+		-	I	|	-	|	-	|	-
+		-	I	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	I	|	Русский язык	|	206	|	Журавлева Л.Б.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Инж. графика	|	45	|	Лончаков С.В., Шевкун А.В.
+		-	I	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	I	|	Обществознание	|	49	|	Лапшакова И.С.
+		-	I	|	Физика	|	312	|	Кисель С.Д., Ковалева В.В.
+		-	I	|	Информ.	|	26	|	Ведерников И.К.
+		-	I	|	-	|	-	|	-
+		-	I	|	Математика	|	214	|	Никифорова Е.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Тех мех.	|	314	|	Лебедева Т.Ю.
+		-	I	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	I	|	Прим. стр. материалов	|	311	|	Серова Л.В.
+		-	I	|	Литература	|	303	|	Соломинова И.В.
+		-	I	|	Коммуникативный практикум	|	202	|	Леонова Н.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	Эл и элек IIп	|	17	|	Рыбас И.А.
+		-	I	|	Физ. культ.	|		|	Раздобреев И.С.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Картограф. IIп	|	302	|	Щербакова И.П.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	ОБЖ	|	200	|	Бабикова Н.А.
+		-	I	|	Инж. графика IIп.	|	25	|	Покатилов Е.Н.
+		-	I	|	-	|	-	|	-
+		-	I	|	Астрономия	|	39	|	Федорова Н.Г.
+		-	I	|	Математика	|	53	|	Цымпилова Б.Д.
+		-	I	|	Вычисл. техн Iп.	|	54	|	Горбунов А.В.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Элем высшей матем.	|	22	|	Лямина О.С.
+		-	I	|	Химия	|	306	|	Швецова Д.О.
+		-	I	|	-	|	-	|	-
+		-	I	|	Осн алг. IIп	|	52	|	Смирнова Т.М.
+		-	I	|	-	|	-	|	-
+		-	I	|	Математика	|	208	|	Гильфанова Л.А.
+		-	I	|	-	|	-	|	-
+		-	I	|	-	|	-	|	-
+		-	I	|	Иностр. язык	|	64	|	Павлов А.М., Гурулева Н.Ю.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	Иностр. язык	|	53	|	Назарова А.А., Туркова С.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	II	|	-	|	-	|	-
+		-	II	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	Физика	|	23	|	Кисель С.Д.
+		-	II	|	-	|	-	|	-
+		-	II	|	Обществознание	|	312	|	Насибулин С.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Теория электр. цепей	|	58	|	Рыбас И.А.
+		-	II	|	Биология	|	216	|	Воронецкая А.И.
+		-	II	|	Математика	|	203	|	Цымпилова Б.Д.
+		-	II	|	Иностр. язык	|	208	|	Чернецкая В.Н., Толстоногова А.А.
+		-	II	|	Химия	|	306	|	Швецова Д.О.
+		-	II	|	Информатика	|	22	|	Никифорова Е.С.
+		-	II	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	II	|	Физика	|	308	|	Ковалева В.В.
+		-	II	|	Обществознание	|	206	|	Турчина Т.С.
+		-	II	|	Биология	|	215	|	Максимова И.Н.
+		-	II	|	-	|	-	|	-
+		-	II	|	Иностр. язык	|	32	|	Павлов А.М., Гурулева Н.Ю.
+		-	II	|	Физ. культура	|		|	Раздобреев И.С.
+		-	II	|	Основы геодезии	|	314	|	Щербакова И.П.
+		-	II	|	Тех мех.	|	202	|	Лебедева Т.Ю.
+		-	II	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	II	|	Прим. стр. материалов	|	311	|	Серова Л.В.
+		-	II	|	ЭДМ	|	310	|	Мартьянов А.Н.
+		-	II	|	Обществозн.	|	214	|	Лапшакова И.С.
+		-	II	|	Математика	|	28	|	Гильфанова Л.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Основы инж. графики	|	43,46	|	Щербакова Е.Л.., Покатилов Е.Н.
+		-	II	|	Физ.культура	|	-	|	Деньченко А.В.
+		-	II	|	ИТ	|	55	|	Юн Р.Е.
+		-	II	|	Архитект. аппар. средств	|	54	|	Горбунов А.В.
+		-	II	|	ОБЖ	|	48	|	Бабикова Н.А.
+		-	II	|	-	|	-	|	-
+		-	II	|	Основы дизайна и композиции	|	56	|	Подойницына Н.С.
+		-	II	|	Прикладное ПО II п.	|	57	|	Теплякова А.Н.
+		-	II	|	-	|	-	|	-
+		-	II	|	Информатика	|	26	|	Ведерников И.К.
+		-	II	|	Статистика	|	302	|	Артюкова Д.А.
+		-	II	|	Литература	|	200	|	Соломинова И.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	Материаловедение	|	17	|	Рощупкина Г.И.
+		-	II	|	Математика	|	212	|	Лямина О.С.
+		-	II	|	Инж. графика	|	45	|	Лончаков С.В., Шевкун А.В.
+		-	II	|	-	|	-	|	-
+		-	II	|	Литература	|	31	|	Журавлева Л.Б.
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Математика	|	216	|	Никифорова Е.С.
+		-	III	|	Физ.культура	|	-	|	Селин А.И.
+		-	III	|	Операц. системы	|	56	|	Степанова Э.П.
+		-	III	|	ОСП	|	13	|	Гулевская Е.В.
+		-	III	|	-	|	-	|	-
+		-	III	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	III	|	Разр.пр.реш Iп ║ ОПП IIп	|	24║110	|	Комнатная С.В.║Баловнева О.Н.
+		-	III	|	История	|	33	|	Турчина Т.С.
+		-	III	|	Литература	|	48	|	Соломинова И.В.
+		-	III	|	Микропроцессорные системы	|	51	|	Иванов А.А.
+		-	III	|	ОБЖ	|	312	|	Бабикова Н.А.
+		-	III	|	Физ. культура	|	-	|	Травкин В.Н.
+		-	III	|	Электрорадиоизмерения	|	Чит.зал	|	Виблый С.Г.
+		-	III	|	Информатика	|	26,29	|	ВедерниковИ.К.,
+		-	III	|	Иностр. язык	|	58	|	Назарова А.А., Туркова С.В.
+		-	III	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	III	|	Литература	|	23	|	Журавлева Л.Б.
+		-	III	|	БЖ	|	45	|	Каргин П.А.
+		-	III	|	Психология общения	|	300	|	Барвинская Т.В.
+		-	III	|	Правов. обесп. проф. деят.	|	317	|	Шведченко А.В.
+		-	III	|	Техн.экспл.инженерных сетей	|	204	|	Истомина Е.В.
+		-	III	|	Чертежи предпр. авто.	|	53	|	Валова И.А.
+		-	III	|	ПМ 01.Управ.зем-имущ.компл.	|	38	|	Кузнецова М.Ю.
+		-	III	|	Физ. Культура	|	-	|	Раздобреев И.С.
+		-	III	|	Иностр. язык	|	302	|	Павлов А.М., Гурулева Н.Ю.
+		-	III	|	МДК 01.02Организ., принц. постр.	|	22	|	Ленская Н.В.
+		-	III	|	ИТ в ПД Iп. || Арх.-план. реш.IIп.	|	57||315	|	Теплякова А.Н.|| Серова Л.В.
+		-	III	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	III	|	Физика	|	31	|	Кисель С.Д.
+		-	III	|	МДК05.01 Выполн. тех. операций	|	ЗабТЭК	|	Морозова М.А.
+		-	III	|	Электрот. и электр	|	17	|	Рыбас И.А.
+		-	III	|	Инж. геол. исслед.	|	202	|	Щербакова И.П.
+		-	III	|	Физика	|	49	|	Ковалева В.В.
+		-	III	|	Математика	|	200	|	Лямина О.С.
+		-	III	|	Коммуникативный практикум	|	314	|	Леонова Н.С.
+		-	III	|	Экономика организ.	|	10	|	Бухвалов А.В.
+		-	III	|	Основы геодезии	|	311	|	Лебедева Т.Ю.
+		-	III	|	История архитектуры	|	24в	|	Деринг Э.К.
+		-	III	|	История	|	215	|	Лапшакова И.С.
+		-	III	|	Технол. и организ работ по ТО	|	Лаб.1	|	Прокопьева М.А.
+		-	III	|	-	|	-	|	-
+		-	III	|	ПДСМ	|	310	|	Хазиахметов А.М.
+		-	III	|	Экономика организации	|	316	|	Левенец М.А.
+		-	III	|	ПБДД	|	15	|	Батуев Б.Н.
+		-	III	|	Химия	|	206	|	Швецова Д.О.
+		-	III	|	Устр. и прин. дейст. авто.	|	212	|	Мартьянов А.Н.
+		-	III	|	Сварка и резка материал.	|	28	|	Рощупкина Г.И.
+		-	III	|	Иностранный язык	|	214	|	Чернецкая В.Н., Толстоногова А.А.
+		-	III	|	Физ.культура	|	-	|	Деньченко А.В.
+		-	III	|	Обществознание	|	64	|	Насибулин С.А.
+		-	III	|	МДК 01.04 Монтаж и экспл. систем видеонабл.	|	54	|	Горбунов А.В.
+		-	III	|	Основы инж. графики	|	43,46	|	Щербакова Е.Л.., Покатилов Е.Н.
+		-	III	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	III	|	Менеджмент	|	52	|	Артюкова Д.А.
+		-	III	|	Математика	|	308	|	Цымпилова Б.Д.
+		-	III	|	Основы предприн. деят.	|	Уч.ком.общ.2	|	Смородникова Л.В.
+		-	III	|	ИТ	|	55	|	Юн Р.Е.
+		-	III	|	Математика	|	306	|	Гильфанова Л.А.
+		-	III	|	Биология	|	208	|	Воронецкая А.И.
+		-	IV	|	Иностранный язык	|	312	|	Назарова А.А.,Туркова С.В.
+		-	IV	|	Физика	|	203	|	Кисель С.Д.
+		-	IV	|	ОБЖ	|	303	|	Воронецкая А.И.
+		-	IV	|	Астрономия	|	39	|	Федорова Н.Г.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Информатика	|	50	|	Никифорова Е.С.
+		-	IV	|	Физ. культура	|		|	Раздобреев И.С.
+		-	IV	|	История	|	200	|	Турчина Т.С.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Обществознание	|	214	|	Лапшакова И.С.
+		-	IV	|	Литература	|	23	|	Журавлева Л.Б.
+		-	IV	|	Математика	|	58	|	Лямина О.С.
+		-	IV	|	Физ. культура	|	-	|	Деньченко А.В.
+		-	IV	|	Литература	|	208	|	Соломинова И.В.
+		-	IV	|	Математика	|	306	|	Гильфанова Л.А.
+		-	IV	|	Иностр. язык	|	308	|	Чернецкая В.Н., Толстоногова А.А.
+		-	IV	|	Физика	|	206	|	Ковалева В.В.
+		-	IV	|	Химия	|	215	|	Швецова Д.О.
+		-	IV	|	История архитектуры	|	24в	|	Деринг Э.К.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	История	|	202	|	Насибулин С.А.
+		-	IV	|	Тех мех.	|	311	|	Лебедева Т.Ю.
+		-	IV	|	Геология и грунт.	|	310	|	Щербакова И.П.
+		-	IV	|	Психология общения	|	28	|	Барвинская Т.В.
+		-	IV	|	Осн. тех. хар. (типология)	|	33	|	Серова Л.В.
+		-	IV	|	Осн алгоритм. IIп	|	52	|	Смирнова Т.М.
+		-	IV	|	Операц. системы	|	56	|	Степанова Э.П.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	БЖ	|	Чит.зал	|	Каргин П.А.
+		-	IV	|	Инж. графика I п.|| Информатика IIп.	|	46 ||26	|	Покатилов Е.Н. || Ведерников И.К.
+		-	IV	|	Экон. недвижимости	|	302	|	Смородникова Л.В.
+		-	IV	|	Математика	|	17	|	Цымпилова Б.Д.
+		-	IV	|	Электрон. и электр	|	212	|	Рыбас И.А.
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Разр.пр.реш Iп ║ ОПП IIп	|	24║110	|	Комнатная С.В.║Баловнева О.Н.
+		-	IV	|	Иностранный язык	|	315	|	Павлов А.М., Гурулева Н.Ю.
+		-	IV	|	Проектир. АД и аэродромов	|	53	|	Хазиахметов А.М., Перебоева Д.А.
+		-	IV	|	Технолог. рем.общ имущ.	|	25	|	Нагина А.В.
+		-	IV	|	Этика ПД	|	6	|	Циглер Е.В.
+		-	IV	|	Численные методы в програм.	|	22	|	Ленская Н.В.
+		-	IV	|	МДК 02.02 Монтаж и обслуж.оптич. систем	|	54	|	Горбунов А.В.
+		-	IV	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	IV	|	ПМ 01.Упр.зем-имущ.компл.	|	38	|	Кузнецова М.Ю.
+		-	IV	|	Физ. культура	|	-	|	Селин А.И.
+		-	IV	|	Технолог. и организ.работ по ТО	|	8	|	Прокопьева М.А.
+		-	IV	|	ТЭДМ	|	7	|	Мартьянов А.Н.
+		-	IV	|	МДК 02.02 Устр. подьемно-трансп.	|	ЗабГУ	|	???
+		-	IV	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	IV	|	ОСП	|	13	|	Гулевская Е.В.
+		-	IV	|	Ценообразование	|	316	|	Левенец М.А.
+		-	IV	|	Экономика организ.	|	10	|	Бухвалов А.В.
+		-	IV	|	ПОПД	|	204	|	Шведченко А.В.
+		-	IV	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+		-	IV	|	МДК 01.03 Разраб.мобильн.приложен.	|	29	|	-
+		-	IV	|	-	|	-	|	-
+		-	IV	|	Восстан. и тех. рем.	|	Лаб.1	|	Рощупкина Г.И.
+		-	IV	|	Восстан. и тех. рем.	|	ЗабГУ	|	-
+		-	IV	|	ПБДД	|	15	|	Батуев Б.Н.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+		-	V	|	Осн алг. Iп	|	52	|	Смирнова Т.М.
+		-	V	|	-	|	-	|	-
+		-	V	|	История	|	33	|	Насибулин С.А.
+		-	V	|	-	|	-	|	-
+		-	V	|	МДК 01.01 Разработка ПМ	|	55	|	Степанова Э.П.
+		-	V	|	-	|	-	|	-
+		-	V	|	История	|	310	|	Лапшакова И.С.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Математич. моделирование	|	29	|	Лямина О.С.
+		-	V	|	-	|	-	|	-
+		-	V	|	Литература	|	215	|	Соломинова И.В.
+		-	V	|	Классный час	|	206	|	Журавлева Л.Б.
+		-	V	|	Правов. обесп. проф. деят.	|	317	|	Шведченко А.В.
+		-	V	|	Физ. культура	|	-	|	Селин А.И.
+		-	V	|	ПБДД	|	Лаб.1	|	Батуев Б.Н.
+		-	V	|	Подбор и прим. автом. экспл. матер.	|	8	|	Рощупкина Г.И.
+		-	V	|	МДК02.01.Технол. ремонта ТО	|	33	|	Жабутинский А.В.
+		-	V	|	МДК 02.01Монтаж и обслуж. ИС	|	55	|	-
+		-	V	|	Иностранный язык	|	7	|	Туркова С.В., Набокова Е.В.
+		-	V	|	-	|	-	|	-
+		-	V	|	ТЭДМ	|	ЗабГУ	|	???
+		-	V	|	Основы философии	|	312	|	Турчина Т.С.
+		-	V	|	Этика ПД	|	6	|	Циглер Е.В.
+		-	V	|	Физика	|	306	|	Кисель С.Д.
+		-	V	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+		-	V	|	Внутридом. инжен. оборуд.	|	25	|	Гулевская Е.В.
+		-	V	|	Физика IIп.	|	58	|	Ковалева В.В.
+		-	V	|	ТЭЗ	|	13	|	Истомина Е.В.
+		-	V	|	Проектир. АД и аэродромов	|	53	|	Хазиахметов А.М., Перебоева Д.А.
+		-	V	|	Арх.-план. реш.Iп.|| ИТ в ПД  IIп.	|	315||57	|	Серова Л.В. || Теплякова А.Н
+		-	V	|	Физ. культура	|	-	|	Раздобреев И.С.
+		-	V	|	1C-Предприятие	|	23	|	Смородникова Л.В., Кубасова Г.В.
+		-	V	|	Рисунок и живопись	|	24,24в	|	Комнатная С.В., Деринг Э.К.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Эконом. организ.	|	10	|	Бухвалов А.В.
+		-	V	|	-	|	-	|	-
+		-	V	|	-	|	-	|	-
+		-	V	|	Содерж. тарифной политикив ЖКХ	|	204	|	Левенец М.А.
+		-	V	|	Монтаж и экспл. компьют. сетей	|	22	|	Ленская Н.В.
+		-	VI	|	БЖ	|	312	|	Каргин П.А.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Стандарт., сертиф.	|	54	|	Горбунов А.В.
+		-	VI	|	ТЭДМ	|	ЗабГУ	|	???
+		-	VI	|	ПОПД	|	10	|	Шведченко А.В.
+		-	VI	|	Иностранный язык	|	6	|	Чернецкая В.Н., Толстоногова А.А.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Иностранный язык	|	205	|	Набокова Е.В.
+		-	VI	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+		-	VI	|	Сод. и методы орг. работ IIп.	|	25	|	Сушкова М.В.
+		-	VI	|	-	|	-	|	-
+		-	VI	|	Проектир. АД и аэродромов	|	45	|	Хазиахметов А.М.
+		-	VI	|	Физ. культура	|	-	|	Раздобреев И.С.
+		-	VI	|	Содерж. тарифной политикив ЖКХ	|	204	|	Левенец М.А.
+		-	VI	|	Организ. деят. структурн. подразд.	|	13	|	Гулевская Е.В.
+		-	VI	|	Прикладное ПО I п.	|	57	|	Теплякова А.Н.
+		-	VI	|	ОПСК	|	315	|	Лебедева Т.Ю.
+		-	VI	|	Физ. культура	|	-	|	Селин А.И.
+		-	VI	|	ПБДД	|	Лаб.1	|	Батуев Б.Н.
+		-	VI	|	Этика ПД	|	8	|	Варфоломеева А.С.
+		-	VI	|	Регулир.правов.отнош.	|	316	|	Нестеров А.В.
+		-	VI	|	Рисунок и живопись	|	24,24в	|	Комнатная С.В., Деринг Э.К.
+		-	VI	|	Разраб.технол.проц.	|	15	|	Рощупкина Г.И.
+		-	VI	|	Цифровая схемотехника	|	51	|	Иванов А.А.
+--------------------------
+Группа: АРХ-17-1				Неделя: <b>нижняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 01:55:40 ERROR Bot:50 - Error sending message
+org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException: Error sending message: [400] Bad Request: message is too long
+	at org.telegram.telegrambots.meta.api.methods.send.SendMessage.deserializeResponse(SendMessage.java:180)
+	at org.telegram.telegrambots.meta.api.methods.send.SendMessage.deserializeResponse(SendMessage.java:24)
+	at org.telegram.telegrambots.bots.DefaultAbsSender.sendApiMethod(DefaultAbsSender.java:725)
+	at org.telegram.telegrambots.meta.bots.AbsSender.execute(AbsSender.java:47)
+	at com.karmanchik.chtotibtelegrambot.bot.Bot.executeWithExceptionCheck(Bot.java:45)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at com.karmanchik.chtotibtelegrambot.bot.Bot.onUpdateReceived(Bot.java:37)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.telegram.telegrambots.meta.generics.LongPollingBot.onUpdatesReceived(LongPollingBot.java:27)
+	at org.telegram.telegrambots.updatesreceivers.DefaultBotSession$HandlerThread.run(DefaultBotSession.java:312)
+2021-01-14 01:55:40 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 02:09:51 INFO  Bot:34 - Получили новый update: Update{updateId=258911030, message=Message{messageId=1111, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610557790, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='1', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 02:09:53 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание на 2021-01-15 (Пятница):
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	IV	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	V	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+		-	VI	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+--------------------------
+Группа: АРХ-17-1				Неделя: <b>нижняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 02:09:54 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}
+2021-01-14 02:09:58 INFO  Bot:34 - Получили новый update: Update{updateId=258911031, message=Message{messageId=1114, from=User{id=977606227, firstName='Арсений', isBot=false, lastName='Карманов', userName='karmanchik999', languageCode='ru', canJoinGroups=null, canReadAllGroupMessages=null, supportInlineQueries=null}, date=1610557797, chat=Chat{id=977606227, type='private', title='null', firstName='Арсений', lastName='Карманов', userName='karmanchik999', allMembersAreAdministrators=null, photo=null, description='null', inviteLink='null', pinnedMessage=null, stickerSetName='null', canSetStickerSet=null, permissions=null, slowModeDelay=null}, forwardFrom=null, forwardFromChat=null, forwardDate=null, text='2', entities=null, captionEntities=null, audio=null, document=null, photo=null, sticker=null, video=null, contact=null, location=null, venue=null, animation=null, pinnedMessage=null, newChatMembers=null, leftChatMember=null, newChatTitle='null', newChatPhoto=null, deleteChatPhoto=null, groupchatCreated=null, replyToMessage=null, voice=null, caption='null', superGroupCreated=null, channelChatCreated=null, migrateToChatId=null, migrateFromChatId=null, editDate=null, game=null, forwardFromMessageId=null, invoice=null, successfulPayment=null, videoNote=null, authorSignature='null', forwardSignature='null', mediaGroupId='null', connectedWebsite='null', passportData=null, forwardSenderName='null', poll=null, replyMarkup=null}, inlineQuery=null, chosenInlineQuery=null, callbackQuery=null, editedMessage=null, channelPost=null, editedChannelPost=null, shippingQuery=null, preCheckoutQuery=null, poll=null, pollAnswer=null}
+2021-01-14 02:10:01 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='Расписание для группы <b>АРХ-17-1</b>:
+--------------------------
+Понедельник:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	ПМ 01. Проект.объект. арх. ср.	|	56	|	Подойницына Н.С.
+		-	IV	|	Осн. эконом. архит. проект	|	32	|	Бухвалов А.В.
+		-	V	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+		-	VI	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+--------------------------
+Вторник:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	ПМ 01. Проект.объект. арх. ср.	|	56	|	Подойницына Н.С.
+		-	IV	|	ПСАП	|	57	|	Теплякова А.Н.
+		-	V	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+--------------------------
+Среда:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Упр. качеством	|	110	|	Сушкова М.В.
+		-	IV	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+		-	V	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+		-	VI	|	Проект.интер. IIп.||ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+--------------------------
+Четверг:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	IV	|	Физ. культура	|	-	|	Селин А.И.
+		-	V	|	Управление качеством	|	110	|	Сушкова М.В.
+--------------------------
+Пятница:
+		-	I	|	-	|	-	|	-
+		-	II	|	-	|	-	|	-
+		-	III	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	IV	|	Осн.градостр.проект.	|	32	|	Сушкова М.В.
+		-	V	|	ОПП I п.|| Проект.интер. IIп.	|	110||56	|	Баловнева О.Н.|| Подойницына Н.С.
+		-	VI	|	Проект.интер. Iп. || ОПП II п.	|	56||110	|	Подойницына Н.С.|| Баловнева О.Н.
+--------------------------
+Неделя: <b>нижняя</b>', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=null}
+2021-01-14 02:10:01 INFO  Bot:43 - Новый объект для отправки: SendMessage{chatId='977606227', text='1	-	Расписание на завтра
+2	-	Все расписание
+3	-	Справочное сообщение
+4	-	Изменить профиль
+', parseMode='html', disableNotification='null', disableWebPagePreview=null, replyToMessageId=null, replyMarkup=ReplyKeyboardMarkup{keyboard=[[KeyboardButton{text=1, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=2, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=3, requestContact=null, requestLocation=null, requestPoll=null}, KeyboardButton{text=4, requestContact=null, requestLocation=null, requestPoll=null}]], resizeKeyboard=true, oneTimeKeyboard=false, selective=false}}

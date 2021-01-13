@@ -35,5 +35,6 @@ public class Group extends AbstractBaseEntity {
 
     public Group(@NotNull String groupName) {
         this.groupName = groupName;
+        this.timetable = "{}";
     }
 }
