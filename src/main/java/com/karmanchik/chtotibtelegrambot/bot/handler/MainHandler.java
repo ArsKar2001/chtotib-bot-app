@@ -155,10 +155,6 @@ public class MainHandler implements Handler {
         );
     }
 
-    private WeekType getWeekType() {
-        return TelegramUtil.isEvenWeek() ? WeekType.UP : WeekType.DOWN;
-    }
-
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableForTomorrow(User user) {
         WeekType weekType = getWeekType();
         int tomorrowDayOfWeek = getTomorrowDayOfWeek();
@@ -205,6 +201,10 @@ public class MainHandler implements Handler {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, 1);
         return new Date(calendar.getTimeInMillis());
+    }
+
+    private WeekType getWeekType() {
+        return TelegramUtil.isEvenWeek() ? WeekType.UP : WeekType.DOWN;
     }
 
     private int getTomorrowDayOfWeek() {

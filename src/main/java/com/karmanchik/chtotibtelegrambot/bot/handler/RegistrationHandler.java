@@ -124,8 +124,7 @@ public class RegistrationHandler implements Handler {
 
         int academicYear = this.getAcademicYear(COURSES.get(message));
         String academicYearPostfix = String.valueOf(academicYear).substring(2);
-        List<Group> groupList = groupRepository.getListGroupNameByYearSuffix(academicYearPostfix)
-                .orElseThrow(RuntimeException::new);
+        List<Group> groupList = groupRepository.getListGroupNameByYearSuffix(academicYearPostfix);
 
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
@@ -166,7 +165,6 @@ public class RegistrationHandler implements Handler {
 
     List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user) {
         user.setUserState(State.SELECT_OPTION);
-        user.setRoleName(Role.TEACHER.toString());
         userRepository.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
@@ -265,8 +263,7 @@ public class RegistrationHandler implements Handler {
     }
 
     boolean isGroupId(String message) {
-        List<Integer> groups = groupRepository.getListGroupId()
-                .orElseThrow(RuntimeException::new);
+        List<Integer> groups = groupRepository.getListGroupId();
         return groups.contains(parseInt(message));
     }
 

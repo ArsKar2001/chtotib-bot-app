@@ -19,10 +19,10 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
     Optional<List<Group>> getListGroup();
 
     @Query(value = "select s.id from Group s")
-    Optional<List<Integer>> getListGroupId();
+    List<Integer> getListGroupId();
 
     @Query(value = "select s from Group s where s.groupName like %:year_suffix%")
-    Optional<List<Group>> getListGroupNameByYearSuffix(@Param("year_suffix") @NotNull String yearSuffix);
+    List<Group> getListGroupNameByYearSuffix(@Param("year_suffix") @NotNull String yearSuffix);
 
     @Query(
             nativeQuery = true,
