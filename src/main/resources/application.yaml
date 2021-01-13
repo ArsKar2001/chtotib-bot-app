@@ -1,0 +1,13 @@
+bot:
+  name: 'chtotibBot'
+  token: '1561541329:AAFr495joT5WNwzbx3vRPKHOGg7p__LhTKw'
+spring:
+  datasource:
+    url: jdbc:postgresql://ec2-34-192-122-0.compute-1.amazonaws.com:5432/d12ajcuv0858s?user=kwdggruqsaufbb&password=44c58f6b9b38548700169038dd38b029bed09a47b51118b01e7c79b1ceb9b891
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
