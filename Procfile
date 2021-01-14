@@ -1,1 +1,1 @@
-bot: mvn clean package && java -jar target/chtotib-telegram-bot-1.01.jar
+bot: java -jar target/chtotib-telegram-bot-1.01.jar
