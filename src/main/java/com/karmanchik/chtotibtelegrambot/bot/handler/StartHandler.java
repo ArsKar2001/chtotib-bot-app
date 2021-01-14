@@ -28,7 +28,7 @@ public class StartHandler implements Handler {
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         SendMessage welcomeMessage = TelegramUtil.createMessageTemplate(user)
                 .setText(String.format(
-                        "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername
+                        "Привет!%nМеня зовут <b>%s</b> :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername
                 ))
                 .enableMarkdown(false);
 

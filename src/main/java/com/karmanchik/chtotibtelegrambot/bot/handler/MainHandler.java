@@ -61,26 +61,21 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getInformationOfBot(User user) {
         StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("<b>ChatId</b>:\t").append(user.getChatId()).append("\n")
+                .append("<b>Роль</b>:\t").append(Role.valueOf(user.getRoleName()).getValue()).append("\n");
         if (isStudent(user)) {
             Group group = groupRepository
                     .findById(user.getGroupId())
                     .orElseThrow(() -> new RuntimeException("не найден group по id " + user.getGroupId()));
-            stringBuilder.append(String.format("<b>Твой данные</b>:%n"))
-                    .append("\t\t<b>ChatId</b> - ").append(user.getChatId()).append("\n")
-                    .append("\t\t<b>Роль</b> - ").append(user.getRoleName()).append("\n")
-                    .append("\t\t<b>Группа</b> - ").append(group.getGroupName()).append("\n")
-                    .append("<b>Бот</b>:" + "\n")
-                    .append("\t\t<b>BotUserName</b> - ").append(botUsername).append("\n")
-                    .append("<b>Разработчик</b>: ").append("@karmanchik999").append("\n");
+            stringBuilder.append("<b>Группа</b>:\t").append(group.getGroupName()).append("\n");
         } else {
-            stringBuilder.append(String.format("<b>Твой данные</b>:%n"))
-                    .append("\t\t<b>chat_id</b> - ").append(user.getChatId()).append("\n")
-                    .append("\t\t<b>Роль</b> - ").append(user.getRoleName()).append("\n")
-                    .append("\t\t<b>Имя</b> - ").append(user.getName()).append("\n")
-                    .append("<b>Бот</b>:" + "\n")
-                    .append("\t\t<b>BotUserName</b> - ").append(botUsername).append("\n")
-                    .append("<b>Разработчик</b>: ").append("@karmanchik999").append("\n");
+            stringBuilder.append("<b>Имя</b>:\t").append(user.getName()).append("\n");
         }
+        stringBuilder.append("\n<b>От разработчика</b>:")
+                .append("\nЭто не финальная версия моего бота. " +
+                        "Сейчас он работает только с расписанием, однако в будущем будет учитывать замену и кидать новости с сайта <a href=\"https://www.chtotib.ru/\">ЧТОТиБ</a>. " +
+                        "По всем ошибкам, вопросам или предложениям писать мне - @l_karmanchik_l.").append("\n");
 
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -168,18 +163,18 @@ public class MainHandler implements Handler {
             List<Lesson> lessonsForTomorrow = groupRepository
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), tomorrowDayOfWeek, weekType.name());
             String dayOfWeek = DAYS_OF_WEEK.get(lessonsForTomorrow.get(0).getDayOfWeek());
-            stringBuilder.append("Расписание на ").append(tomorrow.toString()).append(" (").append(dayOfWeek).append("):\n");
+            stringBuilder.append("Расписание на <b>").append(tomorrow.toString()).append("</b> (").append(dayOfWeek).append("):\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
                     append("\t|\t").append(lesson.getTeacher())
                     .append("\n"));
             stringBuilder.append("--------------------------\n");
-            stringBuilder.append("Группа: ").append(group.getGroupName()).append("\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
+            stringBuilder.append("Группа: <b>").append(group.getGroupName()).append("</b>\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         } else {
             List<Lesson> lessonsForTomorrow = groupRepository.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), tomorrowDayOfWeek, weekType.name());
             String dayOfWeek = DAYS_OF_WEEK.get(tomorrowDayOfWeek);
-            stringBuilder.append("Расписание на ").append(tomorrow.toString()).append(" (").append(dayOfWeek).append("):\n");
+            stringBuilder.append("Расписание на <b>").append(tomorrow.toString()).append("</b> (").append(dayOfWeek).append("):\n");
 
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getGroupName()).

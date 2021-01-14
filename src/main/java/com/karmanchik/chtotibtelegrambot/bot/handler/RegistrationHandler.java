@@ -77,7 +77,7 @@ public class RegistrationHandler implements Handler {
             e.printStackTrace();
             return List.of(
                     TelegramUtil.createMessageTemplate(user)
-                            .setText("Error: " + e.getMessage())
+                            .setText("<b>Ошибка</b>: " + e.getMessage())
             );
         }
     }
@@ -104,7 +104,7 @@ public class RegistrationHandler implements Handler {
 
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Выбери роль")
+                        .setText("Выбери роль...")
                         .setReplyMarkup(markup));
     }
 
@@ -137,7 +137,7 @@ public class RegistrationHandler implements Handler {
         userRepository.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Выбери группу")
+                        .setText("Выбери группу...")
                         .setReplyMarkup(keyboardMarkup)
         );
     }
@@ -162,7 +162,7 @@ public class RegistrationHandler implements Handler {
 
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Выбери курс")
+                        .setText("Выбери курс...")
                         .setReplyMarkup(markup)
         );
     }
@@ -181,12 +181,12 @@ public class RegistrationHandler implements Handler {
                     .orElseThrow(() -> new RuntimeException("не найден group по id " + user.getGroupId()));
             return List.of(TelegramUtil.createMessageTemplate(user)
                     .setText(String.format(
-                            "Твои данные:%n роль: %s%n группа: %s", Role.valueOf(user.getRoleName()).getValue(), group.getGroupName()))
+                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", Role.valueOf(user.getRoleName()).getValue(), group.getGroupName()))
                     .setReplyMarkup(markup));
         } else if (user.getRoleName().equalsIgnoreCase(Role.TEACHER.name())) {
             return List.of(TelegramUtil.createMessageTemplate(user)
                     .setText(String.format(
-                            "Твои данные:%n роль: %s%n Имя: %s", Role.valueOf(user.getRoleName()).getValue(), user.getName()))
+                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", Role.valueOf(user.getRoleName()).getValue(), user.getName()))
                     .setReplyMarkup(markup));
         }
         return Collections.emptyList();

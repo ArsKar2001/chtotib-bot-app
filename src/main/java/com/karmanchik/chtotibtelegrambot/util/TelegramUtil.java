@@ -32,7 +32,7 @@ public class TelegramUtil {
     public static boolean isEvenWeek() {
         Calendar cal = Calendar.getInstance();
         int week = cal.get(Calendar.WEEK_OF_YEAR);
-        return (week % 2 != 0);
+        return (week % 2 == 0);
     }
 
     public static SendMessage createMessageTemplate(User user) {
