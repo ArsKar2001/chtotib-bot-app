@@ -1,5 +1,5 @@
 bot:
-  name: 'test_chtotibBot:'
+  name: 'test_chtotibBot'
   token: '1459587281:AAEWNs3znulax0MAR8tkZ7F549WvJO-x0-k'
 spring:
   datasource:
