@@ -213,7 +213,7 @@ public class RegistrationHandler implements Handler {
         String outMessage;
 
         InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
-        markup1.setKeyboard(TelegramUtil.createTeacherListInlineKeyboardButton(teacherList, 3));
+        markup1.setKeyboard(TelegramUtil.createTeacherListInlineKeyboardButton(teacherList, 2));
 
         ReplyKeyboardMarkup markup2 = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(CANCEL.toUpperCase()));

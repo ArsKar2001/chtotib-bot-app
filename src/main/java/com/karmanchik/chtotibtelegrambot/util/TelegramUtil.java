@@ -2,6 +2,7 @@ package com.karmanchik.chtotibtelegrambot.util;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import lombok.Getter;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -20,19 +22,45 @@ import java.util.Map;
 public class TelegramUtil {
 
     public static final Map<Integer, String> DAYS_OF_WEEK = Map.of(
-             0,"Понедельник",
-             1,"Вторник",
-             2,"Среда",
-             3,"Четверг",
-             4,"Пятница",
-             5,"Суббота",
-             6, "Воскресенье"
+            0,"Понедельник",
+            1,"Вторник",
+            2,"Среда",
+            3,"Четверг",
+            4,"Пятница",
+            5,"Суббота",
+            6, "Воскресенье"
     );
 
     public static boolean isEvenWeek() {
         Calendar cal = Calendar.getInstance();
         int week = cal.get(Calendar.WEEK_OF_YEAR);
         return (week % 2 == 0);
+    }
+
+    public static Date getNextDate() {
+        Calendar calendar = Calendar.getInstance();
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        int days = calendar.get(Calendar.DAY_OF_YEAR);
+        int _days = days;
+        if (dayOfWeek >= 5) {
+            days -= dayOfWeek - 1;
+            days += 7;
+            days -= _days;
+            calendar.add(Calendar.DAY_OF_YEAR, days);
+        } else {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+        return new Date(calendar.getTimeInMillis());
+    }
+
+    public static WeekType getWeekType() {
+        return TelegramUtil.isEvenWeek() ? WeekType.UP : WeekType.DOWN;
+    }
+
+    public static int getNextDayOfWeek() {
+        Calendar calendar = Calendar.getInstance();
+        int nextDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        return (nextDayOfWeek >= 5) ? 0 : nextDayOfWeek;
     }
 
     public static SendMessage createMessageTemplate(User user) {
