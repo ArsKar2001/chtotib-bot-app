@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UpdateReceiver {
                         .orElseGet(() -> userRepository.save(new User(chatId)));
                 user.setBotLastMessageId(messageId);
                 userRepository.save(user);
-                return getHandlerByState(user.getBotState()).handle(user, message.getText());
+                return getHandlerByState(user).handle(user, message.getText());
             } else if (update.hasCallbackQuery()) {
                 final CallbackQuery callbackQuery = update.getCallbackQuery();
                 final int chatId = callbackQuery.getFrom().getId();
@@ -43,7 +44,7 @@ public class UpdateReceiver {
                         .orElseGet(() -> userRepository.save(new User(chatId)));
                 user.setBotLastMessageId(messageId);
                 userRepository.save(user);
-                return getHandlerByCallBackQuery(callbackQuery.getData()).handle(user, callbackQuery.getData());
+                return getHandlerByState(user).handle(user, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException e) {
@@ -51,18 +52,11 @@ public class UpdateReceiver {
         }
     }
 
-    private Handler getHandlerByState(State state) {
+    private Handler getHandlerByState(@NotBlank User user) {
         return handlers.stream()
-                .filter(h -> h.operatedBotState() != null)
-                .filter(h -> h.operatedBotState().equals(state))
-                .findAny()
-                .orElseThrow(UnsupportedOperationException::new);
-    }
-
-    private Handler getHandlerByCallBackQuery(String query) {
-        return handlers.stream()
-                .filter(h -> h.operatedCallBackQuery().stream()
-                        .anyMatch(query::startsWith))
+                .filter(h -> h.operatedUserListState().stream()
+                        .anyMatch(user.getUserState()::equals))
+                .filter(h -> h.operatedBotState().equals(user.getBotState()))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }

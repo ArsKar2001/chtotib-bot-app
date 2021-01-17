@@ -10,7 +10,6 @@ import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -47,10 +46,5 @@ public class StartHandler implements Handler {
     @Override
     public List<State> operatedUserListState() {
         return List.of(State.NONE);
-    }
-
-    @Override
-    public List<? extends String> operatedCallBackQuery() {
-        return Collections.emptyList();
     }
 }

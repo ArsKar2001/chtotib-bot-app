@@ -83,14 +83,18 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        if (message.equalsIgnoreCase(CHANGE)) {
+        List<String> allTeachers = groupRepository.findAllTeachers();
+        if (message.equalsIgnoreCase(CANCEL)) {
             user.setUserState(State.ENTER_NAME);
             userRepository.save(user);
             return inputTeacherName(user);
+        } else if(allTeachers.contains(message)) {
+            user.setName(message);
+            userRepository.save(user);
+            return acceptOrCancel(user);
+        } else {
+            return didNotDefine(user);
         }
-        user.setName(message);
-        userRepository.save(user);
-        return acceptOrCancel(user);
     }
 
     static List<PartialBotApiMethod<? extends Serializable>> selectRole(User user) {
@@ -210,7 +214,6 @@ public class RegistrationHandler implements Handler {
         user.setUserState(State.SELECT_TEACHER);
         userRepository.save(user);
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
-        String outMessage;
 
         InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
         markup1.setKeyboard(TelegramUtil.createTeacherListInlineKeyboardButton(teacherList, 2));
@@ -220,24 +223,32 @@ public class RegistrationHandler implements Handler {
         markup2.setKeyboard(List.of(keyboardRow));
 
         if (!teacherList.isEmpty()) {
-            outMessage = "Это Вы...";
-            return List.of(
-                    TelegramUtil.createMessageTemplate(user)
-                            .setText(outMessage)
-                            .setReplyMarkup(markup1),
-                    TelegramUtil.createMessageTemplate(user)
-                            .setText("...?")
-                            .setReplyMarkup(markup2)
-            );
+            return itIsYou(user, markup1, markup2);
         } else {
-            outMessage = "Не смог вас определить :(";
-            return List.of(
-                    TelegramUtil.createMessageTemplate(user)
-                            .setText(outMessage)
-                            .enableMarkdown(false),
-                    cancel(user).get(0)
-            );
+            return didNotDefine(user);
         }
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> didNotDefine(User user) {
+        String outMessage = "Не смог вас определить :(";
+        return List.of(
+                TelegramUtil.createMessageTemplate(user)
+                        .setText(outMessage)
+                        .enableMarkdown(false),
+                cancel(user).get(0)
+        );
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> itIsYou(User user, InlineKeyboardMarkup markup1, ReplyKeyboardMarkup markup2) {
+        String outMessage = "Это Вы...";
+        return List.of(
+                TelegramUtil.createMessageTemplate(user)
+                        .setText(outMessage)
+                        .setReplyMarkup(markup1),
+                TelegramUtil.createMessageTemplate(user)
+                        .setText("...?")
+                        .setReplyMarkup(markup2)
+        );
     }
 
     private List<String> getListFullTeachers(String message) {
@@ -296,18 +307,5 @@ public class RegistrationHandler implements Handler {
         return List.of(
                 State.SELECT_COURSE, State.SELECT_ROLE, State.SELECT_GROUP, State.SELECT_OPTION, State.ENTER_NAME, State.SELECT_TEACHER
         );
-    }
-
-    @Override
-    public List<? extends String> operatedCallBackQuery() {
-        List<String> stringList = new ArrayList<>();
-        stringList.add(SELECT_ROLE_STUDENT);
-        stringList.add(SELECT_ROLE_TEACHER);
-        stringList.addAll(COURSES.keySet());
-        stringList.addAll(groupRepository.findAllTeachers());
-        stringList.add(ACCEPT);
-        stringList.add(CHANGE);
-        stringList.add(CANCEL);
-        return stringList;
     }
 }

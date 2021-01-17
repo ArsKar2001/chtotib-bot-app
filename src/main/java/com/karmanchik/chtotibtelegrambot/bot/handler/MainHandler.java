@@ -195,11 +195,6 @@ public class MainHandler implements Handler {
 
     @Override
     public List<State> operatedUserListState() {
-        return Collections.emptyList();
-    }
-
-    @Override
-    public List<? extends String> operatedCallBackQuery() {
-        return Collections.emptyList();
+        return List.of(State.NONE);
     }
 }

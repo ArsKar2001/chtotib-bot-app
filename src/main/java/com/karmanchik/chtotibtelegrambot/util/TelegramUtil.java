@@ -31,6 +31,7 @@ public class TelegramUtil {
             6, "Воскресенье"
     );
 
+
     public static boolean isEvenWeek() {
         Calendar cal = Calendar.getInstance();
         int week = cal.get(Calendar.WEEK_OF_YEAR);
@@ -103,16 +104,10 @@ public class TelegramUtil {
         return listList;
     }
 
-    // Creating button
     public static InlineKeyboardButton createInlineKeyboardButton(String text, String command) {
         return new InlineKeyboardButton()
                 .setText(text)
                 .setCallbackData(command);
-    }
-
-    public static KeyboardButton createKeyboardButton(String text) {
-        return new KeyboardButton()
-                .setText(text);
     }
 
     public static ReplyKeyboardMarkup createReplyKeyboardMarkup() {

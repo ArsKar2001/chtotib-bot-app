@@ -13,6 +13,4 @@ public interface Handler {
     State operatedBotState();
 
     List<State> operatedUserListState();
-
-    List<? extends String> operatedCallBackQuery();
 }
