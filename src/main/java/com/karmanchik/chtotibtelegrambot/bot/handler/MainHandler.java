@@ -165,7 +165,7 @@ public class MainHandler implements Handler {
             List<Lesson> lessonsForTomorrow = groupRepository
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
-            stringBuilder.append("Расписание на <b>").append(dateFormat.format(next)).append("</b> (").append(dayOfWeek).append("):\n");
+            stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
