@@ -88,7 +88,7 @@ public class RegistrationHandler implements Handler {
             user.setUserState(State.ENTER_NAME);
             userRepository.save(user);
             return inputTeacherName(user);
-        } else if(allTeachers.contains(message)) {
+        } else if (allTeachers.contains(message)) {
             user.setName(message);
             userRepository.save(user);
             return acceptOrCancel(user);
@@ -133,6 +133,7 @@ public class RegistrationHandler implements Handler {
         int academicYear = this.getAcademicYear(COURSES.get(message));
         String academicYearPostfix = String.valueOf(academicYear).substring(2);
         List<Group> groupList = groupRepository.getListGroupNameByYearSuffix(academicYearPostfix);
+        Arrays.sort(groupList.toArray());
 
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
