@@ -13,8 +13,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Collections;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
@@ -94,7 +95,8 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getFullTimetableForGroup(User user) {
         StringBuilder stringBuilder = new StringBuilder();
-        WeekType week = TelegramUtil.getWeekType();
+        Calendar calendar = Calendar.getInstance();
+        WeekType week = TelegramUtil.getWeekType(calendar);
 
         if (isStudent(user)) {
             Group group = groupRepository
@@ -147,10 +149,14 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableForTomorrow(User user) {
-        WeekType weekType = TelegramUtil.getWeekType();
+        Calendar next = TelegramUtil.getNextDate();
+
         int nextDayOfWeek = TelegramUtil.getNextDayOfWeek();
-        Date nextDay = TelegramUtil.getNextDate();
+        WeekType weekType = TelegramUtil.getWeekType(next);
+
         StringBuilder stringBuilder = new StringBuilder();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 
         if (isStudent(user)) {
             Group group = groupRepository
@@ -159,7 +165,7 @@ public class MainHandler implements Handler {
             List<Lesson> lessonsForTomorrow = groupRepository
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
-            stringBuilder.append("Расписание на <b>").append(nextDay.toString()).append("</b> (").append(dayOfWeek).append("):\n");
+            stringBuilder.append("Расписание на <b>").append(dateFormat.format(next)).append("</b> (").append(dayOfWeek).append("):\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
@@ -170,7 +176,7 @@ public class MainHandler implements Handler {
         } else {
             List<Lesson> lessonsForTomorrow = groupRepository.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
-            stringBuilder.append("Расписание на <b>").append(nextDay.toString()).append("</b> (").append(dayOfWeek).append("):\n");
+            stringBuilder.append("Расписание на <b>").append(next.toString()).append("</b> (").append(dayOfWeek).append("):\n");
 
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getGroupName()).

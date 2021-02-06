@@ -28,7 +28,7 @@ public class User extends AbstractBaseEntity {
     @NotNull
     private Integer chatId;
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column(name = "name", nullable = false)
     @NotBlank
     private String name;
 
