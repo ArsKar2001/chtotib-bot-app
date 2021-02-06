@@ -125,7 +125,7 @@ public class MainHandler implements Handler {
             stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>");
             dayList.forEach(day -> {
                 String dayOfWeek = DAYS_OF_WEEK.get(day);
-                stringBuilder.append(new String(new char[15]).replace('\0', '-'));
+                stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
                 stringBuilder.append(dayOfWeek).append(":\n");
                 lessons.forEach(lesson -> {
                     if (lesson.getDayOfWeek().equals(day)) {
@@ -144,7 +144,7 @@ public class MainHandler implements Handler {
             log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + user.getName() + " - " + dayList.toString());
             stringBuilder.append("Расписание для педагога ").append("<b>").append(user.getName()).append("</b>").append(":\n");
             dayList.forEach(day -> {
-                stringBuilder.append(new String(new char[15]).replace('\0', '-'));
+                stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
                 stringBuilder.append(DAYS_OF_WEEK.get(day)).append(":\n");
                 lessons.forEach(lesson -> {
                     if (lesson.getDayOfWeek().equals(day)) {
@@ -196,7 +196,7 @@ public class MainHandler implements Handler {
                     append("\t|\t").append(lesson.getAuditorium()).
                     append("\t|\t").append(lesson.getTeacher())
                     .append("\n"));
-            stringBuilder.append(new String(new char[15]).replace('\0', '-'));
+            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
             stringBuilder.append("Группа: <b>").append(group.getGroupName()).append("</b>\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         } else {
             var lessonsForTomorrow = groupRepository.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
