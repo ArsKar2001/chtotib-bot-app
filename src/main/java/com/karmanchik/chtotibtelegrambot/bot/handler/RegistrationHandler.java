@@ -133,7 +133,6 @@ public class RegistrationHandler implements Handler {
         int academicYear = this.getAcademicYear(COURSES.get(message));
         String academicYearPostfix = String.valueOf(academicYear).substring(2);
         List<Group> groupList = groupRepository.getListGroupNameByYearSuffix(academicYearPostfix);
-        Arrays.sort(groupList.toArray());
 
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
