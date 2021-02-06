@@ -15,8 +15,6 @@ import java.util.Optional;
 @Repository
 @Transactional(readOnly = true)
 public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
-    @Query(value = "select g.id, g.groupName, g.timetable from Group g")
-    Optional<List<Group>> getListGroup();
 
     @Query(value = "select s.id from Group s")
     List<Integer> getListGroupId();

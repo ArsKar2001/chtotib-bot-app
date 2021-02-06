@@ -60,4 +60,18 @@ public class User extends AbstractBaseEntity {
         this.groupId = GROUP_NONE_ID;
         this.botLastMessageId = chatId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "chatId=" + chatId +
+                ", name='" + name + '\'' +
+                ", botState=" + botState +
+                ", botLastMessageId=" + botLastMessageId +
+                ", userState=" + userState +
+                ", groupId=" + groupId +
+                ", roleName='" + roleName + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

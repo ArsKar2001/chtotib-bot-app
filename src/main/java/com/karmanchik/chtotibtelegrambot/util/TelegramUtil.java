@@ -14,6 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.io.Serializable;
 import java.util.*;
 
+import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
+
 public class TelegramUtil {
 
     public static final Map<Integer, String> DAYS_OF_WEEK = Map.of(
@@ -28,8 +30,7 @@ public class TelegramUtil {
 
 
     public static boolean isEvenWeek(Calendar date) {
-        Calendar cal = date;
-        int week = cal.get(Calendar.WEEK_OF_YEAR);
+        int week = date.get(Calendar.WEEK_OF_YEAR);
         return (week % 2 == 0);
     }
 
@@ -121,10 +122,10 @@ public class TelegramUtil {
         ReplyKeyboardMarkup replyKeyboardMarkup = createReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
-        row.add(MainCommand.COM_1.getValue());
-        row.add(MainCommand.COM_2.getValue());
-        row.add(MainCommand.COM_3.getValue());
-        row.add(MainCommand.COM_4.getValue());
+        row.add(COM_1.getValue());
+        row.add(COM_2.getValue());
+        row.add(COM_3.getValue());
+        row.add(COM_4.getValue());
 
         keyboardRowList.add(row);
 

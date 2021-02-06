@@ -1,15 +1,17 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.json.JSONObject;
-import com.vladmihalcea.hibernate.type.json.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,14 +29,25 @@ import javax.validation.constraints.NotNull;
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Group extends AbstractBaseEntity {
     @Column(name = "group_name", nullable = false, unique = true)
-    @NotNull private String groupName;
+    @NotNull
+    private String groupName;
 
     @Column(name = "timetable", columnDefinition = "json")
     @Type(type = "json")
-    @NotNull private String timetable;
+    @NotNull
+    private String timetable;
 
     public Group(@NotNull String groupName) {
         this.groupName = groupName;
         this.timetable = "{}";
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupName='" + groupName + '\'' +
+                ", timetable='" + timetable + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
