@@ -1,24 +1,29 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
+import com.karmanchik.chtotibtelegrambot.entity.Role;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.model.Role;
-import com.karmanchik.chtotibtelegrambot.model.State;
 import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
 
+import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.STUDENT;
+import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.TEACHER;
+import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
 import static java.lang.Integer.parseInt;
 
+@Log4j
 @Component
 public class RegistrationHandler implements Handler {
 
@@ -26,8 +31,8 @@ public class RegistrationHandler implements Handler {
     public static final String CHANGE = "изменить";
     public static final String CANCEL = "назад";
 
-    private static final String SELECT_ROLE_STUDENT = Role.STUDENT.getValue().toUpperCase();
-    private static final String SELECT_ROLE_TEACHER = Role.TEACHER.getValue().toUpperCase();
+    private static final String ROLE_STUDENT = "студент";
+    private static final String ROLE_TEACHER = "педагог";
 
     private static final Map<String, String> COURSES = Map.of(
             "I", "1",
@@ -47,12 +52,12 @@ public class RegistrationHandler implements Handler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
-            switch (user.getUserState()) {
-                case SELECT_ROLE:
+            switch (user.getUserState().getCode()) {
+                case "SELECT_ROLE":
                     return switchRole(user, message);
-                case SELECT_COURSE:
+                case "SELECT_COURSE":
                     return selectGroup(user, message);
-                case SELECT_GROUP:
+                case "SELECT_GROUP":
                     if (COURSES.containsKey(message)) {
                         return selectGroup(user, message);
                     }
@@ -62,14 +67,14 @@ public class RegistrationHandler implements Handler {
                         return acceptOrCancel(user);
                     }
                     return Collections.emptyList();
-                case SELECT_OPTION:
+                case "SELECT_OPTION":
                     if (message.equalsIgnoreCase(ACCEPT))
                         return accept(user);
                     if (message.equalsIgnoreCase(CHANGE))
                         return cancel(user);
-                case ENTER_NAME:
+                case "ENTER_NAME":
                     return createSelectTeacherButtonsPanel(user, message);
-                case SELECT_TEACHER:
+                case "SELECT_TEACHER":
                     return selectTeacher(user, message);
             }
             return Collections.emptyList();
@@ -85,7 +90,7 @@ public class RegistrationHandler implements Handler {
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
         List<String> allTeachers = groupRepository.findAllTeachers();
         if (message.equalsIgnoreCase(CANCEL)) {
-            user.setUserState(State.ENTER_NAME);
+            user.setUserStateId(ENTER_NAME.getId());
             userRepository.save(user);
             return inputTeacherName(user);
         } else if (allTeachers.contains(message)) {
@@ -100,8 +105,8 @@ public class RegistrationHandler implements Handler {
     static List<PartialBotApiMethod<? extends Serializable>> selectRole(User user) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(
-                SELECT_ROLE_STUDENT,
-                SELECT_ROLE_TEACHER
+                ROLE_STUDENT.toUpperCase(),
+                ROLE_TEACHER.toUpperCase()
         ));
         markup.setKeyboard(List.of(keyboardRow));
         markup.setOneTimeKeyboard(true);
@@ -113,13 +118,13 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> switchRole(User user, String message) {
-        if (message.equalsIgnoreCase(SELECT_ROLE_STUDENT)) {
-            user.setUserState(State.SELECT_COURSE);
-            user.setRoleName(Role.STUDENT.name());
+        if (message.equalsIgnoreCase(ROLE_STUDENT)) {
+            user.setUserStateId(SELECT_COURSE.getId());
+            user.setRoleId(STUDENT.getId());
             userRepository.save(user);
             return createSelectCourseButtonsPanel(user);
-        } else if (message.equalsIgnoreCase(SELECT_ROLE_TEACHER)) {
-            user.setRoleName(Role.TEACHER.name());
+        } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
+            user.setRoleId(TEACHER.getId());
             userRepository.save(user);
             return inputTeacherName(user);
         }
@@ -137,7 +142,7 @@ public class RegistrationHandler implements Handler {
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
 
-        user.setUserState(State.SELECT_GROUP);
+        user.setUserStateId(SELECT_GROUP.getId());
         userRepository.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -147,7 +152,7 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
-        user.setUserState(State.ENTER_NAME);
+        user.setUserStateId(ENTER_NAME.getId());
         userRepository.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -172,46 +177,51 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user) {
-        user.setUserState(State.SELECT_OPTION);
+        user.setUserStateId(SELECT_OPTION.getId());
         userRepository.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
         markup.setKeyboard(List.of(keyboardRow));
 
-        if (user.getRoleName().equalsIgnoreCase(Role.STUDENT.name())) {
-            Group group = groupRepository
-                    .findById(user.getGroupId())
-                    .orElseThrow(() -> new RuntimeException("не найден group по id " + user.getGroupId()));
+        log.debug("!!!!! log debug: create KeyboardRow - " + markup.toString());
+
+        @NotBlank Integer groupId = user.getGroupId();
+        Group group = groupRepository.findById(groupId).orElseThrow();
+        log.debug("!!!!! log debug: получили group - " + group.toString());
+        Role role = user.getRole();
+        log.debug("!!!!! log debug: получили role - " + role.toString());
+
+        if (role.getId() == STUDENT.getId()) {
             return List.of(TelegramUtil.createMessageTemplate(user)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", Role.valueOf(user.getRoleName()).getValue(), group.getGroupName()))
+                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getDescription(), group.getGroupName()))
                     .setReplyMarkup(markup));
-        } else if (user.getRoleName().equalsIgnoreCase(Role.TEACHER.name())) {
+        } else if (role.getId() == TEACHER.getId()) {
             return List.of(TelegramUtil.createMessageTemplate(user)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", Role.valueOf(user.getRoleName()).getValue(), user.getName()))
+                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getDescription(), user.getName()))
                     .setReplyMarkup(markup));
         }
         return Collections.emptyList();
     }
 
     List<PartialBotApiMethod<? extends Serializable>> cancel(User user) {
-        user.setUserState(State.SELECT_ROLE);
-        user.setBotState(State.REG);
+        user.setUserStateId(SELECT_ROLE.getId());
+        user.setBotStateId(REG.getId());
         userRepository.save(user);
         return selectRole(user);
     }
 
     List<PartialBotApiMethod<? extends Serializable>> accept(User user) {
-        user.setUserState(State.NONE);
-        user.setBotState(State.AUTHORIZED);
+        user.setUserStateId(NONE.getId());
+        user.setBotStateId(AUTHORIZED.getId());
         userRepository.save(user);
         return List.of(TelegramUtil.mainMessage(user));
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectTeacherButtonsPanel(User user, String message) {
-        user.setUserState(State.SELECT_TEACHER);
+        user.setUserStateId(SELECT_TEACHER.getId());
         userRepository.save(user);
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
 
@@ -298,14 +308,19 @@ public class RegistrationHandler implements Handler {
     }
 
     @Override
-    public State operatedBotState() {
-        return State.REG;
+    public Integer operatedBotState() {
+        return REG.getId();
     }
 
     @Override
-    public List<State> operatedUserListState() {
+    public List<Integer> operatedUserListState() {
         return List.of(
-                State.SELECT_COURSE, State.SELECT_ROLE, State.SELECT_GROUP, State.SELECT_OPTION, State.ENTER_NAME, State.SELECT_TEACHER
+                SELECT_COURSE.getId(),
+                SELECT_ROLE.getId(),
+                SELECT_GROUP.getId(),
+                SELECT_OPTION.getId(),
+                ENTER_NAME.getId(),
+                SELECT_TEACHER.getId()
         );
     }
 }

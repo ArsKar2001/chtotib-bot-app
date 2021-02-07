@@ -66,8 +66,8 @@ public class UpdateReceiver {
     private Handler getHandlerByState(@NotBlank User user) {
         return handlers.stream()
                 .filter(h -> h.operatedUserListState().stream()
-                        .anyMatch(user.getUserState()::equals))
-                .filter(h -> h.operatedBotState().equals(user.getBotState()))
+                        .anyMatch(user.getUserStateId()::equals))
+                .filter(h -> h.operatedBotState().equals(user.getBotStateId()))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }

@@ -2,8 +2,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.model.Role;
-import com.karmanchik.chtotibtelegrambot.model.State;
+import com.karmanchik.chtotibtelegrambot.model.InstanceState;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
@@ -19,6 +18,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.NONE;
+import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
@@ -67,13 +68,10 @@ public class MainHandler implements Handler {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("<b>ChatId</b>:\t").append(user.getChatId()).append("\n")
-                .append("<b>Роль</b>:\t").append(Role.valueOf(user.getRoleName()).getValue()).append("\n");
+                .append("<b>Роль</b>:\t").append(user.getRole().getDescription()).append("\n");
         if (isStudent(user)) {
-            Integer groupId = user.getGroupId();
-            Group group = groupRepository
-                    .findById(groupId)
-                    .orElseThrow(() -> new RuntimeException("не найден group по id " + groupId));
-            log.debug("!!!! log debug getMessageInfo: find group by id=" + groupId + " - " + group.toString());
+            Group group = user.getGroup();
+            log.debug("!!!! log debug getMessageInfo: find group by id=" + group.getId() + " - " + group.toString());
             stringBuilder.append("<b>Группа</b>:\t").append(group.getGroupName()).append("\n");
         } else {
             stringBuilder.append("<b>Имя</b>:\t").append(user.getName()).append("\n");
@@ -91,13 +89,13 @@ public class MainHandler implements Handler {
     }
 
     private boolean isStudent(User user) {
-        return user.getRoleName().equalsIgnoreCase(Role.STUDENT.name());
+        return user.getRole().getNameRole().equalsIgnoreCase("STUDENT");
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
-        user.setRoleName(Role.NONE.name());
-        user.setUserState(State.SELECT_ROLE);
-        user.setBotState(State.REG);
+        user.setRoleId(NONE.getId());
+        user.setUserStateId(SELECT_ROLE.getId());
+        user.setBotStateId(REG.getId());
         userRepository.save(user);
         return RegistrationHandler.selectRole(user);
     }
@@ -111,11 +109,8 @@ public class MainHandler implements Handler {
         log.debug("!!!! log debug getFullTimetableForGroup: create " + week.getClass().toString() + " - " + week.toString());
 
         if (isStudent(user)) {
-            Integer groupId = user.getGroupId();
-            Group group = groupRepository
-                    .findById(groupId)
-                    .orElseThrow(() -> new RuntimeException("не найден group по id " + groupId));
-            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + groupId + " - " + group.toString());
+            Group group = user.getGroup();
+            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
             var dayList = groupRepository.getListDaysOfWeekByGroupName(group.getGroupName());
             log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
             var lessons = groupRepository.getListLessonByGroupNameAndWeekType(group.getGroupName(), week.name());
@@ -180,17 +175,13 @@ public class MainHandler implements Handler {
 
 
         if (isStudent(user)) {
-            Integer groupId = user.getGroupId();
-            Group group = groupRepository
-                    .findById(groupId)
-                    .orElseThrow(() -> new RuntimeException("не найден group по id " + groupId));
-            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + groupId + " - " + group.toString());
+            Group group = user.getGroup();
+            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
             var lessonsForTomorrow = groupRepository
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-            stringBuilder.append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
             stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getDiscipline()).
@@ -204,13 +195,15 @@ public class MainHandler implements Handler {
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-
+            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getGroupName()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
                     append("\t|\t").append(lesson.getTeacher())
                     .append("\n"));
+            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
+            stringBuilder.append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         }
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -220,12 +213,12 @@ public class MainHandler implements Handler {
     }
 
     @Override
-    public State operatedBotState() {
-        return State.AUTHORIZED;
+    public Integer operatedBotState() {
+        return AUTHORIZED.getId();
     }
 
     @Override
-    public List<State> operatedUserListState() {
-        return List.of(State.NONE);
+    public List<Integer> operatedUserListState() {
+        return List.of(InstanceState.NONE.getId());
     }
 }

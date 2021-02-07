@@ -1,18 +1,17 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import com.karmanchik.chtotibtelegrambot.model.Role;
-import com.karmanchik.chtotibtelegrambot.model.State;
+import com.karmanchik.chtotibtelegrambot.model.InstanceRole;
+import com.karmanchik.chtotibtelegrambot.model.InstanceState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import static com.karmanchik.chtotibtelegrambot.model.InstanceState.START;
 
 
 @Entity
@@ -32,33 +31,51 @@ public class User extends AbstractBaseEntity {
     @NotBlank
     private String name;
 
-    @Column(name = "bot_state", nullable = false)
-    @NotBlank
-    private State botState;
-
     @Column(name = "bot_lat_message_id", nullable = false)
     @NotBlank
     private Integer botLastMessageId;
 
-    @Column(name = "user_state", nullable = false)
+    @Column(name = "bot_state_id", nullable = false)
     @NotBlank
-    private State userState;
+    private Integer botStateId;
 
-    @Column(name = "group_id")
+    @Column(name = "user_state_id", nullable = false)
+    @NotBlank
+    private Integer userStateId;
+
+    @Column(name = "role_id", nullable = false)
+    @NotBlank
+    private Integer roleId;
+
+    @Column(name = "group_id", nullable = false)
+    @NotBlank
     private Integer groupId;
 
-    @Column(name = "role_name", nullable = false)
-    @NotBlank
-    private String roleName;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Group group;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_state_id", referencedColumnName = "id_user_state", insertable = false, updatable = false)
+    private UserState userState;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bot_state_id", referencedColumnName = "id_bot_state", insertable = false, updatable = false)
+    private BotState botState;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Role role;
 
     public User(int chatId) {
         this.chatId = chatId;
         this.name = String.valueOf(chatId);
-        this.botState = State.START;
-        this.userState = State.NONE;
-        this.roleName = Role.NONE.toString();
+        this.botStateId = START.getId();
+        this.userStateId = InstanceState.NONE.getId();
+        this.roleId = InstanceRole.NONE.getId();
         this.groupId = GROUP_NONE_ID;
-        this.botLastMessageId = chatId;
+        this.botLastMessageId = 0;
     }
 
     @Override
@@ -66,11 +83,15 @@ public class User extends AbstractBaseEntity {
         return "User{" +
                 "chatId=" + chatId +
                 ", name='" + name + '\'' +
-                ", botState=" + botState +
                 ", botLastMessageId=" + botLastMessageId +
-                ", userState=" + userState +
+                ", botStateId=" + botStateId +
+                ", userStateId=" + userStateId +
+                ", roleId=" + roleId +
                 ", groupId=" + groupId +
-                ", roleName='" + roleName + '\'' +
+                ", group=" + group +
+                ", userState=" + userState +
+                ", botState=" + botState +
+                ", role=" + role +
                 ", id=" + id +
                 '}';
     }

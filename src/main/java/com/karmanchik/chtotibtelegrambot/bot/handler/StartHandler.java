@@ -1,7 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.model.State;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +10,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.Serializable;
 import java.util.List;
+
+import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
 
 @Component
 public class StartHandler implements Handler {
@@ -31,20 +32,20 @@ public class StartHandler implements Handler {
                 ))
                 .enableMarkdown(false);
 
-        user.setUserState(State.SELECT_ROLE);
-        user.setBotState(State.REG);
+        user.setUserStateId(SELECT_ROLE.getId());
+        user.setBotStateId(REG.getId());
         userRepository.save(user);
 
         return List.of(welcomeMessage, RegistrationHandler.selectRole(user).get(0));
     }
 
     @Override
-    public State operatedBotState() {
-        return State.START;
+    public Integer operatedBotState() {
+        return START.getId();
     }
 
     @Override
-    public List<State> operatedUserListState() {
-        return List.of(State.NONE);
+    public List<Integer> operatedUserListState() {
+        return List.of(NONE.getId());
     }
 }
