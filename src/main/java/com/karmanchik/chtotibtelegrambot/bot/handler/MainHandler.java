@@ -116,11 +116,11 @@ public class MainHandler implements Handler {
             var lessons = groupRepository.getListLessonByGroupNameAndWeekType(group.getGroupName(), week.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
 
+            stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
             stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
-            stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>");
+            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
                 String dayOfWeek = DAYS_OF_WEEK.get(day);
-                stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
                 stringBuilder.append(dayOfWeek).append(":\n");
                 lessons.forEach(lesson -> {
                     if (lesson.getDayOfWeek().equals(day)) {
@@ -131,6 +131,7 @@ public class MainHandler implements Handler {
                                 .append("\n");
                     }
                 });
+                stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             });
         } else {
             var lessons = groupRepository.getListLessonByTeacherAndWeekType(user.getName().toLowerCase(), week.name());
@@ -182,7 +183,7 @@ public class MainHandler implements Handler {
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
+            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
