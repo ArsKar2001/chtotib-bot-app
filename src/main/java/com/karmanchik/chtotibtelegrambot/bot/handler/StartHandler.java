@@ -1,7 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
+import com.karmanchik.chtotibtelegrambot.entity.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.entity.UserState;
+import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,17 +13,16 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.io.Serializable;
 import java.util.List;
 
-import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
 
 @Component
 public class StartHandler implements Handler {
     @Value("${bot.name}")
     private String botUsername;
 
-    private final JpaUserRepository userRepository;
+    private final UserService userService;
 
-    public StartHandler(JpaUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public StartHandler(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -32,20 +33,20 @@ public class StartHandler implements Handler {
                 ))
                 .enableMarkdown(false);
 
-        user.setUserStateId(SELECT_ROLE.getId());
-        user.setBotStateId(REG.getId());
-        userRepository.save(user);
+        user.setUserStateId(UserState.Instance.SELECT_ROLE.getId());
+        user.setBotStateId(BotState.Instance.REG.getId());
+        userService.save(user);
 
         return List.of(welcomeMessage, RegistrationHandler.selectRole(user).get(0));
     }
 
     @Override
-    public Integer operatedBotState() {
-        return START.getId();
+    public BotState.Instance operatedBotState() {
+        return BotState.Instance.START;
     }
 
     @Override
-    public List<Integer> operatedUserListState() {
-        return List.of(NONE.getId());
+    public List<UserState.Instance> operatedUserListState() {
+        return List.of(UserState.Instance.NONE);
     }
 }

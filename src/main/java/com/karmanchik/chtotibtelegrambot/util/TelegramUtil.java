@@ -34,6 +34,7 @@ public class TelegramUtil {
         return (week % 2 == 0);
     }
 
+
     public static Calendar getNextDate() {
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;

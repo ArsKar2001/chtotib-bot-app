@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Transactional(readOnly = true)
@@ -50,7 +49,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "from get_fields_from_json() as data " +
             "where data.groupname = :groupName " +
             "order by data.dayofweek, data.lessonnumber")
-    Optional<List<Lesson>> getListLessonByGroupName(@Param("groupName") @NotNull String groupName);
+    List<Lesson> getListLessonByGroupName(@Param("groupName") @NotNull String groupName);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
@@ -78,10 +77,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "from get_fields_from_json() as data " +
             "where lower(data.teacher) like '%'||:teacher||'%' and data.weektype in (:weekType, 'NONE')" +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> getListLessonByTeacherAndWeekType(
-            @Param("teacher") @NotNull String teacher,
-
-            @Param("weekType") @NotNull String weekType);
+    List<Lesson> getListLessonByTeacherAndWeekType(@Param("teacher") @NotNull String teacher, @Param("weekType") @NotNull String weekType);
 
     @Query(nativeQuery = true, value = "select " +
             "data.dayofweek " +
@@ -110,10 +106,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "and data.weektype in (:weekType, 'NONE') " +
             "and data.dayofweek = ''||:dayOfWeek " +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> findAllByGroupNameAndDayOfWeek(
-            @Param("groupName") @NotNull String groupName,
-            @Param("dayOfWeek") @NotNull Integer dayOfWeek,
-            @Param("weekType") @NotNull String weekType);
+    List<Lesson> findAllByGroupNameAndDayOfWeek(@Param("groupName") @NotNull String groupName, @Param("dayOfWeek") @NotNull Integer dayOfWeek, @Param("weekType") @NotNull String weekType);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +
@@ -128,8 +121,5 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "and data.weektype in (:weekType, 'NONE') " +
             "and data.dayofweek = ''||:dayOfWeek " +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> findAllByTeacherAndDayOfWeek(
-            @Param("teacher") @NotNull String teacher,
-            @Param("dayOfWeek") @NotNull Integer dayOfWeek,
-            @Param("weekType") @NotNull String weekType);
+    List<Lesson> findAllByTeacherAndDayOfWeek(@Param("teacher") @NotNull String teacher, @Param("dayOfWeek") @NotNull Integer dayOfWeek, @Param("weekType") @NotNull String weekType);
 }

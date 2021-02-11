@@ -1,11 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.model.InstanceState;
+import com.karmanchik.chtotibtelegrambot.entity.*;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
-import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
-import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.service.GroupService;
+import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
@@ -18,8 +16,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.NONE;
-import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
@@ -27,13 +23,13 @@ import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 @Component
 public class MainHandler implements Handler {
 
-    private final JpaGroupRepository groupRepository;
-    private final JpaUserRepository userRepository;
+    private final GroupService groupService;
+    private final UserService userService;
 
-    public MainHandler(JpaGroupRepository groupRepository,
-                       JpaUserRepository userRepository) {
-        this.groupRepository = groupRepository;
-        this.userRepository = userRepository;
+    public MainHandler(GroupService groupService,
+                       UserService userService) {
+        this.groupService = groupService;
+        this.userService = userService;
     }
 
     @Override
@@ -93,10 +89,11 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
-        user.setRoleId(NONE.getId());
-        user.setUserStateId(SELECT_ROLE.getId());
-        user.setBotStateId(REG.getId());
-        userRepository.save(user);
+        user.setRoleId(Role.Instance.NONE.getId());
+        user.setName(null);
+        user.setUserStateId(UserState.Instance.SELECT_ROLE.getId());
+        user.setBotStateId(BotState.Instance.REG.getId());
+        userService.save(user);
         return RegistrationHandler.selectRole(user);
     }
 
@@ -111,9 +108,9 @@ public class MainHandler implements Handler {
         if (isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
-            var dayList = groupRepository.getListDaysOfWeekByGroupName(group.getGroupName());
+            var dayList = groupService.getListDaysOfWeekByGroupName(group.getGroupName());
             log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
-            var lessons = groupRepository.getListLessonByGroupNameAndWeekType(group.getGroupName(), week.name());
+            var lessons = groupService.getListLesson(group.getGroupName(), week.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
 
             stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
@@ -134,9 +131,9 @@ public class MainHandler implements Handler {
                 stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             });
         } else {
-            var lessons = groupRepository.getListLessonByTeacherAndWeekType(user.getName().toLowerCase(), week.name());
+            var lessons = groupService.getListLesson(user.getName().toLowerCase(), week.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
-            var dayList = groupRepository.getListDaysOfWeekByTeacher(user.getName());
+            var dayList = groupService.getListDaysOfWeekByTeacher(user.getName());
             log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + user.getName() + " - " + Arrays.toString(dayList.toArray()));
             stringBuilder.append("Расписание для педагога ").append("<b>").append(user.getName()).append("</b>").append(":\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
@@ -178,21 +175,22 @@ public class MainHandler implements Handler {
         if (isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
-            var lessonsForTomorrow = groupRepository
+            var lessonsForTomorrow = groupService
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
-                    append("\t|\t").append(lesson.getDiscipline()).
-                    append("\t|\t").append(lesson.getAuditorium()).
-                    append("\t|\t").append(lesson.getTeacher())
+            lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t")
+                    .append(lesson.getLessonNumber()).
+                            append("\t|\t").append(lesson.getDiscipline()).
+                            append("\t|\t").append(lesson.getAuditorium()).
+                            append("\t|\t").append(lesson.getTeacher())
                     .append("\n"));
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             stringBuilder.append("Группа: <b>").append(group.getGroupName()).append("</b>\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         } else {
-            var lessonsForTomorrow = groupRepository.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
+            var lessonsForTomorrow = groupService.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
@@ -214,12 +212,12 @@ public class MainHandler implements Handler {
     }
 
     @Override
-    public Integer operatedBotState() {
-        return AUTHORIZED.getId();
+    public BotState.Instance operatedBotState() {
+        return BotState.Instance.AUTHORIZED;
     }
 
     @Override
-    public List<Integer> operatedUserListState() {
-        return List.of(InstanceState.NONE.getId());
+    public List<UserState.Instance> operatedUserListState() {
+        return List.of(UserState.Instance.NONE);
     }
 }

@@ -1,10 +1,8 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.entity.Role;
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
-import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.service.GroupService;
+import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
@@ -18,9 +16,10 @@ import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
 
-import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.STUDENT;
-import static com.karmanchik.chtotibtelegrambot.model.InstanceRole.TEACHER;
-import static com.karmanchik.chtotibtelegrambot.model.InstanceState.*;
+import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.REG;
+import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.STUDENT;
+import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.TEACHER;
+import static com.karmanchik.chtotibtelegrambot.entity.UserState.Instance.*;
 import static java.lang.Integer.parseInt;
 
 @Log4j
@@ -41,12 +40,12 @@ public class RegistrationHandler implements Handler {
             "IV", "4"
     );
 
-    private final JpaUserRepository userRepository;
-    private final JpaGroupRepository groupRepository;
+    private final UserService userService;
+    private final GroupService groupService;
 
-    public RegistrationHandler(JpaUserRepository userRepository, JpaGroupRepository groupRepository) {
-        this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
+    public RegistrationHandler(UserService userService, GroupService groupService) {
+        this.userService = userService;
+        this.groupService = groupService;
     }
 
     @Override
@@ -88,14 +87,14 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<String> allTeachers = groupRepository.findAllTeachers();
+        List<String> allTeachers = groupService.findAllTeachers();
         if (message.equalsIgnoreCase(CANCEL)) {
-            user.setUserStateId(ENTER_NAME.getId());
-            userRepository.save(user);
+            user.setUserStateId(UserState.Instance.ENTER_NAME.getId());
+            userService.save(user);
             return inputTeacherName(user);
         } else if (allTeachers.contains(message)) {
             user.setName(message);
-            userRepository.save(user);
+            userService.save(user);
             return acceptOrCancel(user);
         } else {
             return didNotDefine(user);
@@ -121,11 +120,11 @@ public class RegistrationHandler implements Handler {
         if (message.equalsIgnoreCase(ROLE_STUDENT)) {
             user.setUserStateId(SELECT_COURSE.getId());
             user.setRoleId(STUDENT.getId());
-            userRepository.save(user);
+            userService.save(user);
             return createSelectCourseButtonsPanel(user);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
             user.setRoleId(TEACHER.getId());
-            userRepository.save(user);
+            userService.save(user);
             return inputTeacherName(user);
         }
         return Collections.emptyList();
@@ -137,13 +136,13 @@ public class RegistrationHandler implements Handler {
 
         int academicYear = this.getAcademicYear(COURSES.get(message));
         String academicYearPostfix = String.valueOf(academicYear).substring(2);
-        List<Group> groupList = groupRepository.getListGroupNameByYearSuffix(academicYearPostfix);
+        List<Group> groupList = groupService.getListGroupNameByYearSuffix(academicYearPostfix);
 
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
 
         user.setUserStateId(SELECT_GROUP.getId());
-        userRepository.save(user);
+        userService.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText("Выбери группу...")
@@ -152,8 +151,8 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
-        user.setUserStateId(ENTER_NAME.getId());
-        userRepository.save(user);
+        user.setUserStateId(UserState.Instance.ENTER_NAME.getId());
+        userService.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText("Введите свою фамилию...")
@@ -177,8 +176,8 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user) {
-        user.setUserStateId(SELECT_OPTION.getId());
-        userRepository.save(user);
+        user.setUserStateId(UserState.Instance.SELECT_OPTION.getId());
+        userService.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
@@ -187,7 +186,7 @@ public class RegistrationHandler implements Handler {
         log.debug("!!!!! log debug: create KeyboardRow - " + markup.toString());
 
         @NotBlank Integer groupId = user.getGroupId();
-        Group group = groupRepository.findById(groupId).orElseThrow();
+        Group group = groupService.findById(groupId);
         log.debug("!!!!! log debug: получили group - " + group.toString());
         Role role = user.getRole();
         log.debug("!!!!! log debug: получили role - " + role.toString());
@@ -209,20 +208,20 @@ public class RegistrationHandler implements Handler {
     List<PartialBotApiMethod<? extends Serializable>> cancel(User user) {
         user.setUserStateId(SELECT_ROLE.getId());
         user.setBotStateId(REG.getId());
-        userRepository.save(user);
+        userService.save(user);
         return selectRole(user);
     }
 
     List<PartialBotApiMethod<? extends Serializable>> accept(User user) {
-        user.setUserStateId(NONE.getId());
-        user.setBotStateId(AUTHORIZED.getId());
-        userRepository.save(user);
+        user.setUserStateId(UserState.Instance.NONE.getId());
+        user.setBotStateId(BotState.Instance.AUTHORIZED.getId());
+        userService.save(user);
         return List.of(TelegramUtil.mainMessage(user));
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectTeacherButtonsPanel(User user, String message) {
-        user.setUserStateId(SELECT_TEACHER.getId());
-        userRepository.save(user);
+        user.setUserStateId(UserState.Instance.SELECT_TEACHER.getId());
+        userService.save(user);
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
 
         InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
@@ -262,7 +261,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<String> getListFullTeachers(String message) {
-        List<String> teachers = groupRepository.getListTeachersByName(message.toLowerCase());
+        List<String> teachers = groupService.getListTeachersByName(message.toLowerCase());
         List<String> _teachers = new ArrayList<>();
 
         for (String s : teachers) {
@@ -294,7 +293,7 @@ public class RegistrationHandler implements Handler {
     }
 
     boolean isGroupId(String message) {
-        List<Integer> groups = groupRepository.getListGroupId();
+        List<Integer> groups = groupService.getListGroupId();
         return groups.contains(parseInt(message));
     }
 
@@ -308,19 +307,19 @@ public class RegistrationHandler implements Handler {
     }
 
     @Override
-    public Integer operatedBotState() {
-        return REG.getId();
+    public BotState.Instance operatedBotState() {
+        return REG;
     }
 
     @Override
-    public List<Integer> operatedUserListState() {
+    public List<UserState.Instance> operatedUserListState() {
         return List.of(
-                SELECT_COURSE.getId(),
-                SELECT_ROLE.getId(),
-                SELECT_GROUP.getId(),
-                SELECT_OPTION.getId(),
-                ENTER_NAME.getId(),
-                SELECT_TEACHER.getId()
+                SELECT_COURSE,
+                SELECT_ROLE,
+                SELECT_GROUP,
+                SELECT_OPTION,
+                ENTER_NAME,
+                SELECT_TEACHER
         );
     }
 }

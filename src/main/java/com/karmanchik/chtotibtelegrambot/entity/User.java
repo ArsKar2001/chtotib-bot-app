@@ -1,7 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import com.karmanchik.chtotibtelegrambot.model.InstanceRole;
-import com.karmanchik.chtotibtelegrambot.model.InstanceState;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import static com.karmanchik.chtotibtelegrambot.model.InstanceState.START;
 
 
 @Entity
@@ -27,7 +23,7 @@ public class User extends AbstractBaseEntity {
     @NotNull
     private Integer chatId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     @NotBlank
     private String name;
 
@@ -71,9 +67,9 @@ public class User extends AbstractBaseEntity {
     public User(int chatId) {
         this.chatId = chatId;
         this.name = String.valueOf(chatId);
-        this.botStateId = START.getId();
-        this.userStateId = InstanceState.NONE.getId();
-        this.roleId = InstanceRole.NONE.getId();
+        this.botStateId = BotState.Instance.START.getId();
+        this.userStateId = UserState.Instance.NONE.getId();
+        this.roleId = Role.Instance.NONE.getId();
         this.groupId = GROUP_NONE_ID;
         this.botLastMessageId = 0;
     }
