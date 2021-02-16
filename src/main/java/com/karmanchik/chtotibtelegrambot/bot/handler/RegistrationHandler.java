@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
@@ -63,7 +62,7 @@ public class RegistrationHandler implements Handler {
                         return selectGroup(user, message);
                     }
                     if (isGroupId(message)) {
-                        return acceptOrCancel(user, message);
+                        return accept(user);
                     }
                     return Collections.emptyList();
                 case "SELECT_OPTION":
@@ -95,7 +94,7 @@ public class RegistrationHandler implements Handler {
         } else if (allTeachers.contains(message)) {
             user.setName(message);
             final User saveUser2 = userService.save(user);
-            return acceptOrCancel(saveUser2, message);
+            return accept(saveUser2);
         } else {
             return didNotDefine(user);
         }
@@ -174,37 +173,6 @@ public class RegistrationHandler implements Handler {
                         .setText("Выбери курс...")
                         .setReplyMarkup(markup)
         );
-    }
-
-    List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user, String message) {
-        user.setUserStateId(SELECT_OPTION.getId());
-        final User saveUser = userService.save(user);
-
-        ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
-        KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
-        markup.setKeyboard(List.of(keyboardRow));
-
-        log.debug("!!!!! log debug acceptOrCancel: create KeyboardRow - " + markup.toString());
-        Role role = saveUser.getRole();
-        log.debug("!!!!! log debug acceptOrCancel: получили role - " + role.toString());
-
-        if (role.getId() == STUDENT.getId()) {
-            int groupId = parseInt(message);
-            log.debug("!!!!! log debug handle: получили groupId - "+groupId);
-            saveUser.setGroupId(groupId);
-            final User saveUser2 = userService.save(saveUser);
-            final String groupName = saveUser2.getGroup().getGroupName();
-            return List.of(TelegramUtil.createMessageTemplate(saveUser2)
-                    .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getName(), groupName))
-                    .setReplyMarkup(markup));
-        } else if (role.getId() == TEACHER.getId()) {
-            return List.of(TelegramUtil.createMessageTemplate(saveUser)
-                    .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getName(), saveUser.getName()))
-                    .setReplyMarkup(markup));
-        }
-        return Collections.emptyList();
     }
 
     List<PartialBotApiMethod<? extends Serializable>> cancel(User user) {
@@ -319,7 +287,6 @@ public class RegistrationHandler implements Handler {
                 SELECT_COURSE,
                 SELECT_ROLE,
                 SELECT_GROUP,
-                SELECT_OPTION,
                 ENTER_NAME,
                 SELECT_TEACHER
         );
