@@ -12,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
@@ -189,14 +190,13 @@ public class RegistrationHandler implements Handler {
 
         if (role.getId() == STUDENT.getId()) {
             int groupId = parseInt(message);
-
             log.debug("!!!!! log debug handle: получили groupId - "+groupId);
             saveUser.setGroupId(groupId);
-            userService.save(saveUser);
-            log.debug("!!!!! log debug acceptOrCancel: получили group - " + groupId);
-            return List.of(TelegramUtil.createMessageTemplate(saveUser)
+            final User saveUser2 = userService.save(saveUser);
+            final String groupName = saveUser2.getGroup().getGroupName();
+            return List.of(TelegramUtil.createMessageTemplate(saveUser2)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getName(), message))
+                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getName(), groupName))
                     .setReplyMarkup(markup));
         } else if (role.getId() == TEACHER.getId()) {
             return List.of(TelegramUtil.createMessageTemplate(saveUser)
