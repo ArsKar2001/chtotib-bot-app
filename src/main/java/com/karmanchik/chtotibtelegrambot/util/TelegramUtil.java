@@ -9,36 +9,33 @@ import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
 public class TelegramUtil {
 
     public static final Map<Integer, String> DAYS_OF_WEEK = Map.of(
-            0,"Понедельник",
-            1,"Вторник",
-            2,"Среда",
-            3,"Четверг",
-            4,"Пятница",
-            5,"Суббота",
+            0, "Понедельник",
+            1, "Вторник",
+            2, "Среда",
+            3, "Четверг",
+            4, "Пятница",
+            5, "Суббота",
             6, "Воскресенье"
     );
 
 
-    public static boolean isEvenWeek() {
-        Calendar cal = Calendar.getInstance();
-        int week = cal.get(Calendar.WEEK_OF_YEAR);
+    public static boolean isEvenWeek(Calendar date) {
+        int week = date.get(Calendar.WEEK_OF_YEAR);
         return (week % 2 == 0);
     }
 
-    public static Date getNextDate() {
+
+    public static Calendar getNextDate() {
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         int days = calendar.get(Calendar.DAY_OF_YEAR);
@@ -51,11 +48,11 @@ public class TelegramUtil {
         } else {
             calendar.add(Calendar.DAY_OF_YEAR, 1);
         }
-        return new Date(calendar.getTimeInMillis());
+        return calendar;
     }
 
-    public static WeekType getWeekType() {
-        return TelegramUtil.isEvenWeek() ? WeekType.UP : WeekType.DOWN;
+    public static WeekType getWeekType(Calendar next) {
+        return isEvenWeek(next) ? WeekType.UP : WeekType.DOWN;
     }
 
     public static int getNextDayOfWeek() {
@@ -127,10 +124,10 @@ public class TelegramUtil {
         ReplyKeyboardMarkup replyKeyboardMarkup = createReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
-        row.add(MainCommand.COM_1.getValue());
-        row.add(MainCommand.COM_2.getValue());
-        row.add(MainCommand.COM_3.getValue());
-        row.add(MainCommand.COM_4.getValue());
+        row.add(COM_1.getValue());
+        row.add(COM_2.getValue());
+        row.add(COM_3.getValue());
+        row.add(COM_4.getValue());
 
         keyboardRowList.add(row);
 

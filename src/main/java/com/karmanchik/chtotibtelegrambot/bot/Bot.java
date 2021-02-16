@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -32,7 +30,7 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        log.info("Получили новый update: " + update.toString());
+        log.debug("Получили новый update: " + update.toString());
         List<PartialBotApiMethod<? extends Serializable>> messagesToSend = updateReceiver.handle(update);
         if (messagesToSend != null && !messagesToSend.isEmpty()) {
             messagesToSend.forEach(this::executeWithExceptionCheck);
@@ -41,7 +39,7 @@ public class Bot extends TelegramLongPollingBot {
 
     private void executeWithExceptionCheck(Object response) {
         try {
-            log.info("Новый объект для отправки: " + response.toString());
+            log.debug("Новый объект для отправки: " + response.toString());
             execute((BotApiMethod<? extends Serializable>) response);
         } catch (TelegramApiException e) {
             log.error(e.getMessage(), e);
