@@ -16,6 +16,9 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.REG;
+import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.NONE;
+import static com.karmanchik.chtotibtelegrambot.entity.UserState.Instance.SELECT_ROLE;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
@@ -89,10 +92,11 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
-        user.setRoleId(Role.Instance.NONE.getId());
+        user.setRoleId(NONE.getId());
+        user.setGroupId(100);
         user.setName(user.getChatId().toString());
-        user.setUserStateId(UserState.Instance.SELECT_ROLE.getId());
-        user.setBotStateId(BotState.Instance.REG.getId());
+        user.setUserStateId(SELECT_ROLE.getId());
+        user.setBotStateId(REG.getId());
         final User saveUser = userService.save(user);
         return RegistrationHandler.selectRole(saveUser);
     }

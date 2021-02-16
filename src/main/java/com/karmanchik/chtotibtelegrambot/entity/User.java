@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.START;
+
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "chat_id", name = "users_unique_chatid_idx")})
@@ -67,7 +69,7 @@ public class User extends AbstractBaseEntity {
     public User(int chatId) {
         this.chatId = chatId;
         this.name = String.valueOf(chatId);
-        this.botStateId = BotState.Instance.START.getId();
+        this.botStateId = START.getId();
         this.userStateId = UserState.Instance.NONE.getId();
         this.roleId = Role.Instance.NONE.getId();
         this.groupId = GROUP_NONE_ID;

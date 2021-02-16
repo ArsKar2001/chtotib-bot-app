@@ -102,7 +102,7 @@ public class RegistrationHandler implements Handler {
             final User saveUser2 = userService.save(user);
             return accept(saveUser2);
         } else {
-            return didNotDefine(user);
+            return createMessageDidNotDefine(user);
         }
     }
 
@@ -210,11 +210,11 @@ public class RegistrationHandler implements Handler {
         if (!teacherList.isEmpty()) {
             return createMessageItIsYou(saveUser, markup1, markup2);
         } else {
-            return didNotDefine(saveUser);
+            return createMessageDidNotDefine(saveUser);
         }
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> didNotDefine(User user) {
+    private List<PartialBotApiMethod<? extends Serializable>> createMessageDidNotDefine(User user) {
         String outMessage = "Не смог вас определить :(";
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
