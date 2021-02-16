@@ -58,13 +58,7 @@ public class RegistrationHandler implements Handler {
                 case "SELECT_COURSE":
                     return selectGroup(user, message);
                 case "SELECT_GROUP":
-                    if (COURSES.containsKey(message)) {
-                        return selectGroup(user, message);
-                    }
-                    if (isGroupId(message)) {
-                        return accept(user);
-                    }
-                    return Collections.emptyList();
+                    return selectOrAccept(user, message);
                 case "SELECT_OPTION":
                     if (message.equalsIgnoreCase(ACCEPT))
                         return accept(user);
@@ -83,6 +77,18 @@ public class RegistrationHandler implements Handler {
                             .setText("<b>Ошибка</b>: " + e.getMessage())
             );
         }
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> selectOrAccept(User user, String message) {
+        if (COURSES.containsKey(message)) {
+            return selectGroup(user, message);
+        } else if (isGroupId(message)) {
+            final int groupId = parseInt(message);
+            user.setGroupId(groupId);
+            final User saveUser = userService.save(user);
+            return accept(saveUser);
+        }
+        return Collections.emptyList();
     }
 
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
