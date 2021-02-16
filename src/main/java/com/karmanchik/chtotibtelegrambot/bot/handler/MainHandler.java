@@ -107,11 +107,11 @@ public class MainHandler implements Handler {
 
         if (isStudent(user)) {
             Group group = user.getGroup();
-            log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
+            log.debug("!!!! log debug getFullTimetable: find group by id=" + group.getId() + " - " + group.toString());
             var dayList = groupService.findAllDaysOfWeekByGroupName(group.getGroupName());
-            log.debug("!!!! log debug getTimetableNextDay: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
+            log.debug("!!!! log debug getFullTimetable: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
             var lessons = groupService.findAllLessonsByGroup(group.getGroupName(), week.name());
-            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
+            log.debug("!!!! log debug getFullTimetable: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
 
             stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
             stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
@@ -131,10 +131,11 @@ public class MainHandler implements Handler {
                 stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             });
         } else {
-            var lessons = groupService.findAllLessonsByGroup(user.getName().toLowerCase(), week.name());
-            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
+            var lessons = groupService.findAllLessonsByTeacher(user.getName().toLowerCase(), week.name());
+            log.debug("!!!! log debug getFullTimetable: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
             var dayList = groupService.findAllDaysOfWeekByTeacher(user.getName());
-            log.debug("!!!! log debug getTimetableNextDay: find dayList by " + user.getName() + " - " + Arrays.toString(dayList.toArray()));
+            log.debug("!!!! log debug getFullTimetable: find dayList by " + user.getName() + " - " + Arrays.toString(dayList.toArray()));
+            stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
             stringBuilder.append("Расписание для педагога ").append("<b>").append(user.getName()).append("</b>").append(":\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
@@ -194,14 +195,14 @@ public class MainHandler implements Handler {
             log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
+            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
                     append("\t|\t").append(lesson.getGroupName()).
                     append("\t|\t").append(lesson.getDiscipline()).
                     append("\t|\t").append(lesson.getAuditorium()).
                     append("\t|\t").append(lesson.getTeacher())
                     .append("\n"));
-            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
+            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             stringBuilder.append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         }
         return List.of(
