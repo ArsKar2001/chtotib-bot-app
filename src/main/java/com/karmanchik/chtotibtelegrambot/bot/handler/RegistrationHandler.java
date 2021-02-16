@@ -62,10 +62,7 @@ public class RegistrationHandler implements Handler {
                         return selectGroup(user, message);
                     }
                     if (isGroupId(message)) {
-                        int groupId = parseInt(message);
-                        user.setGroupId(groupId);
-                        final User saveUser = userService.save(user);
-                        return acceptOrCancel(saveUser);
+                        return acceptOrCancel(user, message);
                     }
                     return Collections.emptyList();
                 case "SELECT_OPTION":
@@ -97,7 +94,7 @@ public class RegistrationHandler implements Handler {
         } else if (allTeachers.contains(message)) {
             user.setName(message);
             final User saveUser2 = userService.save(user);
-            return acceptOrCancel(saveUser2);
+            return acceptOrCancel(saveUser2, message);
         } else {
             return didNotDefine(user);
         }
@@ -178,29 +175,33 @@ public class RegistrationHandler implements Handler {
         );
     }
 
-    List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user) {
-        user.setUserStateId(UserState.Instance.SELECT_OPTION.getId());
+    List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user, String message) {
+        user.setUserStateId(SELECT_OPTION.getId());
         final User saveUser = userService.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
         markup.setKeyboard(List.of(keyboardRow));
 
-        log.debug("!!!!! log debug: create KeyboardRow - " + markup.toString());
-        Group group = saveUser.getGroup();
-        log.debug("!!!!! log debug: получили group - " + group.toString());
+        log.debug("!!!!! log debug acceptOrCancel: create KeyboardRow - " + markup.toString());
         Role role = saveUser.getRole();
-        log.debug("!!!!! log debug: получили role - " + role.toString());
+        log.debug("!!!!! log debug acceptOrCancel: получили role - " + role.toString());
 
         if (role.getId() == STUDENT.getId()) {
+            int groupId = parseInt(message);
+
+            log.debug("!!!!! log debug handle: получили groupId - "+groupId);
+            saveUser.setGroupId(groupId);
+            userService.save(saveUser);
+            log.debug("!!!!! log debug acceptOrCancel: получили group - " + groupId);
             return List.of(TelegramUtil.createMessageTemplate(saveUser)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getDescription(), group.getGroupName()))
+                            "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getName(), message))
                     .setReplyMarkup(markup));
         } else if (role.getId() == TEACHER.getId()) {
             return List.of(TelegramUtil.createMessageTemplate(saveUser)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getDescription(), saveUser.getName()))
+                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getName(), saveUser.getName()))
                     .setReplyMarkup(markup));
         }
         return Collections.emptyList();

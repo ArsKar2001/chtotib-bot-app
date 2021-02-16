@@ -27,14 +27,14 @@ public class Role {
     private String nameRole;
 
     @Column(name = "description")
-    private String description;
+    private String name;
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
                 ", nameRole='" + nameRole + '\'' +
-                ", description='" + description + '\'' +
+                ", description='" + name + '\'' +
                 '}';
     }
 

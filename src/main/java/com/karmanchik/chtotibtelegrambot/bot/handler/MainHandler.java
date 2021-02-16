@@ -64,7 +64,7 @@ public class MainHandler implements Handler {
         StringBuilder stringBuilder = new StringBuilder();
 
         stringBuilder.append("<b>ChatId</b>:\t").append(user.getChatId()).append("\n")
-                .append("<b>Роль</b>:\t").append(user.getRole().getDescription()).append("\n");
+                .append("<b>Роль</b>:\t").append(user.getRole().getName()).append("\n");
         if (isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getMessageInfo: find group by id=" + group.getId() + " - " + group.toString());
