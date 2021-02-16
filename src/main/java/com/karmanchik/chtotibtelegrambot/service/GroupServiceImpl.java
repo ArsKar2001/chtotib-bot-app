@@ -19,17 +19,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Integer> getListGroupId() {
+    public List<Integer> findAllGroupId() {
         return groupRepository.getListGroupId();
     }
 
     @Override
-    public List<Group> getListGroupNameByYearSuffix(@NotNull String yearSuffix) {
+    public List<Group> findAllGroupNamesByYearSuffix(@NotNull String yearSuffix) {
         return groupRepository.getListGroupNameByYearSuffix(yearSuffix);
     }
 
     @Override
-    public List<String> getListTeachersByName(@NotNull String teacher) {
+    public List<String> findAllTeachersByName(@NotNull String teacher) {
         return groupRepository.getListTeachersByName(teacher);
     }
 
@@ -39,27 +39,27 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Lesson> getListLesson(@NotNull String groupName) {
+    public List<Lesson> findAllLessonsByGroup(@NotNull String groupName) {
         return groupRepository.getListLessonByGroupName(groupName);
     }
 
     @Override
-    public List<Lesson> getListLesson(@NotNull String groupName, @NotNull String weekType) {
-        return groupRepository.getListLessonByGroupNameAndWeekType(groupName, weekType);
+    public List<Lesson> findAllLessonsByGroup(@NotNull String groupName, @NotNull String weekType) {
+        return groupRepository.findAllLessonsByGroupNameAndWeekType(groupName, weekType);
     }
 
     @Override
-    public List<Lesson> getListLessonByTeacher(@NotNull String teacher, @NotNull String weekType) {
-        return groupRepository.getListLessonByTeacherAndWeekType(teacher, weekType);
+    public List<Lesson> findAllLessonsByTeacher(@NotNull String teacher, @NotNull String weekType) {
+        return groupRepository.findAllLessonsByTeacherAndWeekType(teacher, weekType);
     }
 
     @Override
-    public List<Integer> getListDaysOfWeekByGroupName(@NotNull String groupName) {
+    public List<Integer> findAllDaysOfWeekByGroupName(@NotNull String groupName) {
         return groupRepository.getListDaysOfWeekByGroupName(groupName);
     }
 
     @Override
-    public List<Integer> getListDaysOfWeekByTeacher(@NotNull String teacher) {
+    public List<Integer> findAllDaysOfWeekByTeacher(@NotNull String teacher) {
         return groupRepository.getListDaysOfWeekByTeacher(teacher);
     }
 

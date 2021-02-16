@@ -36,11 +36,11 @@ public class MainHandler implements Handler {
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
             if (message.equalsIgnoreCase(COM_1.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getTimetableForTomorrow for " + user.toString());
-                return getTimetableForTomorrow(user);
+                log.debug("!!!! log debug 1: select handler - getTimetableNextDay for " + user.toString());
+                return getTimetableNextDay(user);
             } else if (message.equalsIgnoreCase(COM_2.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getFullTimetableForGroup for " + user.toString());
-                return getFullTimetableForGroup(user);
+                log.debug("!!!! log debug 1: select handler - getFullTimetable for " + user.toString());
+                return getFullTimetable(user);
             } else if (message.equalsIgnoreCase(COM_3.getValue())) {
                 log.debug("!!!! log debug 1: select handler - getMessageInfo for " + user.toString());
                 return getMessageInfo(user);
@@ -90,28 +90,28 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
         user.setRoleId(Role.Instance.NONE.getId());
-        user.setName(null);
+        user.setName(user.getChatId().toString());
         user.setUserStateId(UserState.Instance.SELECT_ROLE.getId());
         user.setBotStateId(BotState.Instance.REG.getId());
-        userService.save(user);
-        return RegistrationHandler.selectRole(user);
+        final User saveUser = userService.save(user);
+        return RegistrationHandler.selectRole(saveUser);
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> getFullTimetableForGroup(User user) {
+    private List<PartialBotApiMethod<? extends Serializable>> getFullTimetable(User user) {
         StringBuilder stringBuilder = new StringBuilder();
-        log.debug("!!!! log debug getFullTimetableForGroup: create " + stringBuilder.getClass().toString());
+        log.debug("!!!! log debug getFullTimetable: create " + stringBuilder.getClass().toString());
         Calendar calendar = Calendar.getInstance();
-        log.debug("!!!! log debug getFullTimetableForGroup: create " + calendar.getClass().toString() + " - " + calendar.toString());
+        log.debug("!!!! log debug getFullTimetable: create " + calendar.getClass().toString() + " - " + calendar.toString());
         WeekType week = TelegramUtil.getWeekType(calendar);
-        log.debug("!!!! log debug getFullTimetableForGroup: create " + week.getClass().toString() + " - " + week.toString());
+        log.debug("!!!! log debug getFullTimetable: create " + week.getClass().toString() + " - " + week.toString());
 
         if (isStudent(user)) {
             Group group = user.getGroup();
-            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
-            var dayList = groupService.getListDaysOfWeekByGroupName(group.getGroupName());
-            log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
-            var lessons = groupService.getListLesson(group.getGroupName(), week.name());
-            log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
+            log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
+            var dayList = groupService.findAllDaysOfWeekByGroupName(group.getGroupName());
+            log.debug("!!!! log debug getTimetableNextDay: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
+            var lessons = groupService.findAllLessonsByGroup(group.getGroupName(), week.name());
+            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
 
             stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
             stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
@@ -131,10 +131,10 @@ public class MainHandler implements Handler {
                 stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             });
         } else {
-            var lessons = groupService.getListLesson(user.getName().toLowerCase(), week.name());
-            log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
-            var dayList = groupService.getListDaysOfWeekByTeacher(user.getName());
-            log.debug("!!!! log debug getTimetableForTomorrow: find dayList by " + user.getName() + " - " + Arrays.toString(dayList.toArray()));
+            var lessons = groupService.findAllLessonsByGroup(user.getName().toLowerCase(), week.name());
+            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
+            var dayList = groupService.findAllDaysOfWeekByTeacher(user.getName());
+            log.debug("!!!! log debug getTimetableNextDay: find dayList by " + user.getName() + " - " + Arrays.toString(dayList.toArray()));
             stringBuilder.append("Расписание для педагога ").append("<b>").append(user.getName()).append("</b>").append(":\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
@@ -159,14 +159,14 @@ public class MainHandler implements Handler {
         );
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> getTimetableForTomorrow(User user) {
+    private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
         Calendar next = TelegramUtil.getNextDate();
-        log.debug("!!!! log debug getTimetableForTomorrow: create Calendar - " + next.toString());
+        log.debug("!!!! log debug getTimetableNextDay: create Calendar - " + next.toString());
 
         int nextDayOfWeek = TelegramUtil.getNextDayOfWeek();
-        log.debug("!!!! log debug getTimetableForTomorrow: create nextDayOfWeek - " + nextDayOfWeek);
+        log.debug("!!!! log debug getTimetableNextDay: create nextDayOfWeek - " + nextDayOfWeek);
         WeekType weekType = TelegramUtil.getWeekType(next);
-        log.debug("!!!! log debug getTimetableForTomorrow: create weekType - " + weekType.toString());
+        log.debug("!!!! log debug getTimetableNextDay: create weekType - " + weekType.toString());
 
         StringBuilder stringBuilder = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -174,10 +174,10 @@ public class MainHandler implements Handler {
 
         if (isStudent(user)) {
             Group group = user.getGroup();
-            log.debug("!!!! log debug getTimetableForTomorrow: find group by id=" + group.getId() + " - " + group.toString());
+            log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
             var lessonsForTomorrow = groupService
                     .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
-            log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
+            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
@@ -191,7 +191,7 @@ public class MainHandler implements Handler {
             stringBuilder.append("Группа: <b>").append(group.getGroupName()).append("</b>\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         } else {
             var lessonsForTomorrow = groupService.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
-            log.debug("!!!! log debug getTimetableForTomorrow: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
+            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");

@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.entity.BotState.Instance;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
@@ -11,11 +12,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
 
+import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.AUTHORIZED;
 import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.REG;
 import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.STUDENT;
 import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.TEACHER;
@@ -63,7 +64,8 @@ public class RegistrationHandler implements Handler {
                     if (isGroupId(message)) {
                         int groupId = parseInt(message);
                         user.setGroupId(groupId);
-                        return acceptOrCancel(user);
+                        final User saveUser = userService.save(user);
+                        return acceptOrCancel(saveUser);
                     }
                     return Collections.emptyList();
                 case "SELECT_OPTION":
@@ -90,12 +92,12 @@ public class RegistrationHandler implements Handler {
         List<String> allTeachers = groupService.findAllTeachers();
         if (message.equalsIgnoreCase(CANCEL)) {
             user.setUserStateId(UserState.Instance.ENTER_NAME.getId());
-            userService.save(user);
-            return inputTeacherName(user);
+            final User saveUser1 = userService.save(user);
+            return inputTeacherName(saveUser1);
         } else if (allTeachers.contains(message)) {
             user.setName(message);
-            userService.save(user);
-            return acceptOrCancel(user);
+            final User saveUser2 = userService.save(user);
+            return acceptOrCancel(saveUser2);
         } else {
             return didNotDefine(user);
         }
@@ -120,12 +122,12 @@ public class RegistrationHandler implements Handler {
         if (message.equalsIgnoreCase(ROLE_STUDENT)) {
             user.setUserStateId(SELECT_COURSE.getId());
             user.setRoleId(STUDENT.getId());
-            userService.save(user);
-            return createSelectCourseButtonsPanel(user);
+            final User saveUser1 = userService.save(user);
+            return createSelectCourseButtonsPanel(saveUser1);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
             user.setRoleId(TEACHER.getId());
-            userService.save(user);
-            return inputTeacherName(user);
+            final User saveUser2 = userService.save(user);
+            return inputTeacherName(saveUser2);
         }
         return Collections.emptyList();
     }
@@ -134,17 +136,18 @@ public class RegistrationHandler implements Handler {
 
         if (!COURSES.containsKey(message)) return Collections.emptyList();
 
-        int academicYear = this.getAcademicYear(COURSES.get(message));
-        String academicYearPostfix = String.valueOf(academicYear).substring(2);
-        List<Group> groupList = groupService.getListGroupNameByYearSuffix(academicYearPostfix);
+        final String s = COURSES.get(message);
+        int academicYear = this.getAcademicYear(s);
+        String academicYearSuffix = String.valueOf(academicYear).substring(2);
+        List<Group> groupList = groupService.findAllGroupNamesByYearSuffix(academicYearSuffix);
 
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
 
         user.setUserStateId(SELECT_GROUP.getId());
-        userService.save(user);
+        final User saveUser = userService.save(user);
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(saveUser)
                         .setText("Выбери группу...")
                         .setReplyMarkup(keyboardMarkup)
         );
@@ -177,29 +180,27 @@ public class RegistrationHandler implements Handler {
 
     List<PartialBotApiMethod<? extends Serializable>> acceptOrCancel(User user) {
         user.setUserStateId(UserState.Instance.SELECT_OPTION.getId());
-        userService.save(user);
+        final User saveUser = userService.save(user);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(ACCEPT.toUpperCase(), CHANGE.toUpperCase()));
         markup.setKeyboard(List.of(keyboardRow));
 
         log.debug("!!!!! log debug: create KeyboardRow - " + markup.toString());
-
-        @NotBlank Integer groupId = user.getGroupId();
-        Group group = groupService.findById(groupId);
+        Group group = saveUser.getGroup();
         log.debug("!!!!! log debug: получили group - " + group.toString());
-        Role role = user.getRole();
+        Role role = saveUser.getRole();
         log.debug("!!!!! log debug: получили role - " + role.toString());
 
         if (role.getId() == STUDENT.getId()) {
-            return List.of(TelegramUtil.createMessageTemplate(user)
+            return List.of(TelegramUtil.createMessageTemplate(saveUser)
                     .setText(String.format(
                             "<b>Роль</b>: %s%n<b>Группа</b>: %s", role.getDescription(), group.getGroupName()))
                     .setReplyMarkup(markup));
         } else if (role.getId() == TEACHER.getId()) {
-            return List.of(TelegramUtil.createMessageTemplate(user)
+            return List.of(TelegramUtil.createMessageTemplate(saveUser)
                     .setText(String.format(
-                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getDescription(), user.getName()))
+                            "<b>Роль</b>: %s%n<b>Имя</b>: %s", role.getDescription(), saveUser.getName()))
                     .setReplyMarkup(markup));
         }
         return Collections.emptyList();
@@ -208,20 +209,20 @@ public class RegistrationHandler implements Handler {
     List<PartialBotApiMethod<? extends Serializable>> cancel(User user) {
         user.setUserStateId(SELECT_ROLE.getId());
         user.setBotStateId(REG.getId());
-        userService.save(user);
-        return selectRole(user);
+        final User saveUser = userService.save(user);
+        return selectRole(saveUser);
     }
 
     List<PartialBotApiMethod<? extends Serializable>> accept(User user) {
-        user.setUserStateId(UserState.Instance.NONE.getId());
-        user.setBotStateId(BotState.Instance.AUTHORIZED.getId());
-        userService.save(user);
-        return List.of(TelegramUtil.mainMessage(user));
+        user.setUserStateId(NONE.getId());
+        user.setBotStateId(AUTHORIZED.getId());
+        final User saveUser = userService.save(user);
+        return List.of(TelegramUtil.mainMessage(saveUser));
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectTeacherButtonsPanel(User user, String message) {
         user.setUserStateId(UserState.Instance.SELECT_TEACHER.getId());
-        userService.save(user);
+        final User saveUser = userService.save(user);
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
 
         InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
@@ -232,9 +233,9 @@ public class RegistrationHandler implements Handler {
         markup2.setKeyboard(List.of(keyboardRow));
 
         if (!teacherList.isEmpty()) {
-            return itIsYou(user, markup1, markup2);
+            return createMessageItIsYou(saveUser, markup1, markup2);
         } else {
-            return didNotDefine(user);
+            return didNotDefine(saveUser);
         }
     }
 
@@ -248,7 +249,7 @@ public class RegistrationHandler implements Handler {
         );
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> itIsYou(User user, InlineKeyboardMarkup markup1, ReplyKeyboardMarkup markup2) {
+    private List<PartialBotApiMethod<? extends Serializable>> createMessageItIsYou(User user, InlineKeyboardMarkup markup1, ReplyKeyboardMarkup markup2) {
         String outMessage = "Это Вы...";
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -261,7 +262,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<String> getListFullTeachers(String message) {
-        List<String> teachers = groupService.getListTeachersByName(message.toLowerCase());
+        List<String> teachers = groupService.findAllTeachersByName(message.toLowerCase());
         List<String> _teachers = new ArrayList<>();
 
         for (String s : teachers) {
@@ -293,7 +294,7 @@ public class RegistrationHandler implements Handler {
     }
 
     boolean isGroupId(String message) {
-        List<Integer> groups = groupService.getListGroupId();
+        List<Integer> groups = groupService.findAllGroupId();
         return groups.contains(parseInt(message));
     }
 
@@ -307,7 +308,7 @@ public class RegistrationHandler implements Handler {
     }
 
     @Override
-    public BotState.Instance operatedBotState() {
+    public Instance operatedBotState() {
         return REG;
     }
 

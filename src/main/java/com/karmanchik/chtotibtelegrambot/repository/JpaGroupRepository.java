@@ -62,7 +62,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "from get_fields_from_json() as data " +
             "where data.groupname = :groupName and data.weektype in (:weekType, 'NONE')" +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> getListLessonByGroupNameAndWeekType(
+    List<Lesson> findAllLessonsByGroupNameAndWeekType(
             @Param("groupName") @NotNull String groupName,
             @Param("weekType") @NotNull String weekType);
 
@@ -77,7 +77,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "from get_fields_from_json() as data " +
             "where lower(data.teacher) like '%'||:teacher||'%' and data.weektype in (:weekType, 'NONE')" +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> getListLessonByTeacherAndWeekType(@Param("teacher") @NotNull String teacher, @Param("weekType") @NotNull String weekType);
+    List<Lesson> findAllLessonsByTeacherAndWeekType(@Param("teacher") @NotNull String teacher, @Param("weekType") @NotNull String weekType);
 
     @Query(nativeQuery = true, value = "select " +
             "data.dayofweek " +
