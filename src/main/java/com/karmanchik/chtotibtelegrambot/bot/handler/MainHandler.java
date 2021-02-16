@@ -115,7 +115,7 @@ public class MainHandler implements Handler {
 
             stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
             stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
-            stringBuilder.append("\n").append(new String(new char[60]).replace('\0', '-')).append("\n");
+            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
                 String dayOfWeek = DAYS_OF_WEEK.get(day);
                 stringBuilder.append(dayOfWeek).append(":\n");
