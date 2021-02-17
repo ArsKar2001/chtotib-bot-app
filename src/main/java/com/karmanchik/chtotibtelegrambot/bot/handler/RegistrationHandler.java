@@ -54,20 +54,20 @@ public class RegistrationHandler implements Handler {
         try {
             switch (user.getUserState().getCode()) {
                 case "SELECT_ROLE":
-                    return switchRole(user, message);
+                    return this.switchRole(user, message);
                 case "SELECT_COURSE":
-                    return selectGroup(user, message);
+                    return this.selectGroup(user, message);
                 case "SELECT_GROUP":
-                    return selectOrAccept(user, message);
+                    return this.selectOrAccept(user, message);
                 case "SELECT_OPTION":
                     if (message.equalsIgnoreCase(ACCEPT))
-                        return accept(user);
+                        return this.accept(user);
                     if (message.equalsIgnoreCase(CHANGE))
-                        return cancel(user);
+                        return this.cancel(user);
                 case "ENTER_NAME":
-                    return createSelectTeacherButtonsPanel(user, message);
+                    return this.createSelectTeacherButtonsPanel(user, message);
                 case "SELECT_TEACHER":
-                    return selectTeacher(user, message);
+                    return this.selectTeacher(user, message);
             }
             return Collections.emptyList();
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class RegistrationHandler implements Handler {
 
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Выбери роль...")
+                        .setText("Кто ты?")
                         .setReplyMarkup(markup));
     }
 

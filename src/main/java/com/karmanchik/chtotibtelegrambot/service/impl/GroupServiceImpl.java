@@ -1,8 +1,9 @@
-package com.karmanchik.chtotibtelegrambot.service;
+package com.karmanchik.chtotibtelegrambot.service.impl;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.model.Lesson;
 import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
@@ -20,17 +21,17 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<Integer> findAllGroupId() {
-        return groupRepository.getListGroupId();
+        return groupRepository.findAllGroupId();
     }
 
     @Override
     public List<Group> findAllGroupNamesByYearSuffix(@NotNull String yearSuffix) {
-        return groupRepository.getListGroupNameByYearSuffix(yearSuffix);
+        return groupRepository.findAllGroupByYearSuffix(yearSuffix);
     }
 
     @Override
     public List<String> findAllTeachersByName(@NotNull String teacher) {
-        return groupRepository.getListTeachersByName(teacher);
+        return groupRepository.findAllTeachersByName(teacher);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<Lesson> findAllLessonsByGroup(@NotNull String groupName) {
-        return groupRepository.getListLessonByGroupName(groupName);
+        return groupRepository.findAllLessonsByGroupName(groupName);
     }
 
     @Override

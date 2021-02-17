@@ -38,9 +38,10 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void executeWithExceptionCheck(Object response) {
+        final var method = (BotApiMethod<? extends Serializable>) response;
+        log.debug("Новый объект для отправки: " + response.toString());
         try {
-            log.debug("Новый объект для отправки: " + response.toString());
-            execute((BotApiMethod<? extends Serializable>) response);
+            execute(method);
         } catch (TelegramApiException e) {
             log.error(e.getMessage(), e);
         }

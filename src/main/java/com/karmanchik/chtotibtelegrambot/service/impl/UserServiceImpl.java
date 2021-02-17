@@ -1,7 +1,8 @@
-package com.karmanchik.chtotibtelegrambot.service;
+package com.karmanchik.chtotibtelegrambot.service.impl;
 
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.service.UserService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 

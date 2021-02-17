@@ -16,10 +16,10 @@ import java.util.List;
 public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
 
     @Query(value = "select s.id from Group s")
-    List<Integer> getListGroupId();
+    List<Integer> findAllGroupId();
 
     @Query(value = "select s from Group s where s.groupName like %:year_suffix%")
-    List<Group> getListGroupNameByYearSuffix(@Param("year_suffix") @NotNull String yearSuffix);
+    List<Group> findAllGroupByYearSuffix(@Param("year_suffix") @NotNull String yearSuffix);
 
     @Query(
             nativeQuery = true,
@@ -28,10 +28,9 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
                     "from get_fields_from_json() as data " +
                     "where lower(data.teacher) like '%'||:teacher||'%' " +
                     "group by data.teacher")
-    List<String> getListTeachersByName(@Param("teacher") @NotNull String teacher);
+    List<String> findAllTeachersByName(@Param("teacher") @NotNull String teacher);
 
-    @Query(
-            nativeQuery = true,
+    @Query(nativeQuery = true,
             value = "select " +
                     "data.teacher " +
                     "from get_fields_from_json() as data " +
@@ -49,7 +48,7 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             "from get_fields_from_json() as data " +
             "where data.groupname = :groupName " +
             "order by data.dayofweek, data.lessonnumber")
-    List<Lesson> getListLessonByGroupName(@Param("groupName") @NotNull String groupName);
+    List<Lesson> findAllLessonsByGroupName(@Param("groupName") @NotNull String groupName);
 
     @Query(nativeQuery = true, value = "SELECT " +
             "data.auditorium as auditorium, " +

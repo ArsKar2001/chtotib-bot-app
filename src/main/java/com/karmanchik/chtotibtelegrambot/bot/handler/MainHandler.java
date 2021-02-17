@@ -40,20 +40,20 @@ public class MainHandler implements Handler {
         try {
             if (message.equalsIgnoreCase(COM_1.getValue())) {
                 log.debug("!!!! log debug 1: select handler - getTimetableNextDay for " + user.toString());
-                return getTimetableNextDay(user);
+                return this.getTimetableNextDay(user);
             } else if (message.equalsIgnoreCase(COM_2.getValue())) {
                 log.debug("!!!! log debug 1: select handler - getFullTimetable for " + user.toString());
-                return getFullTimetable(user);
+                return this.getFullTimetable(user);
             } else if (message.equalsIgnoreCase(COM_3.getValue())) {
                 log.debug("!!!! log debug 1: select handler - getMessageInfo for " + user.toString());
-                return getMessageInfo(user);
+                return this.getMessageInfo(user);
             } else if (message.equalsIgnoreCase(COM_4.getValue())) {
                 log.debug("!!!! log debug 1: select handler - getEditProfile for " + user.toString());
-                return getEditProfile(user);
+                return this.getEditProfile(user);
             }
             log.debug("!!!! log debug 1: select handler - null for " + user.toString());
             return List.of(TelegramUtil.mainMessage(user));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             return List.of(
                     TelegramUtil.createMessageTemplate(user)
@@ -180,8 +180,7 @@ public class MainHandler implements Handler {
         if (isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
-            var lessonsForTomorrow = groupService
-                    .findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
+            var lessonsForTomorrow = groupService.findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
             String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
