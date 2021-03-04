@@ -38,20 +38,4 @@ public class BotState {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-    public enum Instance {
-        START(100),
-        REG(101),
-        AUTHORIZED(102);
-
-        private final int id;
-
-        Instance(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-    }
 }

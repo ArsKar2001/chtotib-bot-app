@@ -1,21 +1,17 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.START;
 
 
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "chat_id", name = "users_unique_chatid_idx")})
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends AbstractBaseEntity {
@@ -27,32 +23,32 @@ public class User extends AbstractBaseEntity {
 
     @Column(name = "name")
     @NotBlank
-    private String name;
+    private String name = "";
 
     @Column(name = "bot_lat_message_id", nullable = false)
     @NotBlank
-    private Integer botLastMessageId;
+    private Integer botLastMessageId = 0;
 
     @Column(name = "bot_state_id", nullable = false)
     @NotBlank
-    private Integer botStateId;
+    private Integer botStateId = State.Bot.START.getId();
 
     @Column(name = "user_state_id", nullable = false)
     @NotBlank
-    private Integer userStateId;
+    private Integer userStateId = State.User.NONE.getId();
 
     @Column(name = "role_id", nullable = false)
     @NotBlank
-    private Integer roleId;
+    private Integer roleId = State.Role.NONE.getId();
 
     @Column(name = "group_id", nullable = false)
     @NotBlank
-    private Integer groupId;
+    private Integer groupId = GROUP_NONE_ID;
 
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Group group;
+    private Group group = GroupNone.getInstance();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_state_id", referencedColumnName = "id_user_state", insertable = false, updatable = false)
@@ -66,31 +62,67 @@ public class User extends AbstractBaseEntity {
     @JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Role role;
 
-    public User(int chatId) {
-        this.chatId = chatId;
-        this.name = String.valueOf(chatId);
-        this.botStateId = START.getId();
-        this.userStateId = UserState.Instance.NONE.getId();
-        this.roleId = Role.Instance.NONE.getId();
-        this.groupId = GROUP_NONE_ID;
-        this.botLastMessageId = 0;
+    public static class UserBuilder {
+
+        private final Integer chatId;
+        private String name;
+        private Integer botLastMessageId;
+        private Integer botStateId;
+        private Integer userStateId;
+        private Integer roleId;
+        private Integer groupId;
+
+        public UserBuilder(Integer chatId) {
+            this.chatId = chatId;
+        }
+
+        public UserBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder setBotLastMessageId(Integer botLastMessageId) {
+            this.botLastMessageId = botLastMessageId;
+            return this;
+        }
+
+        public UserBuilder setBotStateId(Integer botStateId) {
+            this.botStateId = botStateId;
+            return this;
+        }
+
+        public UserBuilder setUserStateId(Integer userStateId) {
+            this.userStateId = userStateId;
+            return this;
+        }
+
+        public UserBuilder setRoleId(Integer roleId) {
+            this.roleId = roleId;
+            return this;
+        }
+
+        public UserBuilder setGroupId(Integer groupId) {
+            this.groupId = groupId;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "chatId=" + chatId +
-                ", name='" + name + '\'' +
-                ", botLastMessageId=" + botLastMessageId +
-                ", botStateId=" + botStateId +
-                ", userStateId=" + userStateId +
-                ", roleId=" + roleId +
-                ", groupId=" + groupId +
-                ", group=" + group +
-                ", userState=" + userState +
-                ", botState=" + botState +
-                ", role=" + role +
-                ", id=" + id +
-                '}';
+    public User(int chatId) {
+        this.chatId = chatId;
+    }
+
+    public User(UserBuilder builder) {
+        this.chatId = builder.chatId;
+        this.name = builder.name;
+        this.botStateId = builder.botStateId;
+        this.userStateId = builder.userStateId;
+        this.roleId = builder.roleId;
+        this.groupId = builder.groupId;
+        this.botLastMessageId = builder.botLastMessageId;
     }
 }

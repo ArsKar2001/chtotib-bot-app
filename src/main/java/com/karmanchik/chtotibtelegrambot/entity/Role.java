@@ -37,20 +37,4 @@ public class Role {
                 ", description='" + name + '\'' +
                 '}';
     }
-
-    public enum Instance {
-        NONE(100),
-        TEACHER(101),
-        STUDENT(102);
-
-        private final int id;
-
-        Instance(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
-    }
 }

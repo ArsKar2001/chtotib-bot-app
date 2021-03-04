@@ -1,10 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -24,30 +21,22 @@ import javax.validation.constraints.NotNull;
         })
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 public class Group extends AbstractBaseEntity {
     @Column(name = "group_name", nullable = false, unique = true)
     @NotNull
-    private String groupName;
+    protected String groupName;
 
     @Column(name = "timetable", columnDefinition = "json")
     @Type(type = "json")
     @NotNull
-    private String timetable;
+    protected String timetable;
 
     public Group(String groupName) {
         this.groupName = groupName;
         this.timetable = "{}";
-    }
-
-    @Override
-    public String toString() {
-        return "Group{" +
-                "groupName='" + groupName + '\'' +
-                ", timetable='" + timetable + '\'' +
-                ", id=" + id +
-                '}';
     }
 }

@@ -2007,7 +2007,7 @@ org.springframework.dao.DataIntegrityViolationException: not-null property refer
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
 	at com.sun.proxy.$Proxy91.save(Unknown Source)
-	at com.karmanchik.chtotibtelegrambot.service.impl.UserServiceImpl.save(UserServiceImpl.java:26)
+	at com.karmanchik.chtotibtelegrambot.service.UserServiceImpl.save(UserServiceImpl.java:26)
 	at com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler.getEditProfile(MainHandler.java:97)
 	at com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler.handle(MainHandler.java:49)
 	at com.karmanchik.chtotibtelegrambot.bot.UpdateReceiver.handle(UpdateReceiver.java:43)

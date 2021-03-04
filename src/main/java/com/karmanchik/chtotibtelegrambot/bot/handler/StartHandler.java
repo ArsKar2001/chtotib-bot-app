@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.State;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.UserState;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
@@ -33,20 +34,20 @@ public class StartHandler implements Handler {
                 ))
                 .enableMarkdown(false);
 
-        user.setUserStateId(UserState.Instance.SELECT_ROLE.getId());
-        user.setBotStateId(BotState.Instance.REG.getId());
+        user.setUserStateId(State.User.SELECT_ROLE.getId());
+        user.setBotStateId(State.Bot.REG.getId());
         userService.save(user);
 
         return List.of(welcomeMessage, RegistrationHandler.selectRole(user).get(0));
     }
 
     @Override
-    public BotState.Instance operatedBotState() {
-        return BotState.Instance.START;
+    public State.Bot operatedBotState() {
+        return State.Bot.START;
     }
 
     @Override
-    public List<UserState.Instance> operatedUserListState() {
-        return List.of(UserState.Instance.NONE);
+    public List<State.User> operatedUserListState() {
+        return List.of(State.User.NONE);
     }
 }

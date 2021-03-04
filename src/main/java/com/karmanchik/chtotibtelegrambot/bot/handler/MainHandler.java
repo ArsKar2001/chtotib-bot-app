@@ -5,7 +5,7 @@ import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
@@ -16,13 +16,13 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.karmanchik.chtotibtelegrambot.entity.BotState.Instance.REG;
-import static com.karmanchik.chtotibtelegrambot.entity.Role.Instance.NONE;
-import static com.karmanchik.chtotibtelegrambot.entity.UserState.Instance.SELECT_ROLE;
+import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.REG;
+import static com.karmanchik.chtotibtelegrambot.entity.State.Role.NONE;
+import static com.karmanchik.chtotibtelegrambot.entity.State.User.SELECT_ROLE;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
-@Log4j
+@Log4j2
 @Component
 public class MainHandler implements Handler {
 
@@ -39,19 +39,19 @@ public class MainHandler implements Handler {
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
             if (message.equalsIgnoreCase(COM_1.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getTimetableNextDay for " + user.toString());
+                log.debug("!!!! log debug 1: select handler - getTimetableNextDay for {}", user.toString());
                 return this.getTimetableNextDay(user);
             } else if (message.equalsIgnoreCase(COM_2.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getFullTimetable for " + user.toString());
+                log.debug("!!!! log debug 1: select handler - getFullTimetable for {}", user.toString());
                 return this.getFullTimetable(user);
             } else if (message.equalsIgnoreCase(COM_3.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getMessageInfo for " + user.toString());
+                log.debug("!!!! log debug 1: select handler - getMessageInfo for {}", user.toString());
                 return this.getMessageInfo(user);
             } else if (message.equalsIgnoreCase(COM_4.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getEditProfile for " + user.toString());
+                log.debug("!!!! log debug 1: select handler - getEditProfile for {}", user.toString());
                 return this.getEditProfile(user);
             }
-            log.debug("!!!! log debug 1: select handler - null for " + user.toString());
+            log.debug("!!!! log debug 1: select handler - null for {}", user.toString());
             return List.of(TelegramUtil.mainMessage(user));
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
@@ -103,11 +103,11 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getFullTimetable(User user) {
         StringBuilder stringBuilder = new StringBuilder();
-        log.debug("!!!! log debug getFullTimetable: create " + stringBuilder.getClass().toString());
+        log.debug("!!!! log debug getFullTimetable: create {}",  stringBuilder.getClass().toString());
         Calendar calendar = Calendar.getInstance();
-        log.debug("!!!! log debug getFullTimetable: create " + calendar.getClass().toString() + " - " + calendar.toString());
+        log.debug("!!!! log debug getFullTimetable: create {}",  calendar.getClass().toString() + " - " + calendar.toString());
         WeekType week = TelegramUtil.getWeekType(calendar);
-        log.debug("!!!! log debug getFullTimetable: create " + week.getClass().toString() + " - " + week.toString());
+        log.debug("!!!! log debug getFullTimetable: create {}",  week.getClass().toString() + " - " + week.toString());
 
         if (isStudent(user)) {
             Group group = user.getGroup();
@@ -216,12 +216,12 @@ public class MainHandler implements Handler {
     }
 
     @Override
-    public BotState.Instance operatedBotState() {
-        return BotState.Instance.AUTHORIZED;
+    public State.Bot operatedBotState() {
+        return State.Bot.AUTHORIZED;
     }
 
     @Override
-    public List<UserState.Instance> operatedUserListState() {
-        return List.of(UserState.Instance.NONE);
+    public List<State.User> operatedUserListState() {
+        return List.of(State.User.NONE);
     }
 }
