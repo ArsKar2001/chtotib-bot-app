@@ -18,22 +18,10 @@ import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
 public class TelegramUtil {
 
-    public static final Map<Integer, String> DAYS_OF_WEEK = Map.of(
-            0, "Понедельник",
-            1, "Вторник",
-            2, "Среда",
-            3, "Четверг",
-            4, "Пятница",
-            5, "Суббота",
-            6, "Воскресенье"
-    );
-
-
     public static boolean isEvenWeek(Calendar date) {
         int week = date.get(Calendar.WEEK_OF_YEAR);
         return (week % 2 == 0);
     }
-
 
     public static Calendar getNextDate() {
         Calendar calendar = Calendar.getInstance();

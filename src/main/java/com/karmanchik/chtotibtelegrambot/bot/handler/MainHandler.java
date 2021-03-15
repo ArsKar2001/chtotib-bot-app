@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.model.DayOfWeek;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
@@ -19,7 +20,6 @@ import java.util.List;
 import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.REG;
 import static com.karmanchik.chtotibtelegrambot.entity.State.Role.NONE;
 import static com.karmanchik.chtotibtelegrambot.entity.State.User.SELECT_ROLE;
-import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.DAYS_OF_WEEK;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
 @Log4j2
@@ -121,7 +121,7 @@ public class MainHandler implements Handler {
             stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
-                String dayOfWeek = DAYS_OF_WEEK.get(day);
+                String dayOfWeek = DayOfWeek.get(day);
                 stringBuilder.append(dayOfWeek).append(":\n");
                 lessons.forEach(lesson -> {
                     if (lesson.getDayOfWeek().equals(day)) {
@@ -143,7 +143,7 @@ public class MainHandler implements Handler {
             stringBuilder.append("Расписание для педагога ").append("<b>").append(user.getName()).append("</b>").append(":\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             dayList.forEach(day -> {
-                stringBuilder.append(DAYS_OF_WEEK.get(day)).append(":\n");
+                stringBuilder.append(DayOfWeek.get(day)).append(":\n");
                 lessons.forEach(lesson -> {
                     if (lesson.getDayOfWeek().equals(day)) {
                         stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
@@ -182,7 +182,7 @@ public class MainHandler implements Handler {
             log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
             var lessonsForTomorrow = groupService.findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
-            String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
+            String dayOfWeek = DayOfWeek.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t")
@@ -196,7 +196,7 @@ public class MainHandler implements Handler {
         } else {
             var lessonsForTomorrow = groupService.findAllByTeacherAndDayOfWeek(user.getName().toLowerCase(), nextDayOfWeek, weekType.name());
             log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
-            String dayOfWeek = DAYS_OF_WEEK.get(nextDayOfWeek);
+            String dayOfWeek = DayOfWeek.get(nextDayOfWeek);
             stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
             stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).

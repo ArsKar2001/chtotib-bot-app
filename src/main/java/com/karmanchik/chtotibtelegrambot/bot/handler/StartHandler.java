@@ -1,9 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.State;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.UserState;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.model.Courses;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
@@ -31,13 +32,6 @@ public class RegistrationHandler implements Handler {
 
     private static final String ROLE_STUDENT = "студент";
     private static final String ROLE_TEACHER = "педагог";
-
-    private static final Map<String, String> COURSES = Map.of(
-            "I", "1",
-            "II", "2",
-            "III", "3",
-            "IV", "4"
-    );
 
     private final UserService userService;
     private final GroupService groupService;
@@ -78,7 +72,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectOrAccept(User user, String message) {
-        if (COURSES.containsKey(message)) {
+        if (Courses.containsKey(message)) {
             return selectGroup(user, message);
         } else if (isGroupId(message)) {
             final int groupId = parseInt(message);
@@ -135,23 +129,23 @@ public class RegistrationHandler implements Handler {
 
     List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
 
-        if (!COURSES.containsKey(message)) return Collections.emptyList();
+        if (Courses.containsKey(message)) {
+            final String s = Courses.get(message);
+            int academicYear = this.getAcademicYear(s);
+            String academicYearSuffix = String.valueOf(academicYear).substring(2);
+            List<Group> groupList = groupService.findAllGroupNamesByYearSuffix(academicYearSuffix);
 
-        final String s = COURSES.get(message);
-        int academicYear = this.getAcademicYear(s);
-        String academicYearSuffix = String.valueOf(academicYear).substring(2);
-        List<Group> groupList = groupService.findAllGroupNamesByYearSuffix(academicYearSuffix);
+            InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+            keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
 
-        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-        keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
-
-        user.setUserStateId(SELECT_GROUP.getId());
-        final User saveUser = userService.save(user);
-        return List.of(
-                TelegramUtil.createMessageTemplate(saveUser)
-                        .setText("Выбери группу...")
-                        .setReplyMarkup(keyboardMarkup)
-        );
+            user.setUserStateId(SELECT_GROUP.getId());
+            final User saveUser = userService.save(user);
+            return List.of(
+                    TelegramUtil.createMessageTemplate(saveUser)
+                            .setText("Выбери группу...")
+                            .setReplyMarkup(keyboardMarkup)
+            );
+        } else return Collections.emptyList();
     }
 
     List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
@@ -165,7 +159,7 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonsPanel(User user) {
-        List<String> values = new ArrayList<>(COURSES.keySet());
+        List<String> values = Courses.getValues();
         Collections.sort(values);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
