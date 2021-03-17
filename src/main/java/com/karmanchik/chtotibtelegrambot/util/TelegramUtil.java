@@ -1,6 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.util;
 
-import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
+import com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
@@ -13,6 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 
 import java.io.Serializable;
 import java.util.*;
+
+import static com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler.*;
 
 public class TelegramUtil {
 
@@ -106,8 +108,7 @@ public class TelegramUtil {
     }
 
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
-        final Set<String> keySet = MainCommand.COMMAND_MAP.keySet();
-
+        final Set<String> keySet = Command.COMMAND_MAP.keySet();
         ReplyKeyboardMarkup replyKeyboardMarkup = createReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();

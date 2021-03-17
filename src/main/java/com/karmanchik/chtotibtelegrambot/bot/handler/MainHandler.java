@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.State;
 import com.karmanchik.chtotibtelegrambot.entity.User;
@@ -17,6 +16,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.REG;
 import static com.karmanchik.chtotibtelegrambot.entity.State.Role.NONE;
@@ -34,8 +34,8 @@ public class MainHandler implements Handler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
-            if (MainCommand.isCommand(message)) {
-                final MainCommand command = MainCommand.valueOfKey(message);
+            if (Command.isCommand(message)) {
+                final Command command = Command.valueOfKey(message);
                 switch (command) {
                     case COM_1:
                         log.debug("!!!! log debug 1: select handler - getTimetableNextDay for {}", user.toString());
@@ -68,11 +68,9 @@ public class MainHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> getMessageInfo(User user) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (userService.isStudent(user)) {
+        if (userService.isStudent(user))
             stringBuilder.append("<b>Группа</b>:\t").append(user.getGroup().getGroupName()).append("\n");
-        } else {
-            stringBuilder.append("<b>Имя</b>:\t").append(user.getName()).append("\n");
-        }
+        else stringBuilder.append("<b>Имя</b>:\t").append(user.getName()).append("\n");
         stringBuilder.append("\n<b>От разработчика</b>:")
                 .append("\nЭто не финальная версия моего бота. " +
                         "Сейчас он работает только с расписанием, однако в будущем будет учитывать замену и кидать новости с сайта <a href=\"https://www.chtotib.ru/\">ЧТОТиБ</a>. " +
@@ -128,7 +126,7 @@ public class MainHandler implements Handler {
                 });
                 stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
             });
-        } else {
+        } else if (userService.isTeacher(user)) {
             var lessons = groupService.findAllLessonsByTeacher(user.getName().toLowerCase(), week.name());
             log.debug("!!!! log debug getFullTimetable: find lessons by " + user.getName() + " - " + Arrays.toString(lessons.toArray()));
             var dayList = groupService.findAllDaysOfWeekByTeacher(user.getName());
@@ -217,5 +215,30 @@ public class MainHandler implements Handler {
     @Override
     public List<State.User> operatedUserListState() {
         return List.of(State.User.NONE);
+    }
+
+    public enum Command {
+        COM_1,
+        COM_2,
+        COM_3,
+        COM_4;
+        public static final Map<String, Command> COMMAND_MAP = new HashMap<>();
+
+        private static final Pattern COMMAND_PATTERN = Pattern.compile("^\\d+");
+
+        static {
+            for (var value : values()) {
+                int key = value.ordinal() + 1;
+                COMMAND_MAP.put(String.valueOf(key), value);
+            }
+        }
+
+        public static Command valueOfKey(String s) {
+            return COMMAND_MAP.get(s);
+        }
+
+        public static boolean isCommand(String s) {
+            return COMMAND_PATTERN.matcher(s).matches();
+        }
     }
 }
