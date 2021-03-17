@@ -1,9 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.util;
 
+import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
-import lombok.Getter;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -13,8 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 
 import java.io.Serializable;
 import java.util.*;
-
-import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
 
 public class TelegramUtil {
 
@@ -108,15 +106,13 @@ public class TelegramUtil {
     }
 
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
+        final Set<String> keySet = MainCommand.COMMAND_MAP.keySet();
 
         ReplyKeyboardMarkup replyKeyboardMarkup = createReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
-        row.add(COM_1.getValue());
-        row.add(COM_2.getValue());
-        row.add(COM_3.getValue());
-        row.add(COM_4.getValue());
 
+        keySet.forEach(row::add);
         keyboardRowList.add(row);
 
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
@@ -129,18 +125,5 @@ public class TelegramUtil {
                                 "4\t-\tИзменить профиль\n"
                 )
                 .setReplyMarkup(replyKeyboardMarkup);
-    }
-
-    @Getter
-    public enum MainCommand {
-        COM_1("1"),
-        COM_2("2"),
-        COM_3("3"),
-        COM_4("4");
-        private final String value;
-
-        MainCommand(String value) {
-            this.value = value;
-        }
     }
 }

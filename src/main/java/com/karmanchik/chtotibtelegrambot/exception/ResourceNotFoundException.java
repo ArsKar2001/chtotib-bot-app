@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.bot.exception;
+package com.karmanchik.chtotibtelegrambot.exception;
 
 public class ResourceNotFoundException extends RuntimeException {
     /**

@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
+import com.karmanchik.chtotibtelegrambot.model.GroupNone;
 import lombok.*;
 
 import javax.persistence.*;

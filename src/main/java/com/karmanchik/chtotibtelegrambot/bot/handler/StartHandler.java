@@ -4,6 +4,8 @@ import com.karmanchik.chtotibtelegrambot.entity.State;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -12,17 +14,14 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.io.Serializable;
 import java.util.List;
 
-
+@Log4j2
 @Component
+@RequiredArgsConstructor
 public class StartHandler implements Handler {
     @Value("${bot.name}")
     private String botUsername;
 
     private final UserService userService;
-
-    public StartHandler(UserService userService) {
-        this.userService = userService;
-    }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {

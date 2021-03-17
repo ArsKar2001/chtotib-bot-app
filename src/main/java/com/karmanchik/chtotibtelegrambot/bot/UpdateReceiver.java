@@ -4,6 +4,7 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import lombok.extern.log4j.Log4j;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,6 +61,10 @@ public class UpdateReceiver {
         } catch (UnsupportedOperationException e) {
             return Collections.emptyList();
         }
+    }
+
+    private byte[] getCipherData(Integer id) {
+        return Base64.encodeInteger(BigInteger.valueOf(id));
     }
 
     private Handler getHandlerByState(@NotBlank User user) {

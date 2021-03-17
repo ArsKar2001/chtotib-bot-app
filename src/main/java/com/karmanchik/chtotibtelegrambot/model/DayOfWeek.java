@@ -1,9 +1,13 @@
 package com.karmanchik.chtotibtelegrambot.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DayOfWeek {
     private static final Map<Integer, String> DAYS_OF_WEEK = Map.of(
             0, "Понедельник",
@@ -19,7 +23,7 @@ public class DayOfWeek {
         return DAYS_OF_WEEK;
     }
 
-    public static boolean containsKey(Object o) {
+    public static boolean containsKey(Integer o) {
         return DAYS_OF_WEEK.containsKey(o);
     }
 

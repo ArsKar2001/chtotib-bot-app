@@ -1,11 +1,14 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
+import com.karmanchik.chtotibtelegrambot.entity.Group;
+import com.karmanchik.chtotibtelegrambot.entity.State;
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.model.DayOfWeek;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
-import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -13,52 +16,51 @@ import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.REG;
 import static com.karmanchik.chtotibtelegrambot.entity.State.Role.NONE;
 import static com.karmanchik.chtotibtelegrambot.entity.State.User.SELECT_ROLE;
-import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.MainCommand.*;
+import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.*;
 
 @Log4j2
 @Component
+@RequiredArgsConstructor
 public class MainHandler implements Handler {
 
     private final GroupService groupService;
     private final UserService userService;
 
-    public MainHandler(GroupService groupService,
-                       UserService userService) {
-        this.groupService = groupService;
-        this.userService = userService;
-    }
-
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
-            if (message.equalsIgnoreCase(COM_1.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getTimetableNextDay for {}", user.toString());
-                return this.getTimetableNextDay(user);
-            } else if (message.equalsIgnoreCase(COM_2.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getFullTimetable for {}", user.toString());
-                return this.getFullTimetable(user);
-            } else if (message.equalsIgnoreCase(COM_3.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getMessageInfo for {}", user.toString());
-                return this.getMessageInfo(user);
-            } else if (message.equalsIgnoreCase(COM_4.getValue())) {
-                log.debug("!!!! log debug 1: select handler - getEditProfile for {}", user.toString());
-                return this.getEditProfile(user);
+            if (MainCommand.isCommand(message)) {
+                final MainCommand command = MainCommand.valueOfKey(message);
+                switch (command) {
+                    case COM_1:
+                        log.debug("!!!! log debug 1: select handler - getTimetableNextDay for {}", user.toString());
+                        return this.getTimetableNextDay(user);
+                    case COM_2:
+                        log.debug("!!!! log debug 1: select handler - getFullTimetable for {}", user.toString());
+                        return this.getFullTimetable(user);
+                    case COM_3:
+                        log.debug("!!!! log debug 1: select handler - getMessageInfo for {}", user.toString());
+                        return this.getMessageInfo(user);
+                    case COM_4:
+                        log.debug("!!!! log debug 1: select handler - getEditProfile for {}", user.toString());
+                        return this.getEditProfile(user);
+                    default:
+                        log.warn("Unsupported command {} for user {}", command, user.getId());
+                        return Collections.emptyList();
+                }
             }
-            log.debug("!!!! log debug 1: select handler - null for {}", user.toString());
-            return List.of(TelegramUtil.mainMessage(user));
+            return List.of(mainMessage(user));
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             return List.of(
-                    TelegramUtil.createMessageTemplate(user)
+                    createMessageTemplate(user)
                             .setText("Ошибка: " + e.getMessage() + ";" + e.getLocalizedMessage()),
-                    TelegramUtil.mainMessage(user)
+                    mainMessage(user)
             );
         }
     }
@@ -66,12 +68,8 @@ public class MainHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> getMessageInfo(User user) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        stringBuilder.append("<b>ChatId</b>:\t").append(user.getChatId()).append("\n")
-                .append("<b>Роль</b>:\t").append(user.getRole().getName()).append("\n");
-        if (isStudent(user)) {
-            Group group = user.getGroup();
-            log.debug("!!!! log debug getMessageInfo: find group by id=" + group.getId() + " - " + group.toString());
-            stringBuilder.append("<b>Группа</b>:\t").append(group.getGroupName()).append("\n");
+        if (userService.isStudent(user)) {
+            stringBuilder.append("<b>Группа</b>:\t").append(user.getGroup().getGroupName()).append("\n");
         } else {
             stringBuilder.append("<b>Имя</b>:\t").append(user.getName()).append("\n");
         }
@@ -81,14 +79,10 @@ public class MainHandler implements Handler {
                         "По всем ошибкам, вопросам или предложениям писать мне - @l_karmanchik_l.").append("\n");
 
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                createMessageTemplate(user)
                         .setText(stringBuilder.toString()),
-                TelegramUtil.mainMessage(user)
+                mainMessage(user)
         );
-    }
-
-    private boolean isStudent(User user) {
-        return user.getRole().getNameRole().equalsIgnoreCase("STUDENT");
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
@@ -103,13 +97,13 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getFullTimetable(User user) {
         StringBuilder stringBuilder = new StringBuilder();
-        log.debug("!!!! log debug getFullTimetable: create {}",  stringBuilder.getClass().toString());
+        log.debug("!!!! log debug getFullTimetable: create {}", stringBuilder.getClass().toString());
         Calendar calendar = Calendar.getInstance();
-        log.debug("!!!! log debug getFullTimetable: create {}",  calendar.getClass().toString() + " - " + calendar.toString());
-        WeekType week = TelegramUtil.getWeekType(calendar);
-        log.debug("!!!! log debug getFullTimetable: create {}",  week.getClass().toString() + " - " + week.toString());
+        log.debug("!!!! log debug getFullTimetable: create {}", calendar.getClass().toString() + " - " + calendar.toString());
+        WeekType week = getWeekType(calendar);
+        log.debug("!!!! log debug getFullTimetable: create {}", week.getClass().toString() + " - " + week.toString());
 
-        if (isStudent(user)) {
+        if (userService.isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getFullTimetable: find group by id=" + group.getId() + " - " + group.toString());
             var dayList = groupService.findAllDaysOfWeekByGroupName(group.getGroupName());
@@ -158,26 +152,26 @@ public class MainHandler implements Handler {
             });
         }
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                createMessageTemplate(user)
                         .setText(stringBuilder.toString()),
-                TelegramUtil.mainMessage(user)
+                mainMessage(user)
         );
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Calendar next = TelegramUtil.getNextDate();
+        Calendar next = getNextDate();
         log.debug("!!!! log debug getTimetableNextDay: create Calendar - " + next.toString());
 
-        int nextDayOfWeek = TelegramUtil.getNextDayOfWeek();
+        int nextDayOfWeek = getNextDayOfWeek();
         log.debug("!!!! log debug getTimetableNextDay: create nextDayOfWeek - " + nextDayOfWeek);
-        WeekType weekType = TelegramUtil.getWeekType(next);
+        WeekType weekType = getWeekType(next);
         log.debug("!!!! log debug getTimetableNextDay: create weekType - " + weekType.toString());
 
         StringBuilder stringBuilder = new StringBuilder();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 
-        if (isStudent(user)) {
+        if (userService.isStudent(user)) {
             Group group = user.getGroup();
             log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
             var lessonsForTomorrow = groupService.findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
@@ -209,9 +203,9 @@ public class MainHandler implements Handler {
             stringBuilder.append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
         }
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                createMessageTemplate(user)
                         .setText(stringBuilder.toString()),
-                TelegramUtil.mainMessage(user)
+                mainMessage(user)
         );
     }
 

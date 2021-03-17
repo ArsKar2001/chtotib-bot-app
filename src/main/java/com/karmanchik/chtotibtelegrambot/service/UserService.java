@@ -12,6 +12,9 @@ import javax.validation.constraints.NotNull;
 @Service
 @Log4j
 public class UserService {
+    public static final String STUDENT = "STUDENT";
+    public static final String TEACHER = "TEACHER";
+
     private final JpaUserRepository userRepository;
 
     public UserService(JpaUserRepository userRepository) {
@@ -24,5 +27,13 @@ public class UserService {
 
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    public boolean isStudent(User user) {
+        return user.getRole().getNameRole().equalsIgnoreCase(STUDENT);
+    }
+
+    public boolean isTeacher(User user) {
+        return user.getRole().getNameRole().equalsIgnoreCase(TEACHER);
     }
 }

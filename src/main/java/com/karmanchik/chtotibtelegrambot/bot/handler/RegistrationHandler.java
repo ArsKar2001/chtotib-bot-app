@@ -5,6 +5,7 @@ import com.karmanchik.chtotibtelegrambot.model.Courses;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -24,6 +25,7 @@ import static java.lang.Integer.parseInt;
 
 @Log4j
 @Component
+@RequiredArgsConstructor
 public class RegistrationHandler implements Handler {
 
     public static final String ACCEPT = "сохранить";
@@ -35,11 +37,6 @@ public class RegistrationHandler implements Handler {
 
     private final UserService userService;
     private final GroupService groupService;
-
-    public RegistrationHandler(UserService userService, GroupService groupService) {
-        this.userService = userService;
-        this.groupService = groupService;
-    }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {

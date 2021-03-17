@@ -1,4 +1,6 @@
-package com.karmanchik.chtotibtelegrambot.entity;
+package com.karmanchik.chtotibtelegrambot.model;
+
+import com.karmanchik.chtotibtelegrambot.entity.Group;
 
 public class GroupNone extends Group {
     private static final Integer GROUP_NONE_ID = 100;

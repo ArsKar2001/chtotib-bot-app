@@ -1,10 +1,13 @@
 package com.karmanchik.chtotibtelegrambot.model;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Courses {
     private static final Map<String, String> COURSES = Map.of(
             "I", "1",
@@ -17,16 +20,16 @@ public class Courses {
         return COURSES;
     }
 
-    public static boolean containsKey(Object o) {
-        return COURSES.containsKey(o);
+    public static boolean containsKey(String s) {
+        return COURSES.containsKey(s);
     }
 
-    public static boolean containsValue(Object o) {
-        return COURSES.containsValue(o);
+    public static boolean containsValue(String s) {
+        return COURSES.containsValue(s);
     }
 
-    public static String get(Object o) {
-        return COURSES.get(o);
+    public static String get(String s) {
+        return COURSES.get(s);
     }
 
     public static List<String> getKeys() {
