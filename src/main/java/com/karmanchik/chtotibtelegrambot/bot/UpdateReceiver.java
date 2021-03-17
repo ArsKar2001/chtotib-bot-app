@@ -38,11 +38,10 @@ public class UpdateReceiver {
                 final int messageId = message.getMessageId();
                 log.debug("!!!! log debug UpdateReceiver: получили messageId - " + messageId);
                 final User user = userService.findByChatId(chatId);
-                log.debug("!!!! log debug UpdateReceiver: получили user по chatId - " + chatId);
                 log.debug("!!!! log debug UpdateReceiver: user - " + user.toString());
                 user.setBotLastMessageId(messageId);
-                userService.save(user);
-                return getHandlerByState(user).handle(user, message.getText());
+                User sUser = userService.save(user);
+                return getHandlerByState(sUser).handle(sUser, message.getText());
             } else if (update.hasCallbackQuery()) {
                 final CallbackQuery callbackQuery = update.getCallbackQuery();
                 log.debug("!!!! log debug UpdateReceiver: получили Message - " + callbackQuery.toString());
@@ -51,20 +50,15 @@ public class UpdateReceiver {
                 final int chatId = callbackQuery.getFrom().getId();
                 log.debug("!!!! log debug UpdateReceiver: получили chatId - " + chatId);
                 final User user = userService.findByChatId(chatId);
-                log.debug("!!!! log debug UpdateReceiver: получили user по chatId - " + chatId);
                 log.debug("!!!! log debug UpdateReceiver: user - " + user.toString());
                 user.setBotLastMessageId(messageId);
-                userService.save(user);
-                return getHandlerByState(user).handle(user, callbackQuery.getData());
+                User sUser = userService.save(user);
+                return getHandlerByState(sUser).handle(sUser, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException e) {
             return Collections.emptyList();
         }
-    }
-
-    private byte[] getCipherData(Integer id) {
-        return Base64.encodeInteger(BigInteger.valueOf(id));
     }
 
     private Handler getHandlerByState(@NotBlank User user) {

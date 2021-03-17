@@ -156,7 +156,7 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonsPanel(User user) {
-        List<String> values = Courses.getValues();
+        List<String> values = Courses.getKeys();
         Collections.sort(values);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
