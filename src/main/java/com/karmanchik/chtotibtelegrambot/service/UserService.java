@@ -1,10 +1,11 @@
 package com.karmanchik.chtotibtelegrambot.service;
 
+import com.karmanchik.chtotibtelegrambot.entity.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.Role;
 import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.UserState;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
-import com.karmanchik.chtotibtelegrambot.service.UserService;
 import lombok.extern.log4j.Log4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
@@ -21,8 +22,17 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findByChatId(@NotNull Integer chatId) {
-        return userRepository.findByChatId(chatId).orElseGet(() -> userRepository.save(new User(chatId)));
+    public User findByChatIdAndName(@NotNull Integer chatId, String userName) {
+        return userRepository.findByChatIdAndName(chatId, userName)
+                .orElseGet(() -> userRepository.save(
+                        User.builder()
+                            .chatId(chatId)
+                            .name(userName)
+                            .roleId(Role.NONE)
+                            .userStateId(UserState.NONE)
+                            .botStateId(BotState.START)
+                        .build()
+                ));
     }
 
     public User save(User user) {

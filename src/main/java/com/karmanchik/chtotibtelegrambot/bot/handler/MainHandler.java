@@ -1,8 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.entity.State;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.*;
 import com.karmanchik.chtotibtelegrambot.model.DayOfWeek;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
@@ -18,9 +16,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.REG;
-import static com.karmanchik.chtotibtelegrambot.entity.State.Role.NONE;
-import static com.karmanchik.chtotibtelegrambot.entity.State.User.SELECT_ROLE;
 import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.*;
 
 @Log4j2
@@ -84,11 +79,11 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
-        user.setRoleId(NONE.getId());
-        user.setGroupId(100);
-        user.setName(user.getChatId().toString());
-        user.setUserStateId(SELECT_ROLE.getId());
-        user.setBotStateId(REG.getId());
+        user.setRoleId(Role.NONE);
+        user.setGroupId(Group.NONE);
+        user.setTeacher("");
+        user.setUserStateId(UserState.SELECT_ROLE);
+        user.setBotStateId(BotState.REG);
         final User saveUser = userService.save(user);
         return RegistrationHandler.selectRole(saveUser);
     }
@@ -208,13 +203,13 @@ public class MainHandler implements Handler {
     }
 
     @Override
-    public State.Bot operatedBotState() {
-        return State.Bot.AUTHORIZED;
+    public Integer operatedBotStateId() {
+        return BotState.AUTHORIZED;
     }
 
     @Override
-    public List<State.User> operatedUserListState() {
-        return List.of(State.User.NONE);
+    public List<Integer> operatedUserListStateId() {
+        return List.of(UserState.NONE);
     }
 
     public enum Command {

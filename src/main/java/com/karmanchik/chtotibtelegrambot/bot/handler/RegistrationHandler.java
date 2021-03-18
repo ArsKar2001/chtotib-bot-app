@@ -17,10 +17,6 @@ import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
 
-import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.*;
-import static com.karmanchik.chtotibtelegrambot.entity.State.Bot.AUTHORIZED;
-import static com.karmanchik.chtotibtelegrambot.entity.State.Role.*;
-import static com.karmanchik.chtotibtelegrambot.entity.State.User.*;
 import static java.lang.Integer.parseInt;
 
 @Log4j
@@ -83,11 +79,11 @@ public class RegistrationHandler implements Handler {
     List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
         List<String> allTeachers = groupService.findAllTeachers();
         if (message.equalsIgnoreCase(CANCEL)) {
-            user.setUserStateId(ENTER_NAME.getId());
+            user.setUserStateId(UserState.ENTER_NAME);
             final User saveUser1 = userService.save(user);
             return inputTeacherName(saveUser1);
         } else if (allTeachers.contains(message)) {
-            user.setName(message);
+            user.setTeacher(message);
             final User saveUser2 = userService.save(user);
             return accept(saveUser2);
         } else {
@@ -112,12 +108,12 @@ public class RegistrationHandler implements Handler {
 
     List<PartialBotApiMethod<? extends Serializable>> switchRole(User user, String message) {
         if (message.equalsIgnoreCase(ROLE_STUDENT)) {
-            user.setUserStateId(SELECT_COURSE.getId());
-            user.setRoleId(STUDENT.getId());
+            user.setUserStateId(UserState.SELECT_COURSE);
+            user.setRoleId(Role.STUDENT);
             final User saveUser1 = userService.save(user);
             return createSelectCourseButtonsPanel(saveUser1);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
-            user.setRoleId(TEACHER.getId());
+            user.setRoleId(Role.TEACHER);
             final User saveUser2 = userService.save(user);
             return inputTeacherName(saveUser2);
         }
@@ -135,7 +131,7 @@ public class RegistrationHandler implements Handler {
             InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
             keyboardMarkup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButton(groupList, 3));
 
-            user.setUserStateId(SELECT_GROUP.getId());
+            user.setUserStateId(UserState.SELECT_GROUP);
             final User saveUser = userService.save(user);
             return List.of(
                     TelegramUtil.createMessageTemplate(saveUser)
@@ -146,7 +142,7 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
-        user.setUserStateId(ENTER_NAME.getId());
+        user.setUserStateId(UserState.ENTER_NAME);
         userService.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
@@ -171,21 +167,21 @@ public class RegistrationHandler implements Handler {
     }
 
     List<PartialBotApiMethod<? extends Serializable>> cancel(User user) {
-        user.setUserStateId(SELECT_ROLE.getId());
-        user.setBotStateId(REG.getId());
+        user.setUserStateId(UserState.SELECT_ROLE);
+        user.setBotStateId(BotState.REG);
         final User saveUser = userService.save(user);
         return selectRole(saveUser);
     }
 
     List<PartialBotApiMethod<? extends Serializable>> accept(User user) {
-        user.setUserStateId(State.User.NONE.getId());
-        user.setBotStateId(AUTHORIZED.getId());
+        user.setUserStateId(UserState.NONE);
+        user.setBotStateId(BotState.AUTHORIZED);
         final User saveUser = userService.save(user);
         return List.of(TelegramUtil.mainMessage(saveUser));
     }
 
     List<PartialBotApiMethod<? extends Serializable>> createSelectTeacherButtonsPanel(User user, String message) {
-        user.setUserStateId(SELECT_TEACHER.getId());
+        user.setUserStateId(UserState.SELECT_TEACHER);
         final User saveUser = userService.save(user);
         List<String> teacherList = getListFullTeachers(message.toLowerCase());
 
@@ -272,18 +268,18 @@ public class RegistrationHandler implements Handler {
     }
 
     @Override
-    public State.Bot operatedBotState() {
-        return REG;
+    public Integer operatedBotStateId() {
+        return BotState.REG;
     }
 
     @Override
-    public List<State.User> operatedUserListState() {
+    public List<Integer> operatedUserListStateId() {
         return List.of(
-                SELECT_COURSE,
-                SELECT_ROLE,
-                SELECT_GROUP,
-                ENTER_NAME,
-                SELECT_TEACHER
+                UserState.SELECT_COURSE,
+                UserState.SELECT_ROLE,
+                UserState.SELECT_GROUP,
+                UserState.ENTER_NAME,
+                UserState.SELECT_TEACHER
         );
     }
 }

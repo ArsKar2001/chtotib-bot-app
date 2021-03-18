@@ -16,6 +16,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
+    public static final Integer NONE = 100;
+    public static final Integer TEACHER = 101;
+    public static final Integer STUDENT = 102;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -27,14 +31,19 @@ public class Role {
     private String nameRole;
 
     @Column(name = "description")
-    private String name;
+    private String description;
+
+    public Role(Integer id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
         return "Role{" +
                 "id=" + id +
                 ", nameRole='" + nameRole + '\'' +
-                ", description='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
+
 }
