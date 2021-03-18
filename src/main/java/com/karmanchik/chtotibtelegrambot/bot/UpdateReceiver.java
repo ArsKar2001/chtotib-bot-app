@@ -57,6 +57,7 @@ public class UpdateReceiver {
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException e) {
+            log.error(e.getMessage(), e);
             return Collections.emptyList();
         }
     }
