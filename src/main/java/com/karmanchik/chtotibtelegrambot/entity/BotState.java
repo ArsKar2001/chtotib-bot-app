@@ -16,11 +16,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BotState {
-    public static final Integer START = 100;
-    public static final Integer REG = 101;
-    public static final Integer AUTHORIZED = 102;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_bot_state", unique = true)

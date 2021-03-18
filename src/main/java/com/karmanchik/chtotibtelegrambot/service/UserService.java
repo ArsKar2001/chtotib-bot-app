@@ -4,6 +4,7 @@ import com.karmanchik.chtotibtelegrambot.entity.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.Role;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,9 @@ public class UserService {
                         User.builder()
                             .chatId(chatId)
                             .name(userName)
-                            .roleId(Role.NONE)
-                            .userStateId(UserState.NONE)
-                            .botStateId(BotState.START)
+                            .roleId(Constants.Role.NONE)
+                            .userStateId(Constants.UserState.NONE)
+                            .botStateId(Constants.BotState.START)
                         .build()
                 ));
     }

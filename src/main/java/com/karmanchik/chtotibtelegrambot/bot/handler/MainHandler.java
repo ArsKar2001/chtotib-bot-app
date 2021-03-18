@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.model.DayOfWeek;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import com.karmanchik.chtotibtelegrambot.service.GroupService;
@@ -79,11 +80,11 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getEditProfile(User user) {
-        user.setRoleId(Role.NONE);
-        user.setGroupId(Group.NONE);
+        user.setRoleId(Constants.Role.NONE);
+        user.setGroupId(Constants.Group.NONE);
         user.setTeacher("");
-        user.setUserStateId(UserState.SELECT_ROLE);
-        user.setBotStateId(BotState.REG);
+        user.setUserStateId(Constants.UserState.SELECT_ROLE);
+        user.setBotStateId(Constants.BotState.REG);
         final User saveUser = userService.save(user);
         return RegistrationHandler.selectRole(saveUser);
     }
@@ -204,12 +205,12 @@ public class MainHandler implements Handler {
 
     @Override
     public Integer operatedBotStateId() {
-        return BotState.AUTHORIZED;
+        return Constants.BotState.AUTHORIZED;
     }
 
     @Override
     public List<Integer> operatedUserListStateId() {
-        return List.of(UserState.NONE);
+        return List.of(Constants.UserState.NONE);
     }
 
     public enum Command {

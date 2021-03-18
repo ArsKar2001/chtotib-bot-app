@@ -19,19 +19,15 @@ public class DayOfWeek {
             6, "Воскресенье"
     );
 
-    public static Map<Integer, String> getAll() {
-        return DAYS_OF_WEEK;
-    }
-
     public static boolean containsKey(Integer o) {
         return DAYS_OF_WEEK.containsKey(o);
     }
 
-    public static boolean containsValue(Object o) {
+    public static boolean containsValue(String o) {
         return DAYS_OF_WEEK.containsValue(o);
     }
 
-    public static String get(Object o) {
+    public static String get(Integer o) {
         return DAYS_OF_WEEK.get(o);
     }
 

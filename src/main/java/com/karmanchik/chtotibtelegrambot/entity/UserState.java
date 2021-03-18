@@ -14,16 +14,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 public class UserState {
-    public static final Integer NONE = 200;
-    public static final Integer SELECT_COURSE = 201;
-    public static final Integer SELECT_GROUP = 202;
-    public static final Integer SELECT_ROLE = 203;
-    public static final Integer SELECT_OPTION = 204;
-    public static final Integer ENTER_NAME = 205;
-    public static final Integer SELECT_TEACHER = 206;
-
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user_state", unique = true)

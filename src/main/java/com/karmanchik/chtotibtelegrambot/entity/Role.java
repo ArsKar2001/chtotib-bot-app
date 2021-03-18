@@ -16,9 +16,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role {
-    public static final Integer NONE = 100;
-    public static final Integer TEACHER = 101;
-    public static final Integer STUDENT = 102;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

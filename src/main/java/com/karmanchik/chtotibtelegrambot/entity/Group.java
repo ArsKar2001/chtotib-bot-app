@@ -26,9 +26,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group extends AbstractBaseEntity {
-    public static final Integer NONE = 100;
-
-    @Column(name = "group_name", nullable = false, unique = true)
+    @Column(name = "group_name", unique = true)
     @NotNull
     private String groupName;
 
@@ -36,10 +34,9 @@ public class Group extends AbstractBaseEntity {
     @Type(type = "json")
     private String lessons;
 
-
-
     public Group(String groupName) {
         this.groupName = groupName;
+        this.lessons = "[]";
     }
 
     @Override
