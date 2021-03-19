@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.service;
 
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
 import lombok.extern.log4j.Log4j;
@@ -19,10 +20,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public com.karmanchik.chtotibtelegrambot.entity.User findByChatIdAndName(@NotNull Integer chatId, String userName) {
+    public User findByChatIdAndName(@NotNull Integer chatId, String userName) {
         return userRepository.findByChatIdAndName(chatId, userName)
                 .orElseGet(() -> userRepository.save(
-                        com.karmanchik.chtotibtelegrambot.entity.User.builder()
+                        User.builder()
                             .chatId(chatId)
                             .name(userName)
                             .roleId(Constants.Role.NONE)

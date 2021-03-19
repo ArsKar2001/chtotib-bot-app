@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.util;
 
-import com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
