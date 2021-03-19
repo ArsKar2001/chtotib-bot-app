@@ -34,15 +34,12 @@ public class MainHandler implements Handler {
                 final Command command = Command.valueOfKey(message);
                 switch (command) {
                     case COM_1:
-                        log.debug("!!!! log debug 1: select handler - getTimetableNextDay for {}", user.toString());
-                        return this.getTimetableNextDay(user);
-                    case COM_2:
                         log.debug("!!!! log debug 1: select handler - getFullTimetable for {}", user.toString());
-                        return this.getFullTimetable(user);
-                    case COM_3:
+                        return this.getTimetable(user);
+                    case COM_2:
                         log.debug("!!!! log debug 1: select handler - getMessageInfo for {}", user.toString());
                         return this.getMessageInfo(user);
-                    case COM_4:
+                    case COM_3:
                         log.debug("!!!! log debug 1: select handler - getEditProfile for {}", user.toString());
                         return this.getEditProfile(user);
                     default:
@@ -59,6 +56,10 @@ public class MainHandler implements Handler {
                     mainMessage(user)
             );
         }
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> getTimetable(User user) {
+        return null;
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getMessageInfo(User user) {
@@ -83,8 +84,8 @@ public class MainHandler implements Handler {
         user.setRoleId(Constants.Role.NONE);
         user.setGroupId(Constants.Group.NONE);
         user.setTeacher("");
-        user.setUserStateId(Constants.UserState.SELECT_ROLE);
-        user.setBotStateId(Constants.BotState.REG);
+        user.setUserStateId(Constants.User.SELECT_ROLE);
+        user.setBotStateId(Constants.Bot.REG);
         final User saveUser = userService.save(user);
         return RegistrationHandler.selectRole(saveUser);
     }
@@ -206,19 +207,18 @@ public class MainHandler implements Handler {
 
     @Override
     public Integer operatedBotStateId() {
-        return Constants.BotState.AUTHORIZED;
+        return Constants.Bot.AUTHORIZED;
     }
 
     @Override
     public List<Integer> operatedUserListStateId() {
-        return List.of(Constants.UserState.NONE);
+        return List.of(Constants.User.NONE);
     }
 
     public enum Command {
-        COM_1,
-        COM_2,
-        COM_3,
-        COM_4;
+        COM_1, // Расписание на завтра
+        COM_2, // Справочное сообщение
+        COM_3; // Изменить профиль
         public static final Map<String, Command> COMMAND_MAP = new HashMap<>();
 
         private static final Pattern COMMAND_PATTERN = Pattern.compile("^\\d+");

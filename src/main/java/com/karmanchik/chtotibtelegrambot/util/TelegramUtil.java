@@ -54,7 +54,7 @@ public class TelegramUtil {
                 .enableMarkdown(false)
                 .setParseMode(ParseMode.HTML);
     }
-    
+
 
     public static SendMessage createMessageTemplate(String chatId) {
         return new SendMessage()
@@ -119,12 +119,10 @@ public class TelegramUtil {
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
 
         return TelegramUtil.createMessageTemplate(user)
-                .setText(
-                        "1\t-\tРасписание на завтра\n" +
-                                "2\t-\tВсе расписание\n" +
-                                "3\t-\tСправочное сообщение\n" +
-                                "4\t-\tИзменить профиль\n"
-                )
+                .setText("1\t-\tРасписание на завтра\n" +
+                        "2\t-\tВсе расписание\n" +
+                        "3\t-\tСправочное сообщение\n" +
+                        "4\t-\tИзменить профиль\n")
                 .setReplyMarkup(replyKeyboardMarkup);
     }
 }

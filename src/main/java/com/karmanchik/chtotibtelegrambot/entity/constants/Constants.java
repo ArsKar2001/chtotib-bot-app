@@ -5,13 +5,13 @@ public class Constants {
         public static final Integer NONE = 100;
     }
 
-    public static class BotState {
+    public static class Bot {
         public static final Integer START = 100;
         public static final Integer REG = 101;
         public static final Integer AUTHORIZED = 102;
     }
 
-    public static class UserState {
+    public static class User {
         public static final Integer NONE = 200;
         public static final Integer SELECT_COURSE = 201;
         public static final Integer SELECT_GROUP = 202;
@@ -19,6 +19,7 @@ public class Constants {
         public static final Integer SELECT_OPTION = 204;
         public static final Integer ENTER_NAME = 205;
         public static final Integer SELECT_TEACHER = 206;
+        public static final Integer SELECT_TIMETABLE = 207;
     }
 
     public static class Role {

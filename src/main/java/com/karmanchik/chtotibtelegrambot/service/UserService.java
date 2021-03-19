@@ -1,9 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.service;
 
-import com.karmanchik.chtotibtelegrambot.entity.BotState;
-import com.karmanchik.chtotibtelegrambot.entity.Role;
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.repository.JpaUserRepository;
 import lombok.extern.log4j.Log4j;
@@ -23,28 +19,28 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User findByChatIdAndName(@NotNull Integer chatId, String userName) {
+    public com.karmanchik.chtotibtelegrambot.entity.User findByChatIdAndName(@NotNull Integer chatId, String userName) {
         return userRepository.findByChatIdAndName(chatId, userName)
                 .orElseGet(() -> userRepository.save(
-                        User.builder()
+                        com.karmanchik.chtotibtelegrambot.entity.User.builder()
                             .chatId(chatId)
                             .name(userName)
                             .roleId(Constants.Role.NONE)
-                            .userStateId(Constants.UserState.NONE)
-                            .botStateId(Constants.BotState.START)
+                            .userStateId(Constants.User.NONE)
+                            .botStateId(Constants.Bot.START)
                         .build()
                 ));
     }
 
-    public User save(User user) {
+    public com.karmanchik.chtotibtelegrambot.entity.User save(com.karmanchik.chtotibtelegrambot.entity.User user) {
         return userRepository.save(user);
     }
 
-    public boolean isStudent(User user) {
+    public boolean isStudent(com.karmanchik.chtotibtelegrambot.entity.User user) {
         return user.getRole().getNameRole().equalsIgnoreCase(STUDENT);
     }
 
-    public boolean isTeacher(User user) {
+    public boolean isTeacher(com.karmanchik.chtotibtelegrambot.entity.User user) {
         return user.getRole().getNameRole().equalsIgnoreCase(TEACHER);
     }
 }
