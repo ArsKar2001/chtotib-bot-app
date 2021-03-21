@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -18,25 +19,23 @@ import java.util.List;
                         name = "schedule_group_name_uindex")
         })
 @TypeDef(name = "json", typeClass = JsonStringType.class)
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group extends AbstractBaseEntity {
-    @Setter
-    @Getter
+
     @Column(name = "group_name", unique = true)
     @NotNull
     private String groupName;
 
-    @Getter
-    @Setter
-    @Column(name = "timetable", columnDefinition = "json", nullable = false)
+    @Column(name = "lessons", columnDefinition = "json", nullable = false)
     @Type(type = "json")
     private String lessons;
 
-    @Getter
-    @OneToMany(cascade = {CascadeType.ALL})
-    @JoinColumn(referencedColumnName = "id", columnDefinition = "group_id", updatable = false, nullable = false)
+    @JsonManagedReference
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "group")
     private List<Replacement> replacements;
 
     public Group(String groupName) {

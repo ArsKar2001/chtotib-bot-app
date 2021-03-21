@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -21,11 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Replacement extends AbstractBaseEntity {
 
-    @Column(name = "group_id")
-    @NotNull
-    private Integer groupId;
-
-    @Column(name = "timetable", columnDefinition = "json", nullable = false)
+    @Column(name = "lessons", columnDefinition = "json", nullable = false)
     @Type(type = "json")
     private String timetable;
 
@@ -33,13 +28,17 @@ public class Replacement extends AbstractBaseEntity {
     @NotNull
     private LocalDate date;
 
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "group_id")
+    private Group group;
 
     @Override
     public String toString() {
         return "Replacement{" +
-                "groupId=" + groupId +
-                ", timetable='" + timetable + '\'' +
+                "timetable='" + timetable + '\'' +
                 ", date=" + date +
+                ", group=" + group +
                 ", id=" + id +
                 '}';
     }

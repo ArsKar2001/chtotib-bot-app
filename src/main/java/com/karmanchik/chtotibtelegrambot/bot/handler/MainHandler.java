@@ -1,10 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.*;
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
-import com.karmanchik.chtotibtelegrambot.model.DayOfWeek;
-import com.karmanchik.chtotibtelegrambot.model.WeekType;
-import com.karmanchik.chtotibtelegrambot.service.GroupService;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,20 +9,21 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.*;
+import static com.karmanchik.chtotibtelegrambot.util.TelegramUtil.createMessageTemplate;
 
 @Log4j2
 @Component
 @RequiredArgsConstructor
 public class MainHandler implements Handler {
 
-    private final GroupService groupService;
     private final UserService userService;
+    private final Helper helper;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
@@ -34,26 +32,26 @@ public class MainHandler implements Handler {
                 final Command command = Command.valueOfKey(message);
                 switch (command) {
                     case COM_1:
-                        log.debug("!!!! log debug 1: select handler - getFullTimetable for {}", user.toString());
-                        return this.getTimetable(user);
+                        log.debug("!!!! log debug 1: select handler - getTimetable for {}", user.toString());
+                        return getTimetable(user);
                     case COM_2:
                         log.debug("!!!! log debug 1: select handler - getMessageInfo for {}", user.toString());
-                        return this.getMessageInfo(user);
+                        return getMessageInfo(user);
                     case COM_3:
                         log.debug("!!!! log debug 1: select handler - getEditProfile for {}", user.toString());
-                        return this.getEditProfile(user);
+                        return getEditProfile(user);
                     default:
                         log.warn("Unsupported command {} for user {}", command, user.getId());
                         return Collections.emptyList();
                 }
             }
-            return List.of(mainMessage(user));
+            return List.of(Helper.mainMessage(user));
         } catch (RuntimeException e) {
             log.error(e.getMessage(), e);
             return List.of(
                     createMessageTemplate(user)
                             .setText("Ошибка: " + e.getMessage() + ";" + e.getLocalizedMessage()),
-                    mainMessage(user)
+                    Helper.mainMessage(user)
             );
         }
     }
@@ -76,7 +74,7 @@ public class MainHandler implements Handler {
         return List.of(
                 createMessageTemplate(user)
                         .setText(stringBuilder.toString()),
-                mainMessage(user)
+                Helper.mainMessage(user)
         );
     }
 
@@ -90,120 +88,7 @@ public class MainHandler implements Handler {
         return RegistrationHandler.selectRole(saveUser);
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> getFullTimetable(User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        log.debug("!!!! log debug getFullTimetable: create {}", stringBuilder.getClass().toString());
-        Calendar calendar = Calendar.getInstance();
-        log.debug("!!!! log debug getFullTimetable: create {}", calendar.getClass().toString() + " - " + calendar.toString());
-        WeekType week = getWeekType(calendar);
-        log.debug("!!!! log debug getFullTimetable: create {}", week.getClass().toString() + " - " + week.toString());
 
-        if (userService.isStudent(user)) {
-            Group group = user.getGroup();
-            log.debug("!!!! log debug getFullTimetable: find group by id=" + group.getId() + " - " + group.toString());
-            var dayList = groupService.findAllDaysOfWeekByGroupName(group.getGroupName());
-            log.debug("!!!! log debug getFullTimetable: find dayList by " + group.getGroupName() + " - " + Arrays.toString(dayList.toArray()));
-            var lessons = groupService.findAllLessonsByGroup(group.getGroupName(), week.name());
-            log.debug("!!!! log debug getFullTimetable: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessons.toArray()));
-
-            stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
-            stringBuilder.append("Расписание для группы ").append("<b>").append(group.getGroupName()).append("</b>").append(":\n");
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            dayList.forEach(day -> {
-                String dayOfWeek = DayOfWeek.get(day);
-                stringBuilder.append(dayOfWeek).append(":\n");
-                lessons.forEach(lesson -> {
-                    if (lesson.getDayOfWeek().equals(day)) {
-                        stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
-                                append("\t|\t").append(lesson.getDiscipline()).
-                                append("\t|\t").append(lesson.getAuditorium()).
-                                append("\t|\t").append(lesson.getTeacher())
-                                .append("\n");
-                    }
-                });
-                stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            });
-        } else if (userService.isTeacher(user)) {
-            String teacher = user.getTeacher();
-            var lessons = groupService.findAllLessonsByTeacher(teacher.toLowerCase(), week.name());
-            log.debug("!!!! log debug getFullTimetable: find lessons by " + teacher + " - " + Arrays.toString(lessons.toArray()));
-            var dayList = groupService.findAllDaysOfWeekByTeacher(teacher);
-            log.debug("!!!! log debug getFullTimetable: find dayList by " + teacher + " - " + Arrays.toString(dayList.toArray()));
-            stringBuilder.append("Неделя: ").append("<b>").append(week.getValue()).append("</b>").append("\n");
-            stringBuilder.append("Расписание для педагога ").append("<b>").append(teacher).append("</b>").append(":\n");
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            dayList.forEach(day -> {
-                stringBuilder.append(DayOfWeek.get(day)).append(":\n");
-                lessons.forEach(lesson -> {
-                    if (lesson.getDayOfWeek().equals(day)) {
-                        stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
-                                append("\t|\t").append(lesson.getGroupName()).
-                                append("\t|\t").append(lesson.getDiscipline()).
-                                append("\t|\t").append(lesson.getAuditorium()).
-                                append("\t|\t").append(lesson.getTeacher())
-                                .append("\n");
-                    }
-                });
-                stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            });
-        }
-        return List.of(
-                createMessageTemplate(user)
-                        .setText(stringBuilder.toString()),
-                mainMessage(user)
-        );
-    }
-
-    private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Calendar next = getNextDate();
-        log.debug("!!!! log debug getTimetableNextDay: create Calendar - " + next.toString());
-
-        int nextDayOfWeek = getNextDayOfWeek();
-        log.debug("!!!! log debug getTimetableNextDay: create nextDayOfWeek - " + nextDayOfWeek);
-        WeekType weekType = getWeekType(next);
-        log.debug("!!!! log debug getTimetableNextDay: create weekType - " + weekType.toString());
-
-        StringBuilder stringBuilder = new StringBuilder();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-
-        if (userService.isStudent(user)) {
-            Group group = user.getGroup();
-            log.debug("!!!! log debug getTimetableNextDay: find group by id=" + group.getId() + " - " + group.toString());
-            var lessonsForTomorrow = groupService.findAllByGroupNameAndDayOfWeek(group.getGroupName(), nextDayOfWeek, weekType.name());
-            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + group.getGroupName() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
-            String dayOfWeek = DayOfWeek.get(nextDayOfWeek);
-            stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t")
-                    .append(lesson.getLessonNumber()).
-                            append("\t|\t").append(lesson.getDiscipline()).
-                            append("\t|\t").append(lesson.getAuditorium()).
-                            append("\t|\t").append(lesson.getTeacher())
-                    .append("\n"));
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            stringBuilder.append("Группа: <b>").append(group.getGroupName()).append("</b>\t\t\t\t").append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
-        } else {
-            var lessonsForTomorrow = groupService.findAllByTeacherAndDayOfWeek(user.getTeacher().toLowerCase(), nextDayOfWeek, weekType.name());
-            log.debug("!!!! log debug getTimetableNextDay: find lessons by " + user.getTeacher() + " - " + Arrays.toString(lessonsForTomorrow.toArray()));
-            String dayOfWeek = DayOfWeek.get(nextDayOfWeek);
-            stringBuilder.append("Расписание на <b>").append(dateFormat.format(next.getTime())).append("</b> (").append(dayOfWeek).append("):\n");
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            lessonsForTomorrow.forEach(lesson -> stringBuilder.append("\t\t-\t").append(lesson.getLessonNumber()).
-                    append("\t|\t").append(lesson.getGroupName()).
-                    append("\t|\t").append(lesson.getDiscipline()).
-                    append("\t|\t").append(lesson.getAuditorium()).
-                    append("\t|\t").append(lesson.getTeacher())
-                    .append("\n"));
-            stringBuilder.append(new String(new char[60]).replace('\0', '-')).append("\n");
-            stringBuilder.append("Неделя: ").append("<b>").append(weekType.getValue()).append("</b>");
-        }
-        return List.of(
-                createMessageTemplate(user)
-                        .setText(stringBuilder.toString()),
-                mainMessage(user)
-        );
-    }
 
     @Override
     public Integer operatedBotStateId() {
@@ -216,7 +101,7 @@ public class MainHandler implements Handler {
     }
 
     public enum Command {
-        COM_1, // Расписание на завтра
+        COM_1, // Узнать расписание
         COM_2, // Справочное сообщение
         COM_3; // Изменить профиль
         public static final Map<String, Command> COMMAND_MAP = new HashMap<>();

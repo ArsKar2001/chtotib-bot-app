@@ -1,13 +1,15 @@
 package com.karmanchik.chtotibtelegrambot.service;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.model.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.repository.JpaGroupRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 @Service
 @Log4j2
@@ -64,5 +66,10 @@ public class GroupService {
 
     public Group findById(Integer groupId) {
         return groupRepository.findById(groupId).orElseGet(Group::new);
+    }
+
+    public boolean isGroupId(String message) {
+        List<Integer> groups = groupRepository.findAllGroupId();
+        return groups.contains(parseInt(message));
     }
 }

@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.model;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 public interface Lesson {
     String getAuditorium();

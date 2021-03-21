@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.repository;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.model.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

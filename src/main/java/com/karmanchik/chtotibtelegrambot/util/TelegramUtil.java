@@ -105,23 +105,4 @@ public class TelegramUtil {
         row.addAll(strings);
         return row;
     }
-
-    public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
-        final Set<String> keySet = Command.COMMAND_MAP.keySet();
-        ReplyKeyboardMarkup replyKeyboardMarkup = createReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRowList = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
-
-        keySet.forEach(row::add);
-        keyboardRowList.add(row);
-
-        replyKeyboardMarkup.setKeyboard(keyboardRowList);
-
-        return TelegramUtil.createMessageTemplate(user)
-                .setText("1\t-\tРасписание на завтра\n" +
-                        "2\t-\tВсе расписание\n" +
-                        "3\t-\tСправочное сообщение\n" +
-                        "4\t-\tИзменить профиль\n")
-                .setReplyMarkup(replyKeyboardMarkup);
-    }
 }
