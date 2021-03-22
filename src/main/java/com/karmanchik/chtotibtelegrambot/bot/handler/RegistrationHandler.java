@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
@@ -11,13 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
-import java.time.Month;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 

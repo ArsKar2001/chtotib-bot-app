@@ -2,7 +2,6 @@ package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;

@@ -4,16 +4,15 @@ import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.model.WeekType;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
-import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.io.Serializable;
-import java.util.*;
-
-import static com.karmanchik.chtotibtelegrambot.bot.handler.MainHandler.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TelegramUtil {
 
@@ -57,18 +56,17 @@ public class TelegramUtil {
 
     public static SendMessage createMessageTemplate(String chatId) {
         return new SendMessage()
-                .setChatId(chatId)
-                .enableMarkdown(false);
+                .setChatId(chatId);
     }
 
     public static List<List<InlineKeyboardButton>> createGroupListInlineKeyboardButton(List<Group> groupList, Integer countButtonInRow) {
-        List<List<InlineKeyboardButton>> listList = new ArrayList<>();
-        List<InlineKeyboardButton> buttonsLine = new ArrayList<>();
+        List<List<InlineKeyboardButton>> listList = new LinkedList<>();
+        List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
         for (Group group : groupList) {
             buttonsLine.add(TelegramUtil.createInlineKeyboardButton(group.getGroupName(), group.getId().toString()));
             if (buttonsLine.size() % countButtonInRow == 0) {
                 listList.add(buttonsLine);
-                buttonsLine = new ArrayList<>();
+                buttonsLine.clear();
             }
         }
         listList.add(buttonsLine);

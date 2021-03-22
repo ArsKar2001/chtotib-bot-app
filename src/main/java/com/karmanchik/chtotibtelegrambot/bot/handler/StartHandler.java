@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
 import com.karmanchik.chtotibtelegrambot.service.UserService;
 import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
@@ -23,7 +24,7 @@ public class StartHandler implements Handler {
     private final UserService userService;
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> handle(com.karmanchik.chtotibtelegrambot.entity.User user, String message) {
+    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         SendMessage welcomeMessage = TelegramUtil.createMessageTemplate(user)
                 .setText(String.format(
                         "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername
