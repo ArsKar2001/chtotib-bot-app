@@ -1,135 +1,146 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
+import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.jpa.models.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
+import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
-import com.karmanchik.chtotibtelegrambot.service.GroupService;
-import com.karmanchik.chtotibtelegrambot.service.UserService;
-import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import static com.karmanchik.chtotibtelegrambot.bot.handler.Helper.*;
-import static java.lang.Integer.parseInt;
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
 
 @Log4j2
 @Component
 @RequiredArgsConstructor
 public class RegistrationHandler implements Handler {
 
-    private static final String ROLE_STUDENT = "студент";
-    private static final String ROLE_TEACHER = "педагог";
-
     private final UserService userService;
     private final GroupService groupService;
-    private final Helper helper;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
-            switch (user.getUserState().getCode()) {
-                case "SELECT_ROLE":
+            UserState state = user.getUserState();
+            switch (state) {
+                case SELECT_COURSE:
+                    return selectGroup(user, message);
+                case SELECT_GROUP:
+                    return selectGroupOrAccept(user, message);
+                case SELECT_ROLE:
                     return switchRole(user, message);
-                case "SELECT_COURSE":
-                    return helper.selectGroup(user, message);
-                case "SELECT_GROUP":
-                    return selectOrAccept(user, message);
-                case "SELECT_OPTION":
-                    if (message.equalsIgnoreCase(ACCEPT))
-                        return helper.accept(user);
-                    if (message.equalsIgnoreCase(CHANGE))
-                        return helper.cancel(user);
-                case "ENTER_NAME":
-                    return helper.createSelectTeacherButtonsPanel(user, message);
-                case "SELECT_TEACHER":
-                    return selectTeacher(user, message);
+                case SELECT_OPTION:
+                    break;
+                case ENTER_NAME:
+                    break;
+                case SELECT_TEACHER:
+                    break;
+                case SELECT_TIMETABLE:
+                    break;
             }
             return Collections.emptyList();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return List.of(
                     TelegramUtil.createMessageTemplate(user)
-                            .setText("<b>Ошибка</b>: " + e.getMessage())
-            );
+                            .setText("<b>Ошибка</b>: " + e.getMessage()));
         }
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> selectOrAccept(User user, String message) {
-        if (Courses.containsKey(message)) {
-            return helper.selectGroup(user, message);
-        } else if (groupService.isGroupId(message)) {
-            user.setGroupId(parseInt(message));
-            final User saveUser = userService.save(user);
-            return helper.accept(saveUser);
-        }
-        return Collections.emptyList();
-    }
-
-    List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<String> allTeachers = groupService.findAllTeachers();
-        if (message.equalsIgnoreCase(CANCEL)) {
-            user.setUserStateId(Constants.User.ENTER_NAME);
-            final User saveUser1 = userService.save(user);
-            return helper.inputTeacherName(saveUser1);
-        } else if (allTeachers.contains(message)) {
-            user.setTeacher(message);
-            final User saveUser2 = userService.save(user);
-            return helper.accept(saveUser2);
-        } else {
-            return helper.createMessageDidNotDefine(user);
-        }
-    }
-
-    static List<PartialBotApiMethod<? extends Serializable>> selectRole(User user) {
-        ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
-        KeyboardRow keyboardRow = TelegramUtil.createKeyboardRow(List.of(
-                ROLE_STUDENT.toUpperCase(),
-                ROLE_TEACHER.toUpperCase()
-        ));
-        markup.setKeyboard(List.of(keyboardRow));
-        markup.setOneTimeKeyboard(true);
-
-        return List.of(
-                TelegramUtil.createMessageTemplate(user)
-                        .setText("Кто ты?")
-                        .setReplyMarkup(markup));
-    }
-
-    List<PartialBotApiMethod<? extends Serializable>> switchRole(User user, String message) {
+    private List<PartialBotApiMethod<? extends Serializable>> switchRole(User user, String message) {
         if (message.equalsIgnoreCase(ROLE_STUDENT)) {
-            user.setUserStateId(Constants.User.SELECT_COURSE);
-            user.setRoleId(Constants.Role.STUDENT);
-            final User saveUser1 = userService.save(user);
-            return helper.createSelectCourseButtonsPanel(saveUser1);
+            user.setUserState(UserState.SELECT_COURSE);
+            user.setRole(Role.STUDENT);
+            User save = userService.save(user);
+            return TelegramUtil.createSelectGroupButtonPanel(save);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
-            user.setRoleId(Constants.Role.TEACHER);
-            final User saveUser2 = userService.save(user);
-            return helper.inputTeacherName(saveUser2);
+            user.setRole(Role.TEACHER);
+            return inputTeacherName(user);
         }
         return Collections.emptyList();
     }
 
-    @Override
-    public Integer operatedBotStateId() {
-        return Constants.Bot.REG;
+    private List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
+        user.setUserState(UserState.ENTER_NAME);
+        User save = userService.save(user);
+        return List.of(
+                TelegramUtil.createMessageTemplate(save)
+                        .setText("Введите фамилию...")
+                        .enableMarkdown(false));
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
+        if (Courses.containsKey(message)) {
+            String s = Courses.get(message);
+            Integer academicYear = TelegramUtil.getAcademicYear(s);
+            int beginIndex = 2;
+            String academicYearSuffix = academicYear.toString().substring(beginIndex);
+
+            List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
+
+            InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
+            markup.setKeyboard(TelegramUtil.createGroupListInlineKeyboardButtons(groups, 3));
+
+            user.setUserState(UserState.SELECT_GROUP);
+            User save = userService.save(user);
+            return List.of(
+                    TelegramUtil.createMessageTemplate(save)
+                            .setText("Выбери группу...")
+                            .setReplyMarkup(markup));
+        }
+        return Collections.emptyList();
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(User user, String message) throws ResourceNotFoundException {
+        int id = Integer.parseInt(message);
+
+        if (Courses.containsKey(message)) {
+            return selectGroup(user, message);
+        } else if (groupService.existsById(id)) {
+            Group group = groupService.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
+            user.setGroup(group);
+            return accept(user);
+        }
+        return Collections.emptyList();
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> accept(User user) {
+        user.setUserState(UserState.NONE);
+        user.setBotState(BotState.AUTHORIZED);
+        User save = userService.save(user);
+        return List.of(Helper.mainMessage(save));
     }
 
     @Override
-    public List<Integer> operatedUserListStateId() {
+    public BotState operatedBotState() {
+        return BotState.REG;
+    }
+
+    @Override
+    public List<UserState> operatedUserSate() {
         return List.of(
-                Constants.User.SELECT_COURSE,
-                Constants.User.SELECT_ROLE,
-                Constants.User.SELECT_GROUP,
-                Constants.User.ENTER_NAME,
-                Constants.User.SELECT_TEACHER
+                UserState.SELECT_ROLE,
+                UserState.SELECT_COURSE,
+                UserState.SELECT_TEACHER,
+                UserState.ENTER_NAME,
+                UserState.SELECT_OPTION,
+                UserState.SELECT_TIMETABLE
         );
     }
 }

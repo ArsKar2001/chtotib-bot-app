@@ -1,13 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.model;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Courses {
     private static final Map<String, String> COURSES = Map.of(
             "I", "1",
@@ -15,6 +11,8 @@ public class Courses {
             "III", "3",
             "IV", "4"
     );
+
+    private Courses() {}
 
     public static Map<String, String> getAll() {
         return COURSES;
