@@ -1,8 +1,8 @@
 package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.service.UserService;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
+import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -10,7 +10,6 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -29,33 +28,25 @@ public class UpdateReceiver {
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
         try {
             if (isMessageWithText(update)) {
-                final Message message = update.getMessage();
-                log.debug("!!!! log debug UpdateReceiver: получили Message - " + message.toString());
-                final int chatId = message.getFrom().getId();
-                log.debug("!!!! log debug UpdateReceiver: получили chatId - " + chatId);
-                final String userName = message.getChat().getUserName();
-                log.debug("!!!! log debug UpdateReceiver: получили userName - {}", userName);
-                final int messageId = message.getMessageId();
-                log.debug("!!!! log debug UpdateReceiver: получили messageId - " + messageId);
-                final User user = userService.findByChatIdAndName(chatId, userName);
-                log.debug("!!!! log debug UpdateReceiver: user - " + user.toString());
-                user.setBotLastMessageId(messageId);
-                User sUser = userService.save(user);
-                return getHandlerByState(sUser).handle(sUser, message.getText());
+                Message message = update.getMessage();
+                log.info("Message - {}", message);
+                Integer chatId = message.getFrom().getId();
+                log.info("Chat Id - {}", chatId);
+                String userName = message.getChat().getUserName();
+                log.info("UserName - {}", userName);
+                User user = userService.findByChatIdAndUserName(chatId, userName);
+                log.info("User - {}", user);
+                return getHandlerByState(user).handle(user, message.getText());
             } else if (update.hasCallbackQuery()) {
-                final CallbackQuery callbackQuery = update.getCallbackQuery();
-                log.debug("!!!! log debug UpdateReceiver: получили Message - " + callbackQuery.toString());
-                final int messageId = callbackQuery.getMessage().getMessageId();
-                log.debug("!!!! log debug UpdateReceiver: получили messageId - " + messageId);
-                final int chatId = callbackQuery.getFrom().getId();
-                log.debug("!!!! log debug UpdateReceiver: получили chatId - " + chatId);
-                final String userName = callbackQuery.getMessage().getChat().getUserName();
-                log.debug("!!!! log debug UpdateReceiver: получили userName - {}", userName);
-                final User user = userService.findByChatIdAndName(chatId, userName);
-                log.debug("!!!! log debug UpdateReceiver: user - " + user.toString());
-                user.setBotLastMessageId(messageId);
-                User sUser = userService.save(user);
-                return getHandlerByState(sUser).handle(sUser, callbackQuery.getData());
+                CallbackQuery callbackQuery = update.getCallbackQuery();
+                log.info("CallbackQuery - {}", callbackQuery);
+                Integer chatId = callbackQuery.getFrom().getId();
+                log.info("Chat Id - {}", chatId);
+                String userName = callbackQuery.getMessage().getChat().getUserName();
+                log.info("UserName - {}", userName);
+                User user = userService.findByChatIdAndUserName(chatId, userName);
+                log.info("User - {}", user);
+                return getHandlerByState(user).handle(user, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException e) {
@@ -64,11 +55,11 @@ public class UpdateReceiver {
         }
     }
 
-    private Handler getHandlerByState(@NotBlank User user) {
+    private Handler getHandlerByState(User user) {
         return handlers.stream()
-                .filter(h -> h.operatedUserListStateId().stream()
-                        .anyMatch(state -> state.equals(user.getUserStateId())))
-                .filter(h -> h.operatedBotStateId().equals(user.getBotStateId()))
+                .filter(handler -> handler.operatedBotState() == user.getBotState())
+                .filter(handler -> handler.operatedUserSate().stream()
+                        .anyMatch(state -> state == user.getUserState()))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }

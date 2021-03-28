@@ -1,8 +1,11 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.entity.constants.Constants;
-import com.karmanchik.chtotibtelegrambot.service.UserService;
-import com.karmanchik.chtotibtelegrambot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
+import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,33 +20,32 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class StartHandler implements Handler {
+    private final UserService userService;
+
     @Value("${bot.name}")
     private String botUsername;
 
-    private final UserService userService;
-
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> handle(com.karmanchik.chtotibtelegrambot.entity.User user, String message) {
-        SendMessage welcomeMessage = TelegramUtil.createMessageTemplate(user)
+    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
+        SendMessage welcome = TelegramUtil.createMessageTemplate(user)
                 .setText(String.format(
-                        "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername
-                ))
-                .enableMarkdown(false);
-
-        user.setUserStateId(Constants.User.SELECT_ROLE);
-        user.setBotStateId(Constants.Bot.REG);
-        userService.save(user);
-
-        return List.of(welcomeMessage, RegistrationHandler.selectRole(user).get(0));
+                        "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername));
+        user.setBotState(BotState.REG);
+        user.setUserState(UserState.SELECT_ROLE);
+        User save = userService.save(user);
+        return List.of(
+                welcome,
+                Helper.selectRole(save)
+        );
     }
 
     @Override
-    public Integer operatedBotStateId() {
-        return Constants.Bot.START;
+    public BotState operatedBotState() {
+        return BotState.START;
     }
 
     @Override
-    public List<Integer> operatedUserListStateId() {
-        return List.of(Constants.User.NONE);
+    public List<UserState> operatedUserSate() {
+        return List.of(UserState.NONE);
     }
 }
