@@ -107,11 +107,11 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(User user, String message) throws ResourceNotFoundException {
-        int id = Integer.parseInt(message);
 
         if (Courses.containsKey(message)) {
             return selectGroup(user, message);
-        } else if (groupService.existsById(id)) {
+        } else if (Helper.isNumeric(message)) {
+            int id = Integer.parseInt(message);
             Group group = groupService.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
             user.setGroup(group);
@@ -138,6 +138,7 @@ public class RegistrationHandler implements Handler {
                 UserState.SELECT_ROLE,
                 UserState.SELECT_COURSE,
                 UserState.SELECT_TEACHER,
+                UserState.SELECT_GROUP,
                 UserState.ENTER_NAME,
                 UserState.SELECT_OPTION,
                 UserState.SELECT_TIMETABLE

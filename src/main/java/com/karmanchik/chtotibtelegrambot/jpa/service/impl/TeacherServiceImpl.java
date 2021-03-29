@@ -2,6 +2,7 @@ package com.karmanchik.chtotibtelegrambot.jpa.service.impl;
 
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
+import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
 import com.karmanchik.chtotibtelegrambot.jpa.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,8 +18,8 @@ public class TeacherServiceImpl implements TeacherService {
     private final JpaTeacherRepository teacherRepository;
 
     @Override
-    public <S extends Teacher> S getByName(String teacherName) {
-        return (S) teacherRepository.getByName(teacherName)
+    public Teacher getByName(String teacherName) {
+        return teacherRepository.getByName(teacherName)
                 .orElseGet(() -> teacherRepository
                         .save(Teacher.builder(teacherName)
                                 .build()));
@@ -27,11 +28,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public <S extends Teacher> S save(S s) {
         return teacherRepository.save(s);
-    }
-
-    @Override
-    public <S extends Teacher> List<S> saveAll(List<S> s) {
-        return teacherRepository.saveAll(s);
     }
 
     @Override
@@ -51,17 +47,22 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public <S extends Teacher> Optional<S> findById(Integer id) {
-        return (Optional<S>) teacherRepository.findById(id);
+    public List<IdTeacherName> getIdTeacherName() {
+        return teacherRepository.getAllIdTeacherName();
     }
 
     @Override
-    public <S extends Teacher> List<S> findAll() {
-        return (List<S>) teacherRepository.findAll();
+    public List<Teacher> saveAll(List<Teacher> t) {
+        return teacherRepository.saveAll(t);
     }
 
     @Override
-    public Optional<List<String>> getAllNames() {
-        return teacherRepository.getAllNames();
+    public Optional<Teacher> findById(Integer id) {
+        return teacherRepository.findById(id);
+    }
+
+    @Override
+    public List<Teacher> findAll() {
+        return teacherRepository.findAll();
     }
 }

@@ -18,8 +18,8 @@ public class GroupServiceImpl implements GroupService {
     private final JpaGroupRepository groupRepository;
 
     @Override
-    public <S extends Group> S getByName(String name) {
-        return (S) groupRepository.getByName(name)
+    public Group getByName(String name) {
+        return groupRepository.getByName(name)
                 .orElseGet(() -> groupRepository
                         .save(Group.builder(name)
                                 .build()));
@@ -45,10 +45,6 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.save(s);
     }
 
-    @Override
-    public <S extends Group> List<S> saveAll(List<S> s) {
-        return groupRepository.saveAll(s);
-    }
 
     @Override
     public void deleteById(Integer id) {
@@ -67,12 +63,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public <S extends Group> Optional<S> findById(Integer id) {
-        return (Optional<S>) groupRepository.findById(id);
+    public List<Group> saveAll(List<Group> t) {
+        return groupRepository.saveAll(t);
     }
 
     @Override
-    public <S extends Group> List<S> findAll() {
-        return (List<S>) groupRepository.findAll();
+    public Optional<Group> findById(Integer id) {
+        return groupRepository.findById(id);
+    }
+
+    @Override
+    public List<Group> findAll() {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
+import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
     Optional<Teacher> getByName(@NotNull String name);
 
-    @Query("SELECT g.name FROM Group g")
-    Optional<List<String>> getAllNames();
+    @Query(nativeQuery = true,
+    value = "SELECT t.id, t.name FROM teacher t " +
+            "ORDER BY t.name")
+    List<IdTeacherName> getAllIdTeacherName();
 }

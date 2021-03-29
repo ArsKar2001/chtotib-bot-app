@@ -22,11 +22,6 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public <S extends Lesson> List<S> saveAll(List<S> s) {
-        return lessonsRepository.saveAll(s);
-    }
-
-    @Override
     public void deleteById(Integer id) {
         lessonsRepository.deleteById(id);
     }
@@ -43,12 +38,17 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public <S extends Lesson> Optional<S> findById(Integer id) {
-        return null;
+    public List<Lesson> saveAll(List<Lesson> t) {
+        return lessonsRepository.saveAll(t);
     }
 
     @Override
-    public <S extends Lesson> List<S> findAll() {
-        return (List<S>) lessonsRepository.findAll();
+    public Optional<Lesson> findById(Integer id) {
+        return lessonsRepository.findById(id);
+    }
+
+    @Override
+    public List<Lesson> findAll() {
+        return lessonsRepository.findAll();
     }
 }

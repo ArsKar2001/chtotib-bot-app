@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface BaseService<T extends BaseEntity> {
     <S extends T> S save(S s);
 
-    <S extends T> List<S> saveAll(List<S> s);
+    List<T> saveAll(List<T> t);
 
     void deleteById(Integer id);
 
@@ -16,7 +16,7 @@ public interface BaseService<T extends BaseEntity> {
 
     <S extends T> void deleteAll();
 
-    <S extends T> Optional<S> findById(Integer id);
+    Optional<T> findById(Integer id);
 
-    <S extends T> List<S> findAll();
+    List<T> findAll();
 }

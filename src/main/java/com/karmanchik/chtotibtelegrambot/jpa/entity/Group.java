@@ -42,7 +42,7 @@ public class Group extends BaseEntity {
     @Setter
     @JsonManagedReference
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy(value = "date ASC")
+    @OrderBy(value = "date, pairNumber ASC")
     private Set<Replacement> replacements;
 
     private static GroupBuilder builder() {

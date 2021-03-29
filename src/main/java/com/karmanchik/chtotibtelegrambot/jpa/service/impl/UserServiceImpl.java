@@ -25,11 +25,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public <S extends User> List<S> saveAll(List<S> s) {
-        return null;
-    }
-
-    @Override
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
     }
@@ -47,16 +42,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public <S extends User> Optional<S> findById(Integer id) {
-        return (Optional<S>) userRepository.findById(id);
-    }
-
-    @Override
-    public <S extends User> List<S> findAll() {
-        return (List<S>) userRepository.findAll();
-    }
-
-    @Override
     public User findByChatIdAndUserName(Integer chatId, String userName) {
         return userRepository.findByChatIdAndUserName(chatId, userName)
                 .orElseGet(() -> userRepository.save(User.builder(chatId, userName)
@@ -64,5 +49,20 @@ public class UserServiceImpl implements UserService {
                         .userState(UserState.NONE)
                         .role(Role.NONE)
                         .build()));
+    }
+
+    @Override
+    public List<User> saveAll(List<User> t) {
+        return userRepository.saveAll(t);
+    }
+
+    @Override
+    public Optional<User> findById(Integer id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
