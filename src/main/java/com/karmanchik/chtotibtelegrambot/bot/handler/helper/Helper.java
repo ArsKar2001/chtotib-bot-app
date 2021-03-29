@@ -30,7 +30,6 @@ public class Helper {
     }
 
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
-
         return TelegramUtil.createMessageTemplate(user)
                 .setText("Поздравляю! :)");
     }

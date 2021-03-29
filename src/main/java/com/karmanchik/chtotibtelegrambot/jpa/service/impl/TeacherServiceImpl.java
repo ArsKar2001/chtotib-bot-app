@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<IdTeacherName> getIdTeacherName() {
         return teacherRepository.getAllIdTeacherName();
+    }
+
+    @Override
+    public List<IdTeacherName> getAllIdTeacherNameByNameLike(@NotNull String suffix) {
+        return teacherRepository.getAllIdTeacherNameByNameLike(suffix);
     }
 
     @Override

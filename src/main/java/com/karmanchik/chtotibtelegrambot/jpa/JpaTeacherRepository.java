@@ -17,7 +17,13 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
     Optional<Teacher> getByName(@NotNull String name);
 
     @Query(nativeQuery = true,
-    value = "SELECT t.id, t.name FROM teacher t " +
-            "ORDER BY t.name")
+            value = "SELECT t.id, t.name FROM teacher t " +
+                    "ORDER BY t.name")
     List<IdTeacherName> getAllIdTeacherName();
+
+    @Query(nativeQuery = true,
+            value = "SELECT t.id, name FROM teacher t " +
+                    "WHERE lower(t.name) LIKE '%' || lower($1) || '%'" +
+                    "ORDER BY t.name")
+    List<IdTeacherName> getAllIdTeacherNameByNameLike(@NotNull String suffix);
 }

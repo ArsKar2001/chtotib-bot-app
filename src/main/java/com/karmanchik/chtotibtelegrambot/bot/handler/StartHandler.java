@@ -31,7 +31,10 @@ public class StartHandler implements Handler {
                 .setText(String.format(
                         "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername));
         user.setBotState(BotState.REG);
+        log.info("Set user({}): bot_state - {}", user.getId(), BotState.REG);
         user.setUserState(UserState.SELECT_ROLE);
+        log.info("Set user({}): user_state - {}", user.getId(), BotState.REG);
+
         User save = userService.save(user);
         return List.of(
                 welcome,

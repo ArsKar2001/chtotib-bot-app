@@ -54,7 +54,7 @@ public class TelegramUtil {
         return (now_month > Month.SEPTEMBER.getValue()) ? academicYear + 1 : academicYear;
     }
 
-    public static List<List<InlineKeyboardButton>> createGroupListInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
+    public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
         List<List<InlineKeyboardButton>> listList = new LinkedList<>();
         List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
 
