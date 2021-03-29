@@ -114,6 +114,7 @@ public class RegistrationHandler implements Handler {
             return selectGroup(user, message);
         } else if (Helper.isNumeric(message)) {
             int id = Integer.parseInt(message);
+            log.info("Find group by id: {} ...", id);
             Group group = groupService.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
             user.setGroup(group);
