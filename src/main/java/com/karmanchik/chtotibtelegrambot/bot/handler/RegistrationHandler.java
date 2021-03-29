@@ -141,7 +141,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<IdTeacherName> teacherNames = teacherService.getAllIdTeacherNameByNameLike(message);
+        List<IdTeacherName> teacherNames = teacherService.getAllIdTeacherNameByName(message);
         if (!teacherNames.isEmpty()) {
             user.setUserState(UserState.SELECT_TEACHER);
             User save = userService.save(user);

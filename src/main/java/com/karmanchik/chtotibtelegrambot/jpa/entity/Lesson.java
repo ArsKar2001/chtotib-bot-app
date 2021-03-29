@@ -51,12 +51,12 @@ public class Lesson extends BaseEntity {
     @NotNull
     private WeekType weekType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;

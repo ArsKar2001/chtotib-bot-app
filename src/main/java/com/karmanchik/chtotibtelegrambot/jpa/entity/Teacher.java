@@ -1,13 +1,12 @@
 package com.karmanchik.chtotibtelegrambot.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -22,19 +21,21 @@ public class Teacher extends BaseEntity {
     private String name;
 
     @Setter
+    @JsonBackReference
     @OneToOne(mappedBy = "teacher")
     private User user;
 
     @Getter
-    @JsonManagedReference
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
     @OrderBy("day, pairNumber ASC")
-    private Set<Lesson> lessons;
+    private List<Lesson> lessons;
 
     @Getter
-    @JsonManagedReference
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Replacement> replacements;
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OrderBy("date, pairNumber ASC")
+    private List<Replacement> replacements;
 
     public static TeacherBuilder builder(String name) {
         return hiddenBuilder().name(name);

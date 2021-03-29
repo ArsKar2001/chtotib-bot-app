@@ -1,13 +1,14 @@
 package com.karmanchik.chtotibtelegrambot.jpa.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(
@@ -30,27 +31,28 @@ public class Group extends BaseEntity {
     private String name;
 
     @Setter
+    @JsonBackReference
     @OneToOne(mappedBy = "group")
     private User user;
 
     @Setter
-    @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("day, pairNumber ASC")
-    private Set<Lesson> lessons;
+    private List<Lesson> lessons;
 
     @Setter
-    @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy(value = "date, pairNumber ASC")
-    private Set<Replacement> replacements;
-
-    private static GroupBuilder builder() {
-        return new GroupBuilder();
-    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy(value = "date ASC")
+    private List<Replacement> replacements;
 
     public static GroupBuilder builder(String name) {
         return hiddenBuilder().name(name);
+    }
+
+    public List<Replacement> getReplacements() {
+        return replacements;
     }
 
     @Override

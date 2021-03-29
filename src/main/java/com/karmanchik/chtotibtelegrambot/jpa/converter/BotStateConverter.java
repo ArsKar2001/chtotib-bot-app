@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.jpa.converter;
 
+
 import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
 
 import javax.persistence.AttributeConverter;

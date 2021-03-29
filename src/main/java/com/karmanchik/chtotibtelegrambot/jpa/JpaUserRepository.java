@@ -11,5 +11,5 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface JpaUserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByChatIdAndUserName(@NotNull Integer chatId, @NotNull String userName);
+    Optional<User> getByChatIdAndUserName(@NotNull Integer chatId, @NotNull String userName);
 }

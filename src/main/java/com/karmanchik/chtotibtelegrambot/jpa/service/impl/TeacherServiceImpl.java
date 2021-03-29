@@ -1,6 +1,8 @@
 package com.karmanchik.chtotibtelegrambot.jpa.service.impl;
 
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.Replacement;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
 import com.karmanchik.chtotibtelegrambot.jpa.service.TeacherService;
@@ -8,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
     private final JpaTeacherRepository teacherRepository;
+    private final EntityManager entityManager;
 
     @Override
     public Teacher getByName(String teacherName) {
@@ -32,34 +35,42 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public List<Teacher> saveAll(List<Teacher> s) {
+        return teacherRepository.saveAll(s);
+    }
+
+    @Override
     public void deleteById(Integer id) {
         teacherRepository.deleteById(id);
     }
 
     @Override
-    public <S extends Teacher> void delete(S s) {
-        teacherRepository.delete(s);
+    public void delete(Teacher t) {
+        teacherRepository.delete(t);
     }
 
     @Override
-    public <S extends Teacher> void deleteAll() {
+    public void deleteAll() {
         log.info("Deleted all users!");
         teacherRepository.deleteAllInBatch();
     }
 
     @Override
-    public List<IdTeacherName> getIdTeacherName() {
-        return teacherRepository.getAllIdTeacherName();
+    public List<Lesson> getLessonsByGroupId(Integer id) {
+        return (List<Lesson>) entityManager.createQuery(
+                "SELECT l FROM Lesson l " +
+                        "WHERE l.group.id = :id " +
+                        "ORDER BY l.day, l.pairNumber")
+                .setParameter("id", id).getResultList();
     }
 
     @Override
-    public List<IdTeacherName> getAllIdTeacherNameByNameLike(@NotNull String suffix) {
-        return teacherRepository.getAllIdTeacherNameByNameLike(suffix);
-    }
-
-    @Override
-    public List<Teacher> saveAll(List<Teacher> t) {
-        return teacherRepository.saveAll(t);
+    public List<Replacement> getReplacementsByGroupId(Integer id) {
+        return entityManager.createQuery(
+                "SELECT r FROM Replacement r " +
+                        "WHERE r.group.id = :id " +
+                        "ORDER BY r.date, r.pairNumber")
+                .setParameter("id", id).getResultList();
     }
 
     @Override
@@ -70,5 +81,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
+    }
+
+    @Override
+    public List<IdTeacherName> getAllIdTeacherName() {
+        return teacherRepository.getAllNames();
+    }
+
+    @Override
+    public List<IdTeacherName> getAllIdTeacherNameByName(String message) {
+        return teacherRepository.getAllIdTeacherNameByName(message);
     }
 }

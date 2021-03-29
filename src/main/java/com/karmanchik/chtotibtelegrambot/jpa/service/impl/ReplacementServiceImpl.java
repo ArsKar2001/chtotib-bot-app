@@ -29,18 +29,18 @@ public class ReplacementServiceImpl implements ReplacementService {
     }
 
     @Override
-    public <S extends Replacement> void delete(S s) {
-        replacementRepository.delete(s);
-    }
-
-    @Override
-    public <S extends Replacement> void deleteAll() {
-        replacementRepository.deleteAll();
-    }
-
-    @Override
     public List<Replacement> saveAll(List<Replacement> t) {
         return replacementRepository.saveAll(t);
+    }
+
+    @Override
+    public void delete(Replacement replacement) {
+        replacementRepository.delete(replacement);
+    }
+
+    @Override
+    public void deleteAll() {
+        replacementRepository.deleteAll();
     }
 
     @Override

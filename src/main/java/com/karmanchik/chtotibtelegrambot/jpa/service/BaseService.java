@@ -12,9 +12,9 @@ public interface BaseService<T extends BaseEntity> {
 
     void deleteById(Integer id);
 
-    <S extends T> void delete(S s);
+    void delete(T t);
 
-    <S extends T> void deleteAll();
+    void deleteAll();
 
     Optional<T> findById(Integer id);
 

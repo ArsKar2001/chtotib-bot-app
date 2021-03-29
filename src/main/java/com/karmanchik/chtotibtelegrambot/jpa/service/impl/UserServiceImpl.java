@@ -25,35 +25,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> saveAll(List<User> t) {
+        return userRepository.saveAll(t);
+    }
+
+    @Override
     public void deleteById(Integer id) {
         userRepository.deleteById(id);
     }
 
     @Override
-    public <S extends User> void delete(S s) {
-        log.info("Delete user {}", s.getId());
-        userRepository.delete(s);
+    public void delete(User user) {
+    userRepository.delete(user);
     }
 
     @Override
-    public <S extends User> void deleteAll() {
-        log.info("Delete all users!");
-        userRepository.deleteAllInBatch();
-    }
-
-    @Override
-    public User findByChatIdAndUserName(Integer chatId, String userName) {
-        return userRepository.findByChatIdAndUserName(chatId, userName)
-                .orElseGet(() -> userRepository.save(User.builder(chatId, userName)
-                        .botState(BotState.START)
-                        .userState(UserState.NONE)
-                        .role(Role.NONE)
-                        .build()));
-    }
-
-    @Override
-    public List<User> saveAll(List<User> t) {
-        return userRepository.saveAll(t);
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 
     @Override
@@ -64,5 +52,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User findByChatIdAndUserName(Integer chatId, String userName) {
+        return userRepository.getByChatIdAndUserName(chatId, userName)
+                .orElseGet(() -> userRepository.save(
+                        User.builder(chatId, userName)
+                                .botState(BotState.START)
+                                .userState(UserState.NONE)
+                                .role(Role.NONE)
+                                .build()));
     }
 }

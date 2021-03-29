@@ -27,19 +27,18 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public <S extends Lesson> void delete(S s) {
-        lessonsRepository.delete(s);
-    }
-
-    @Override
-    public <S extends Lesson> void deleteAll() {
-        log.info("Deleted all lessons!");
-        lessonsRepository.deleteAllInBatch();
-    }
-
-    @Override
     public List<Lesson> saveAll(List<Lesson> t) {
         return lessonsRepository.saveAll(t);
+    }
+
+    @Override
+    public void delete(Lesson lesson) {
+        lessonsRepository.delete(lesson);
+    }
+
+    @Override
+    public void deleteAll() {
+        lessonsRepository.deleteAll();
     }
 
     @Override

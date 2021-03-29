@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.jpa.converter;
 
-
 import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
 
 import javax.persistence.AttributeConverter;

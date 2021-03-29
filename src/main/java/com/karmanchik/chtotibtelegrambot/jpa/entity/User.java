@@ -6,7 +6,6 @@ import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -30,17 +29,20 @@ public class User extends BaseEntity {
     @NotNull
     private String userName;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "user_teacher",
-    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
-    inverseJoinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)})
     private Teacher teacher;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "user_group",
-    joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
-    inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)})
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)})
     private Group group;
+
 
     @Column(name = "role_id")
     private Role role;
