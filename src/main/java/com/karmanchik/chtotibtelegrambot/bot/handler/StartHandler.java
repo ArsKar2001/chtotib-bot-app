@@ -1,7 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
@@ -12,11 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -39,9 +34,15 @@ public class StartHandler implements Handler {
             case NONE:
                 return welcomeMessage(user);
             case START:
-                return List.of(Helper.selectRole(user));
+                return startMessage(user);
         }
         return Collections.emptyList();
+    }
+
+    private List<PartialBotApiMethod<? extends Serializable>> startMessage(User user) {
+        user.setBotState(BotState.REG);
+        user.setUserState(UserState.SELECT_ROLE);
+        return List.of(HandlerHelper.selectRole(userService.save(user)));
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> welcomeMessage(User user) {

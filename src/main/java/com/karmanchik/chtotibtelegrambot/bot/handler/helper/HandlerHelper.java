@@ -2,6 +2,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -12,8 +13,9 @@ import java.util.List;
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
 
-public class Helper {
-    private Helper() {}
+public class HandlerHelper {
+    private HandlerHelper() {
+    }
 
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
@@ -30,19 +32,19 @@ public class Helper {
     }
 
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
+        Role role = user.getRole();
+
         return TelegramUtil.createMessageTemplate(user)
-                .setText("Поздравляю! :)");
+                .setText("1.\tУзнать расписание");
     }
 
     public static boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
+        if (strNum != null) try {
             int i = Integer.parseInt(strNum);
+            return true;
         } catch (NumberFormatException nfe) {
             return false;
         }
-        return true;
+        else return false;
     }
 }

@@ -29,4 +29,11 @@ public class MainHandler implements Handler {
     public List<UserState> operatedUserSate() {
         return null;
     }
+
+    private enum MainCommand {
+        COMMAND_1,
+        COMMAND_2,
+        COMMAND_3,
+        COMMAND_4,
+    }
 }

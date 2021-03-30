@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
@@ -94,12 +94,14 @@ public class RegistrationHandler implements Handler {
             String academicYearSuffix = academicYear.toString().substring(beginIndex);
             List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
 
+
             user.setUserState(UserState.SELECT_GROUP);
             return List.of(
                     TelegramUtil.createMessageTemplate(userService.save(user))
                             .setText("Выбери группу...")
-                            .setReplyMarkup(() ->
-                                    TelegramUtil.createInlineKeyboardButtons(groups, 3)));
+                            .setReplyMarkup(new InlineKeyboardMarkup()
+                                    .setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
+                            ));
         }
         return Collections.emptyList();
     }
@@ -108,7 +110,7 @@ public class RegistrationHandler implements Handler {
 
         if (Courses.containsKey(message)) {
             return selectGroup(user, message);
-        } else if (Helper.isNumeric(message)) {
+        } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
             Group group = groupService.findById(id)
@@ -124,7 +126,7 @@ public class RegistrationHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacherOrAccept(User user, String message) throws ResourceNotFoundException {
         if (message.equalsIgnoreCase(CANCEL)) {
             return inputTeacherName(user);
-        } else if (Helper.isNumeric(message)) {
+        } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             Teacher teacher = teacherService.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Teacher.class));
@@ -167,7 +169,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> sendMessageDidNotDefine(User user) {
-        String outMessage = "Не смог вас определить :(";
+        String outMessage = "Педагог не найден";
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText(outMessage)
@@ -180,14 +182,14 @@ public class RegistrationHandler implements Handler {
         user.setUserState(UserState.NONE);
         user.setBotState(BotState.AUTHORIZED);
         User save = userService.save(user);
-        return Helper.mainMessage(save);
+        return HandlerHelper.mainMessage(save);
     }
 
     private PartialBotApiMethod<? extends Serializable> cancel(User user) {
         user.setUserState(UserState.SELECT_ROLE);
         user.setBotState(BotState.REG);
         final User saveUser = userService.save(user);
-        return Helper.selectRole(saveUser);
+        return HandlerHelper.selectRole(saveUser);
     }
 
     @Override
