@@ -2,7 +2,10 @@ package com.karmanchik.chtotibtelegrambot.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,16 +28,18 @@ public class Teacher extends BaseEntity {
     @OneToOne(mappedBy = "teacher")
     private User user;
 
-    @Getter
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @Setter
+    @JsonManagedReference
+    @OneToMany(mappedBy = "teacher")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy("day, pairNumber ASC")
     private List<Lesson> lessons;
 
-    @Getter
-    @JsonIgnore
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    @OrderBy("date, pairNumber ASC")
+    @Setter
+    @JsonManagedReference
+    @OneToMany(mappedBy = "teacher")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OrderBy(value = "date ASC")
     private List<Replacement> replacements;
 
     public static TeacherBuilder builder(String name) {

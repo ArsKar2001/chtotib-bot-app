@@ -2,8 +2,11 @@ package com.karmanchik.chtotibtelegrambot.jpa.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
@@ -36,14 +39,16 @@ public class Group extends BaseEntity {
     private User user;
 
     @Setter
-    @JsonIgnore
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "group")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy("day, pairNumber ASC")
     private List<Lesson> lessons;
 
     @Setter
-    @JsonIgnore
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "group")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy(value = "date ASC")
     private List<Replacement> replacements;
 

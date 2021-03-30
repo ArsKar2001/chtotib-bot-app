@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
+import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
@@ -12,9 +13,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
+
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.CREATE;
 
 @Log4j2
 @Component
@@ -27,19 +34,27 @@ public class StartHandler implements Handler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
-        SendMessage welcome = TelegramUtil.createMessageTemplate(user)
-                .setText(String.format(
-                        "Привет!%nМеня зовут %s :D%nЯ был создан для работы со студентами и педагогами ЧТОТиБ.", botUsername));
-        user.setBotState(BotState.REG);
-        log.info("Set user({}): bot_state - {}", user.getId(), BotState.REG);
-        user.setUserState(UserState.SELECT_ROLE);
-        log.info("Set user({}): user_state - {}", user.getId(), BotState.REG);
+        UserState state = user.getUserState();
+        switch (state) {
+            case NONE:
+                return welcomeMessage(user);
+            case START:
+                return List.of(Helper.selectRole(user));
+        }
+        return Collections.emptyList();
+    }
 
-        User save = userService.save(user);
-        return List.of(
-                welcome,
-                Helper.selectRole(save)
-        );
+    private List<PartialBotApiMethod<? extends Serializable>> welcomeMessage(User user) {
+        user.setUserState(UserState.START);
+        userService.save(user);
+        log.info("Set user({}): user_state - {}", user.getId(), UserState.START);
+
+        return List.of(TelegramUtil.createMessageTemplate(user)
+                .setText(String.format("Привет @%s!!!%nМеня зовут @%s :D%n" +
+                        "Я был создан для работы со студентами и педагогами ЧТОТиБ.%n" +
+                        "Давай создадим твою анкету?!", user.getUserName(), botUsername))
+                .setReplyMarkup(() -> TelegramUtil.createKeyboardRow(List.of(CREATE)))
+                .enableMarkdown(true));
     }
 
     @Override
@@ -49,6 +64,9 @@ public class StartHandler implements Handler {
 
     @Override
     public List<UserState> operatedUserSate() {
-        return List.of(UserState.NONE);
+        return List.of(
+                UserState.NONE,
+                UserState.START
+        );
     }
 }

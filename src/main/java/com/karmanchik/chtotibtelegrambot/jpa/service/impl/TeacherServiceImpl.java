@@ -1,8 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.jpa.service.impl;
 
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Replacement;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
 import com.karmanchik.chtotibtelegrambot.jpa.service.TeacherService;
@@ -56,8 +54,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Lesson> getLessonsByGroupId(Integer id) {
-        return (List<Lesson>) entityManager.createQuery(
+    public List<?> getLessonsByGroupId(Integer id) {
+        return entityManager.createQuery(
                 "SELECT l FROM Lesson l " +
                         "WHERE l.group.id = :id " +
                         "ORDER BY l.day, l.pairNumber")
@@ -65,7 +63,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Replacement> getReplacementsByGroupId(Integer id) {
+    public List<?> getReplacementsByGroupId(Integer id) {
         return entityManager.createQuery(
                 "SELECT r FROM Replacement r " +
                         "WHERE r.group.id = :id " +

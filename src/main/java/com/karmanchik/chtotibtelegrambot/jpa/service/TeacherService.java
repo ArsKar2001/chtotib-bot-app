@@ -1,7 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.jpa.service;
 
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Replacement;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
 
@@ -11,9 +9,9 @@ public interface TeacherService extends BaseService<Teacher> {
 
     Teacher getByName(String teacherName);
 
-    List<Lesson> getLessonsByGroupId(Integer id);
+    List<?> getLessonsByGroupId(Integer id);
 
-    List<Replacement> getReplacementsByGroupId(Integer id);
+    List<?> getReplacementsByGroupId(Integer id);
 
     List<IdTeacherName> getAllIdTeacherName();
 

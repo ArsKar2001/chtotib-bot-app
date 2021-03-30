@@ -50,7 +50,7 @@ public class RegistrationHandler implements Handler {
                     return selectGroupOrAccept(user, message);
                 case SELECT_ROLE:
                     return switchRole(user, message);
-                case ENTER_NAME:
+                case TEACHER_ENTER_NAME:
                     return selectTeacher(user, message);
                 case SELECT_TEACHER:
                     return selectTeacherOrAccept(user, message);
@@ -78,7 +78,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
-        user.setUserState(UserState.ENTER_NAME);
+        user.setUserState(UserState.TEACHER_ENTER_NAME);
         User save = userService.save(user);
         return List.of(
                 TelegramUtil.createMessageTemplate(save)
@@ -92,18 +92,14 @@ public class RegistrationHandler implements Handler {
             Integer academicYear = TelegramUtil.getAcademicYear(s);
             int beginIndex = 2;
             String academicYearSuffix = academicYear.toString().substring(beginIndex);
-
             List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
 
-            InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-            markup.setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3));
-
             user.setUserState(UserState.SELECT_GROUP);
-            User save = userService.save(user);
             return List.of(
-                    TelegramUtil.createMessageTemplate(save)
+                    TelegramUtil.createMessageTemplate(userService.save(user))
                             .setText("Выбери группу...")
-                            .setReplyMarkup(markup));
+                            .setReplyMarkup(() ->
+                                    TelegramUtil.createInlineKeyboardButtons(groups, 3)));
         }
         return Collections.emptyList();
     }
@@ -206,7 +202,7 @@ public class RegistrationHandler implements Handler {
                 UserState.SELECT_COURSE,
                 UserState.SELECT_TEACHER,
                 UserState.SELECT_GROUP,
-                UserState.ENTER_NAME
+                UserState.TEACHER_ENTER_NAME
         );
     }
 }
