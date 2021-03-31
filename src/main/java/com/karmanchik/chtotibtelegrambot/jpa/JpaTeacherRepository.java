@@ -22,7 +22,7 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
 
     @Query(nativeQuery = true,
             value = "SELECT t.id, t.name FROM teacher t " +
-                    "WHERE t.name LIKE '%' || ?1 || '%'" +
+                    "WHERE lower(t.name) LIKE '%' || lower(?1) || '%'" +
                     "ORDER BY t.name")
     List<IdTeacherName> getAllIdTeacherNameByName(String message);
 }

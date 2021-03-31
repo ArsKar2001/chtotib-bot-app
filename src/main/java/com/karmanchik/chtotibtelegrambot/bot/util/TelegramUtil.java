@@ -16,10 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 
 import java.io.Serializable;
 import java.time.Month;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class TelegramUtil {
     private TelegramUtil() {}
@@ -76,7 +73,7 @@ public class TelegramUtil {
                 .setCallbackData(command);
     }
 
-    public static List<PartialBotApiMethod<? extends Serializable>> createSelectGroupButtonPanel(User user) {
+    public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(User user) {
         List<String> values = Courses.getKeys();
         Collections.sort(values);
 

@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -51,10 +52,11 @@ public class StartHandler implements Handler {
         log.info("Set user({}): user_state - {}", user.getId(), UserState.START);
 
         return List.of(TelegramUtil.createMessageTemplate(user)
-                .setText(String.format("Привет @%s!!!%nМеня зовут @%s :D%n" +
+                .setText(String.format("Привет %s!!!%nМеня зовут @%s :D%n" +
                         "Я был создан для работы со студентами и педагогами ЧТОТиБ.%n" +
                         "Давай создадим твою анкету?!", user.getUserName(), botUsername))
-                .setReplyMarkup(() -> TelegramUtil.createKeyboardRow(List.of(CREATE)))
+                .setReplyMarkup(TelegramUtil.createReplyKeyboardMarkup()
+                        .setKeyboard(List.of(TelegramUtil.createKeyboardRow(List.of(CREATE)))))
                 .enableMarkdown(true));
     }
 

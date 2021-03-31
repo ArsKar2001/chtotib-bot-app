@@ -8,7 +8,7 @@ public enum UserState {
     SELECT_ROLE(203),
     SELECT_TEACHER(206),
     SELECT_TIMETABLE(207),
-    TEACHER_ENTER_NAME(205),
+    INPUT_TEXT(205),
     START(208);
 
     private final int code;

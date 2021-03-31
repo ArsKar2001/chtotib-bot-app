@@ -61,4 +61,16 @@ public class Replacement extends BaseEntity {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    @Override
+    public String toString() {
+        return "Replacement{" +
+                "pairNumber='" + pairNumber + '\'' +
+                ", discipline='" + discipline + '\'' +
+                ", auditorium='" + auditorium + '\'' +
+                ", groupName='" + groupName + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", date=" + date +
+                ", id=" + id +
+                '}';
+    }
 }

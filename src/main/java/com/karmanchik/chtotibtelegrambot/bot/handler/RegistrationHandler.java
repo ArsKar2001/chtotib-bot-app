@@ -50,7 +50,7 @@ public class RegistrationHandler implements Handler {
                     return selectGroupOrAccept(user, message);
                 case SELECT_ROLE:
                     return switchRole(user, message);
-                case TEACHER_ENTER_NAME:
+                case INPUT_TEXT:
                     return selectTeacher(user, message);
                 case SELECT_TEACHER:
                     return selectTeacherOrAccept(user, message);
@@ -69,7 +69,7 @@ public class RegistrationHandler implements Handler {
             user.setUserState(UserState.SELECT_COURSE);
             user.setRole(Role.STUDENT);
             User save = userService.save(user);
-            return TelegramUtil.createSelectGroupButtonPanel(save);
+            return TelegramUtil.createSelectCourseButtonPanel(save);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
             user.setRole(Role.TEACHER);
             return inputTeacherName(user);
@@ -78,12 +78,10 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
-        user.setUserState(UserState.TEACHER_ENTER_NAME);
-        User save = userService.save(user);
-        return List.of(
-                TelegramUtil.createMessageTemplate(save)
-                        .setText("Введите фамилию...")
-                        .enableMarkdown(false));
+        user.setUserState(UserState.INPUT_TEXT);
+        return List.of(HandlerHelper.inputMessage(
+                userService.save(user),
+                "Введите фамилию..."));
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
@@ -147,9 +145,10 @@ public class RegistrationHandler implements Handler {
             final InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
             markup1.setKeyboard(TelegramUtil.createInlineKeyboardButtons(teacherNames, 2));
 
+            final ReplyKeyboardMarkup markup2 = TelegramUtil.createReplyKeyboardMarkup();
             final KeyboardRow row = TelegramUtil.createKeyboardRow(List.of(ConstantsHandler.CANCEL));
-            final ReplyKeyboardMarkup markup2 = new ReplyKeyboardMarkup();
-            markup2.setKeyboard(List.of(row));
+            markup2.setKeyboard(List.of(row))
+                    .setOneTimeKeyboard(true);
 
             return sendMessageIsIsYou(save, markup1, markup2);
         }
@@ -204,7 +203,7 @@ public class RegistrationHandler implements Handler {
                 UserState.SELECT_COURSE,
                 UserState.SELECT_TEACHER,
                 UserState.SELECT_GROUP,
-                UserState.TEACHER_ENTER_NAME
+                UserState.INPUT_TEXT
         );
     }
 }

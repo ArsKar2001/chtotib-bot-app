@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.Base64;
+import java.util.Locale;
 
 class UpdateReceiverTest {
     @Test
@@ -18,5 +21,12 @@ class UpdateReceiverTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    void testLocalDate() {
+        LocalDate now = LocalDate.now();
+        System.out.println(now.getDayOfWeek().getValue());
+        System.out.println(now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru")));
     }
 }
