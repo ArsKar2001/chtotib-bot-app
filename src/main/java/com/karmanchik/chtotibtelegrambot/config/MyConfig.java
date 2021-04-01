@@ -3,6 +3,8 @@ package com.karmanchik.chtotibtelegrambot.config;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
@@ -10,9 +12,9 @@ import java.util.Locale;
 @Configuration
 public class MyConfig {
     @Bean
-    public Locale locale() {
-        Locale ru = Locale.forLanguageTag("ru");
-        log.info("Set locale - {}", ru);
-        return ru;
+    public LocaleResolver locale() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.forLanguageTag("ru"));
+        return slr;
     }
 }

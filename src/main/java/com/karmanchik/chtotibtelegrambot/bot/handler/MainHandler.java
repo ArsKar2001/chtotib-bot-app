@@ -18,7 +18,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -83,8 +82,9 @@ public class MainHandler implements Handler {
 
             if (!group.getReplacements().isEmpty()) {
                 LocalDate repDate = group.getReplacements().get(0).getDate();
+                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
                 message.append(MESSAGE_SPLIT).append("\n")
-                        .append("Замена на ").append("<b>").append(repDate).append("</b>:").append("\n")
+                        .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
                         .append(MESSAGE_SPLIT).append("\n");
                 group.getReplacements().forEach(replacement -> message.append("\t")
                         .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
@@ -113,8 +113,9 @@ public class MainHandler implements Handler {
                     });
             if (!teacher.getReplacements().isEmpty()) {
                 LocalDate repDate = teacher.getReplacements().get(0).getDate();
+                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
                 message.append(MESSAGE_SPLIT).append("\n")
-                        .append("Замена на ").append("<b>").append(repDate).append("</b>:").append("\n")
+                        .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
                         .append(MESSAGE_SPLIT).append("\n");
                 teacher.getReplacements().forEach(replacement -> message.append("\t")
                         .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
