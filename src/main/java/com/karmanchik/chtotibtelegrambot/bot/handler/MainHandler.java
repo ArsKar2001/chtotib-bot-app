@@ -59,7 +59,7 @@ public class MainHandler implements Handler {
         Role role = user.getRole();
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
-        String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+        String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
         StringBuilder message = new StringBuilder();
         if (role.equals(Role.STUDENT)) {
             Group group = user.getGroup();
@@ -82,7 +82,7 @@ public class MainHandler implements Handler {
 
             if (!group.getReplacements().isEmpty()) {
                 LocalDate repDate = group.getReplacements().get(0).getDate();
-                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
                 message.append(MESSAGE_SPLIT).append("\n")
                         .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
                         .append(MESSAGE_SPLIT).append("\n");
@@ -113,7 +113,7 @@ public class MainHandler implements Handler {
                     });
             if (!teacher.getReplacements().isEmpty()) {
                 LocalDate repDate = teacher.getReplacements().get(0).getDate();
-                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault());
+                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
                 message.append(MESSAGE_SPLIT).append("\n")
                         .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
                         .append(MESSAGE_SPLIT).append("\n");
