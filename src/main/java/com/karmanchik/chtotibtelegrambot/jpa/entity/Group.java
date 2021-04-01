@@ -56,10 +56,6 @@ public class Group extends BaseEntity {
         return hiddenBuilder().name(name);
     }
 
-    public List<Replacement> getReplacements() {
-        return replacements;
-    }
-
     @Override
     public String toString() {
         return "Group{" +

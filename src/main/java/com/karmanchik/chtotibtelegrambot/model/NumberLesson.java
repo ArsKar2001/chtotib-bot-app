@@ -5,42 +5,42 @@ import java.util.List;
 import java.util.Map;
 
 public class NumberLesson {
-    private static final Map<String, Integer> COURSES = Map.of(
-            "I", 1,
-            "II", 2,
-            "III", 3,
-            "IV", 4,
-            "V", 5,
-            "VI", 6,
-            "VII", 7,
-            "VIII", 8
+    private static final Map<Integer, String> COURSES = Map.of(
+            1,"I",
+            2,"II",
+            3,"III",
+            4,"IV",
+            5,"V",
+            6,"VI",
+            7,"VII",
+            8,"VIII"
 
     );
 
     private NumberLesson() {
     }
 
-    public static Map<String, Integer> getAll() {
+    public static Map<Integer, String> getAll() {
         return COURSES;
     }
 
-    public static boolean containsKey(String s) {
+    public static boolean containsKey(Integer s) {
         return COURSES.containsKey(s);
     }
 
-    public static boolean containsValue(Integer integer) {
+    public static boolean containsValue(String integer) {
         return COURSES.containsValue(integer);
     }
 
-    public static Integer get(String s) {
-        return COURSES.get(s);
+    public static String get(Integer i) {
+        return COURSES.get(i);
     }
 
-    public static List<String> getKeys() {
+    public static List<Integer> getKeys() {
         return new ArrayList<>(COURSES.keySet());
     }
 
-    public static List<Integer> getValues() {
+    public static List<String> getValues() {
         return new ArrayList<>(COURSES.values());
     }
 }

@@ -13,6 +13,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "teacher")
+@Getter
+@Setter
 @Builder(builderMethodName = "hiddenBuilder")
 @NoArgsConstructor
 @AllArgsConstructor

@@ -45,26 +45,24 @@ public class HandlerHelper {
 
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
-        LocalDate nextSchoolDate = DateHelper.getNextSchoolDate().toLocalDate();
+        LocalDate nextSchoolDate = DateHelper.getNextSchoolDate();
         String name = nextSchoolDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
         Role role = user.getRole();
         markup.setKeyboard(List.of(
                 TelegramUtil.createKeyboardRow(MainCommand.getKeyAll())));
-        if (role.equals(Role.STUDENT)) {
-            return TelegramUtil.createMessageTemplate(user)
-                    .setText("1.\tРасписание на " + nextSchoolDate + " (" + name + ")\n" +
-                            "2.\tВсе расписание\n" +
-                            "3.\tУзнать расписание педагога\n" +
-                            "4.\tИзменить анкету")
-                    .setReplyMarkup(markup);
-        } else {
-            return TelegramUtil.createMessageTemplate(user)
-                    .setText("1.\tРасписание на " + nextSchoolDate + " (" + name + ")\n" +
-                            "2.\tВсе расписание\n" +
-                            "3.\tУзнать расписание группы\n" +
-                            "4.\tИзменить анкету")
-                    .setReplyMarkup(markup);
-        }
+        return role.equals(Role.STUDENT) ?
+                TelegramUtil.createMessageTemplate(user)
+                        .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
+                                "2.\tВсе расписание\n" +
+                                "3.\tУзнать расписание педагога\n" +
+                                "4.\tИзменить анкету")
+                        .setReplyMarkup(markup) :
+                TelegramUtil.createMessageTemplate(user)
+                        .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
+                                "2.\tВсе расписание\n" +
+                                "3.\tУзнать расписание студента\n" +
+                                "4.\tИзменить анкету")
+                        .setReplyMarkup(markup);
     }
 
     public static boolean isNumeric(String strNum) {
