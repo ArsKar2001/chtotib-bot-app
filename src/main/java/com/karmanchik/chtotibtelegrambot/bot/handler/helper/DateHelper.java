@@ -13,6 +13,10 @@ public class DateHelper {
     private DateHelper() {
     }
 
+    public static Locale getLocale() {
+        return Locale.forLanguageTag("ru");
+    }
+
     public static LocalDate getNextSchoolDate() {
         LocalDateTime now = LocalDateTime.now();
         if (now.getHour() > 12) {

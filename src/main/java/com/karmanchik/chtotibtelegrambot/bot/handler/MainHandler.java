@@ -5,6 +5,7 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper.MainCommand;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -51,8 +53,60 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
-
-        return null;
+        Role role = user.getRole();
+        WeekType weekType = DateHelper.getWeekType();
+        StringBuilder message = new StringBuilder();
+        if (role.equals(Role.STUDENT)) {
+            Group group = user.getGroup();
+            message.append("Расписание ").append("<b>").append(group.getName()).append("</b>:").append("\n");
+            group.getLessons().stream()
+                    .map(Lesson::getDay)
+                    .distinct()
+                    .forEach(day -> {
+                        String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, DateHelper.getLocale());
+                        message.append(MESSAGE_SPLIT).append("\n")
+                                .append("<b>").append(displayName).append("</b>:").append("\n");
+                        group.getLessons().stream()
+                                .filter(lesson -> lesson.getDay().equals(day))
+                                .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
+                                .forEach(lesson -> {
+                                    String number = NumberLesson.get(lesson.getPairNumber());
+                                    message.append("\t")
+                                            .append(number).append("\t<b>|</b>\t")
+                                            .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
+                                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
+                                            .append(lesson.getTeacherName())
+                                            .append("\n");
+                                });
+                    });
+        } else if (role.equals(Role.TEACHER)) {
+            Teacher teacher = user.getTeacher();
+            message.append("Расписание ").append("<b>").append(teacher.getName()).append("</b>:").append("\n");
+            teacher.getLessons().stream()
+                    .map(Lesson::getDay)
+                    .distinct()
+                    .forEach(day -> {
+                        String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, DateHelper.getLocale());
+                        message.append(MESSAGE_SPLIT).append("\n")
+                                .append("<b>").append(displayName).append("</b>:").append("\n");
+                        teacher.getLessons().stream()
+                                .filter(lesson -> lesson.getDay().equals(day))
+                                .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
+                                .forEach(lesson -> {
+                                    String number = NumberLesson.get(lesson.getPairNumber());
+                                    message.append("\t")
+                                            .append(number).append("\t<b>|</b>\t")
+                                            .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
+                                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
+                                            .append(lesson.getGroupName())
+                                            .append("\n");
+                                });
+                    });
+        }
+        return List.of(TelegramUtil.createMessageTemplate(user)
+                        .setText(message.toString()),
+                HandlerHelper.mainMessage(user)
+        );
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
