@@ -12,6 +12,7 @@ import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
@@ -53,56 +54,31 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
-        Role role = user.getRole();
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
-        if (role.equals(Role.STUDENT)) {
-            Group group = user.getGroup();
-            message.append("Расписание ").append("<b>").append(group.getName()).append("</b>:").append("\n");
-            group.getLessons().stream()
-                    .map(Lesson::getDay)
-                    .distinct()
-                    .forEach(day -> {
-                        String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, DateHelper.getLocale());
-                        message.append(MESSAGE_SPLIT).append("\n")
-                                .append("<b>").append(displayName).append("</b>:").append("\n");
-                        group.getLessons().stream()
-                                .filter(lesson -> lesson.getDay().equals(day))
-                                .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                                .forEach(lesson -> {
-                                    String number = NumberLesson.get(lesson.getPairNumber());
-                                    message.append("\t")
-                                            .append(number).append("\t<b>|</b>\t")
-                                            .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                            .append(lesson.getTeacherName())
-                                            .append("\n");
-                                });
-                    });
-        } else if (role.equals(Role.TEACHER)) {
-            Teacher teacher = user.getTeacher();
-            message.append("Расписание ").append("<b>").append(teacher.getName()).append("</b>:").append("\n");
-            teacher.getLessons().stream()
-                    .map(Lesson::getDay)
-                    .distinct()
-                    .forEach(day -> {
-                        String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, DateHelper.getLocale());
-                        message.append(MESSAGE_SPLIT).append("\n")
-                                .append("<b>").append(displayName).append("</b>:").append("\n");
-                        teacher.getLessons().stream()
-                                .filter(lesson -> lesson.getDay().equals(day))
-                                .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                                .forEach(lesson -> {
-                                    String number = NumberLesson.get(lesson.getPairNumber());
-                                    message.append("\t")
-                                            .append(number).append("\t<b>|</b>\t")
-                                            .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                            .append(lesson.getGroupName())
-                                            .append("\n");
-                                });
-                    });
-        }
+        GroupOrTeacher data = HandlerHelper.getData(user);
+
+        message.append("Расписание ").append("<b>").append(data.getName()).append("</b>:").append("\n");
+        data.getLessons().stream()
+                .map(Lesson::getDay)
+                .distinct()
+                .forEach(day -> {
+                    String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, DateHelper.getLocale());
+                    message.append(MESSAGE_SPLIT).append("\n")
+                            .append("<b>").append(displayName).append("</b>:").append("\n");
+                    data.getLessons().stream()
+                            .filter(lesson -> lesson.getDay().equals(day))
+                            .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
+                            .forEach(lesson -> {
+                                String number = NumberLesson.get(lesson.getPairNumber());
+                                message.append("\t")
+                                        .append(number).append("\t<b>|</b>\t")
+                                        .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
+                                        .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
+                                        .append(lesson.getTeacherName())
+                                        .append("\n");
+                            });
+                });
         return List.of(TelegramUtil.createMessageTemplate(user)
                         .setText(message.toString()),
                 HandlerHelper.mainMessage(user)
@@ -110,74 +86,39 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Role role = user.getRole();
+        GroupOrTeacher data = HandlerHelper.getData(user);
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
         String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
-        StringBuilder message = new StringBuilder();
-        if (role.equals(Role.STUDENT)) {
-            Group group = user.getGroup();
-            message.append("Группа: ").append("<b>").append(group.getName()).append("</b>").append("\n")
-                    .append(MESSAGE_SPLIT).append("\n")
-                    .append("Расписание на ").append("<b>").append(date).append("</b>").append(" (").append(name).append("):").append("\n")
-                    .append(MESSAGE_SPLIT).append("\n");
-            group.getLessons().stream()
-                    .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())
-                    .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                    .forEach(lesson -> {
-                        String number = NumberLesson.get(lesson.getPairNumber());
-                        message.append("\t")
-                                .append(number).append("\t<b>|</b>\t")
-                                .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                                .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                .append(lesson.getTeacherName())
-                                .append("\n");
-                    });
 
-            if (!group.getReplacements().isEmpty()) {
-                LocalDate repDate = group.getReplacements().get(0).getDate();
-                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
-                message.append(MESSAGE_SPLIT).append("\n")
-                        .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
-                        .append(MESSAGE_SPLIT).append("\n");
-                group.getReplacements().forEach(replacement -> message.append("\t")
-                        .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
-                        .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
-                        .append(replacement.getAuditorium()).append("\t<b>|</b>\t")
-                        .append(replacement.getTeacherName())
-                        .append("\n"));
-            }
-        } else if (role.equals(Role.TEACHER)) {
-            Teacher teacher = user.getTeacher();
-            message.append("Педагог: ").append("<b>").append(teacher.getName()).append("</b>").append("\n")
-                    .append(MESSAGE_SPLIT).append("\n")
-                    .append("Расписание на ").append("<b>").append(date).append("</b>").append(" (").append(name).append("):").append("\n")
+
+        StringBuilder message = new StringBuilder()
+                .append("Расписание ").append("<b>").append(data.getName()).append("</b>").append(" на ").append("<b>").append(date).append("</b>").append(" (").append(name).append("):").append("\n")
+                .append(MESSAGE_SPLIT).append("\n");
+        data.getLessons().stream()
+                .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())
+                .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
+                .forEach(lesson -> {
+                    String number = NumberLesson.get(lesson.getPairNumber());
+                    message.append("\t")
+                            .append(number).append("\t<b>|</b>\t")
+                            .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
+                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
+                            .append(lesson.getTeacherName())
+                            .append("\n");
+                });
+        if (!data.getReplacements().isEmpty()) {
+            LocalDate repDate = data.getReplacements().get(0).getDate();
+            String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
+            message.append(MESSAGE_SPLIT).append("\n")
+                    .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
                     .append(MESSAGE_SPLIT).append("\n");
-            teacher.getLessons().stream()
-                    .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())
-                    .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                    .forEach(lesson -> {
-                        String number = NumberLesson.get(lesson.getPairNumber());
-                        message.append("\t")
-                                .append(number).append("\t|\t")
-                                .append(lesson.getDiscipline()).append("\t|\t")
-                                .append(lesson.getAuditorium()).append("\t|\t")
-                                .append(lesson.getGroupName())
-                                .append("\n");
-                    });
-            if (!teacher.getReplacements().isEmpty()) {
-                LocalDate repDate = teacher.getReplacements().get(0).getDate();
-                String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
-                message.append(MESSAGE_SPLIT).append("\n")
-                        .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
-                        .append(MESSAGE_SPLIT).append("\n");
-                teacher.getReplacements().forEach(replacement -> message.append("\t")
-                        .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
-                        .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
-                        .append(replacement.getAuditorium()).append("\t<b>|</b>\t")
-                        .append(replacement.getGroupName())
-                        .append("\n"));
-            }
+            data.getReplacements().forEach(replacement -> message.append("\t")
+                    .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
+                    .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
+                    .append(replacement.getAuditorium()).append("\t<b>|</b>\t")
+                    .append(replacement.getTeacherName())
+                    .append("\n"));
         }
         return List.of(TelegramUtil.createMessageTemplate(user)
                         .setText(message.toString()),

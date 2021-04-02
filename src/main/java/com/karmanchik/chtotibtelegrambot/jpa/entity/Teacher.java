@@ -3,6 +3,7 @@ package com.karmanchik.chtotibtelegrambot.jpa.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -18,7 +19,7 @@ import java.util.List;
 @Builder(builderMethodName = "hiddenBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher extends BaseEntity {
+public class Teacher extends BaseEntity implements GroupOrTeacher {
     @Setter
     @Getter
     @Column(name = "name")

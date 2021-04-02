@@ -3,6 +3,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
+import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -40,6 +41,18 @@ public class HandlerHelper {
         return TelegramUtil.createMessageTemplate(user)
                 .setText(text)
                 .enableMarkdown(true);
+    }
+
+    public static GroupOrTeacher getData(User user) {
+        if (user == null)
+            return null;
+        switch (user.getRole()) {
+            case STUDENT:
+                return user.getGroup();
+            case TEACHER:
+                return user.getTeacher();
+        }
+        return null;
     }
 
 
