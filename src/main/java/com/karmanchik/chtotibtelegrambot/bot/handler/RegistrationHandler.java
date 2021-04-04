@@ -150,25 +150,25 @@ public class RegistrationHandler implements Handler {
             markup2.setKeyboard(List.of(row))
                     .setOneTimeKeyboard(true);
 
-            return sendMessageIsIsYou(save, markup1, markup2);
+            return sendMessageItIsYou(save, markup1, markup2);
         }
-        return sendMessageDidNotDefine(user);
+        return sendMessageNotFound(user);
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> sendMessageIsIsYou(User user,
+    private List<PartialBotApiMethod<? extends Serializable>> sendMessageItIsYou(User user,
                                                                                  InlineKeyboardMarkup markup1,
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Это вы...")
+                        .setText("Это вы")
                         .setReplyMarkup(markup1),
                 TelegramUtil.createMessageTemplate(user)
                         .setText("...?")
                         .setReplyMarkup(markup2));
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> sendMessageDidNotDefine(User user) {
-        String outMessage = "Педагог не найден";
+    private List<PartialBotApiMethod<? extends Serializable>> sendMessageNotFound(User user) {
+        String outMessage = "По запросу ник";
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText(outMessage)

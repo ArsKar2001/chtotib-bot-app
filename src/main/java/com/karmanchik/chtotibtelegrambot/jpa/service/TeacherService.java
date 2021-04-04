@@ -9,10 +9,6 @@ public interface TeacherService extends BaseService<Teacher> {
 
     Teacher getByName(String teacherName);
 
-    List<?> getLessonsByGroupId(Integer id);
-
-    List<?> getReplacementsByGroupId(Integer id);
-
     List<IdTeacherName> getAllIdTeacherName();
 
     List<IdTeacherName> getAllIdTeacherNameByName(String message);

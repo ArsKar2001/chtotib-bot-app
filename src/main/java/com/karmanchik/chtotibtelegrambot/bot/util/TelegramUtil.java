@@ -17,9 +17,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TelegramUtil {
-    private TelegramUtil() {}
+    private TelegramUtil() {
+    }
 
     public static SendMessage createMessageTemplate(User user) {
         String chatId = user.getChatId().toString();
@@ -55,14 +57,15 @@ public class TelegramUtil {
         List<List<InlineKeyboardButton>> listList = new LinkedList<>();
         List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
 
-        models.forEach(model -> {
-            InlineKeyboardButton button = createInlineKeyboardButton(model.getName(), model.getId().toString());
-            buttonsLine.add(button);
-            if (buttonsLine.size() % countButtonInRow == 0) {
-                listList.add(new LinkedList<>(buttonsLine));
-                buttonsLine.clear();
-            }
-        });
+        models.stream()
+                .map(model -> TelegramUtil.createInlineKeyboardButton(model.getName(), model.getId().toString()))
+                .forEach(button -> {
+                    buttonsLine.add(button);
+                    if (buttonsLine.size() % countButtonInRow == 0) {
+                        listList.add(new LinkedList<>(buttonsLine));
+                        buttonsLine.clear();
+                    }
+                });
         listList.add(buttonsLine);
         return listList;
     }
@@ -74,8 +77,10 @@ public class TelegramUtil {
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(User user) {
-        List<String> values = Courses.getKeys();
-        Collections.sort(values);
+        List<String> values = Courses.getKeys()
+                .stream()
+                .sorted(String::lastIndexOf)
+                .collect(Collectors.toList());
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow row = TelegramUtil.createKeyboardRow(values);

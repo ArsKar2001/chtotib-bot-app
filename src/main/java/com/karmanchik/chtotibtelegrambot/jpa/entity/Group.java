@@ -50,7 +50,7 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     @JsonManagedReference
     @OneToMany(mappedBy = "group")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy(value = "date ASC")
+    @OrderBy(value = "date, pairNumber ASC")
     private List<Replacement> replacements;
 
     public static GroupBuilder builder(String name) {

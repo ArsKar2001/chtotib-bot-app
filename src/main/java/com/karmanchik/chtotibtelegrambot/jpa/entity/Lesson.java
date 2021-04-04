@@ -61,10 +61,6 @@ public class Lesson extends BaseEntity {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
-    public Lesson getInstance() {
-        return this;
-    }
-
     @Override
     public String toString() {
         return "Lesson{" +

@@ -51,24 +51,6 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Lesson> getLessonsByGroupId(Integer id) {
-        return entityManager.createQuery(
-                "SELECT l FROM Lesson l " +
-                        "WHERE l.group.id = :id " +
-                        "ORDER BY l.day, l.pairNumber")
-                .setParameter("id", id).getResultList();
-    }
-
-    @Override
-    public List<Replacement> getReplacementByGroupId(Integer id) {
-        return entityManager.createQuery(
-                "SELECT r FROM Replacement r " +
-                        "WHERE r.group.id = :id " +
-                        "ORDER BY r.date, r.pairNumber")
-                .setParameter("id", id).getResultList();
-    }
-
-    @Override
     public List<IdGroupName> getAllGroupNameByYearSuffix(String academicYearSuffix) {
         return groupRepository.getAllGroupNameByYearSuffix(academicYearSuffix);
     }

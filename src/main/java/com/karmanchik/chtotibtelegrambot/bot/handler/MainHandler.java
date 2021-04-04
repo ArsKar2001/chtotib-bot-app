@@ -44,8 +44,8 @@ public class MainHandler implements Handler {
                     return getTimetableNextDay(user);
                 case COMMAND_2:
                     return getTimetableFull(user);
-                case COMMAND_3:
-                    break;
+//                case COMMAND_3:
+//                    return getTimetableOther(user);
                 case COMMAND_4:
                     return editProfile(user);
             }
@@ -53,10 +53,22 @@ public class MainHandler implements Handler {
         return List.of(HandlerHelper.mainMessage(user));
     }
 
+    private List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(User user) {
+        Role role = user.getRole();
+        if (role.equals(Role.STUDENT)) {
+            user.setUserState(UserState.INPUT_TEXT);
+            return SelectTimetableTeacherHandler.start(userService.save(user));
+        } else {
+            user.setUserState(UserState.SELECT_COURSE);
+            return SelectTimetableGroupHandler.start(userService.save(user));
+        }
+    }
+
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
         GroupOrTeacher data = HandlerHelper.getData(user);
+        Role role = user.getRole();
 
         message.append("Расписание ").append("<b>").append(data.getName()).append("</b>:").append("\n");
         data.getLessons().stream()
@@ -75,7 +87,9 @@ public class MainHandler implements Handler {
                                         .append(number).append("\t<b>|</b>\t")
                                         .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
                                         .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                        .append(lesson.getTeacherName())
+                                        .append(role.equals(Role.STUDENT) ?
+                                                lesson.getTeacherName() :
+                                                lesson.getGroupName())
                                         .append("\n");
                             });
                 });
@@ -90,6 +104,7 @@ public class MainHandler implements Handler {
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
         String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
+        Role role = user.getRole();
 
 
         StringBuilder message = new StringBuilder()
@@ -104,20 +119,23 @@ public class MainHandler implements Handler {
                             .append(number).append("\t<b>|</b>\t")
                             .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
                             .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                            .append(lesson.getTeacherName())
+                            .append(role.equals(Role.STUDENT) ?
+                                    lesson.getTeacherName() :
+                                    lesson.getGroupName())
                             .append("\n");
                 });
         if (!data.getReplacements().isEmpty()) {
-            LocalDate repDate = data.getReplacements().get(0).getDate();
-            String dayOfWeek = repDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
             message.append(MESSAGE_SPLIT).append("\n")
-                    .append("Замена на ").append("<b>").append(repDate).append("</b>").append(" (").append(dayOfWeek).append(")").append("\n")
+                    .append("Замена:").append("\n")
                     .append(MESSAGE_SPLIT).append("\n");
             data.getReplacements().forEach(replacement -> message.append("\t")
+                    .append(replacement.getDate()).append("\t<b>|</b>\t")
                     .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
                     .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
                     .append(replacement.getAuditorium()).append("\t<b>|</b>\t")
-                    .append(replacement.getTeacherName())
+                    .append(role.equals(Role.STUDENT) ?
+                            replacement.getTeacherName() :
+                            replacement.getGroupName())
                     .append("\n"));
         }
         return List.of(TelegramUtil.createMessageTemplate(user)

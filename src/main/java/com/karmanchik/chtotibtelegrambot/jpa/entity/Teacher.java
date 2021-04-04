@@ -42,7 +42,7 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     @JsonManagedReference
     @OneToMany(mappedBy = "teacher")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy(value = "date ASC")
+    @OrderBy(value = "date, pairNumber ASC")
     private List<Replacement> replacements;
 
     public static TeacherBuilder builder(String name) {

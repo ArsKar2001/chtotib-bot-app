@@ -10,10 +10,6 @@ import java.util.List;
 public interface GroupService extends BaseService<Group> {
     Group getByName(String name);
 
-    List<Lesson> getLessonsByGroupId(Integer id);
-
-    List<Replacement> getReplacementByGroupId(Integer id);
-
     List<IdGroupName> getAllGroupName();
 
     List<IdGroupName> getAllGroupNameByYearSuffix(String academicYearSuffix);

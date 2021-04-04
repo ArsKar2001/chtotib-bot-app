@@ -19,12 +19,11 @@ public class DateHelper {
 
     public static LocalDate getNextSchoolDate() {
         LocalDateTime now = LocalDateTime.now();
-        if (now.getHour() > 12) {
-            if (now.getDayOfWeek().getValue() < 5)
-                now = now.plusDays(1);
-            else do {
-                now = now.plusDays(1);
-            } while (now.getDayOfWeek() != DayOfWeek.MONDAY);
+        if (now.getDayOfWeek().getValue() >= 5) {
+            do now = now.plusDays(1);
+            while (now.getDayOfWeek() != DayOfWeek.MONDAY);
+        } else if (now.getHour() > 12) {
+            now = now.plusDays(1);
         }
         return now.toLocalDate();
     }

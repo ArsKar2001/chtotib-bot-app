@@ -53,23 +53,7 @@ public class TeacherServiceImpl implements TeacherService {
         teacherRepository.deleteAllInBatch();
     }
 
-    @Override
-    public List<?> getLessonsByGroupId(Integer id) {
-        return entityManager.createQuery(
-                "SELECT l FROM Lesson l " +
-                        "WHERE l.group.id = :id " +
-                        "ORDER BY l.day, l.pairNumber")
-                .setParameter("id", id).getResultList();
-    }
 
-    @Override
-    public List<?> getReplacementsByGroupId(Integer id) {
-        return entityManager.createQuery(
-                "SELECT r FROM Replacement r " +
-                        "WHERE r.group.id = :id " +
-                        "ORDER BY r.date, r.pairNumber")
-                .setParameter("id", id).getResultList();
-    }
 
     @Override
     public Optional<Teacher> findById(Integer id) {

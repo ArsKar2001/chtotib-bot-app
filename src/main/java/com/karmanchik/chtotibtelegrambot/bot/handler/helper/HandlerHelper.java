@@ -23,6 +23,8 @@ public class HandlerHelper {
     private HandlerHelper() {
     }
 
+
+
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow row = TelegramUtil.createKeyboardRow(List.of(
