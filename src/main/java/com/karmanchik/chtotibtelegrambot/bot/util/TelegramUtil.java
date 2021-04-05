@@ -77,10 +77,8 @@ public class TelegramUtil {
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(User user) {
-        List<String> values = Courses.getKeys()
-                .stream()
-                .sorted(String::lastIndexOf)
-                .collect(Collectors.toList());
+        List<String> values = Courses.getKeys();
+        Collections.sort(values);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow row = TelegramUtil.createKeyboardRow(values);
