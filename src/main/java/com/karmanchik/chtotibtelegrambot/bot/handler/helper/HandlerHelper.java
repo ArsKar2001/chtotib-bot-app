@@ -3,6 +3,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -22,7 +23,6 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 public class HandlerHelper {
     private HandlerHelper() {
     }
-
 
 
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
@@ -61,21 +61,24 @@ public class HandlerHelper {
     public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         LocalDate nextSchoolDate = DateHelper.getNextSchoolDate();
+        String weekType = DateHelper.getWeekType().equals(WeekType.DOWN) ? "нижняя" : "верхняя";
         String name = nextSchoolDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
         Role role = user.getRole();
+
+
         markup.setKeyboard(List.of(
                 TelegramUtil.createKeyboardRow(MainCommand.getKeyAll())));
         return role.equals(Role.STUDENT) ?
                 TelegramUtil.createMessageTemplate(user)
                         .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
-                                "2.\tВсе расписание\n" +
+                                "2.\tРасписание на эту неделю (" + weekType + ")\n" +
                                 "3.\tУзнать расписание педагога\n" +
                                 "4.\tИзменить анкету")
                         .setReplyMarkup(markup) :
                 TelegramUtil.createMessageTemplate(user)
                         .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
-                                "2.\tВсе расписание\n" +
-                                "3.\tУзнать расписание студента\n" +
+                                "2.\tРасписание на эту неделю (" + weekType + ")\n" +
+                                "3.\tУзнать расписание группы\n" +
                                 "4.\tИзменить анкету")
                         .setReplyMarkup(markup);
     }
