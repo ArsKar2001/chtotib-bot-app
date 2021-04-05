@@ -4,9 +4,7 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper.MainCommand;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
@@ -26,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.MESSAGE_SPLIT;
 
@@ -57,10 +56,10 @@ public class MainHandler implements Handler {
         Role role = user.getRole();
         if (role.equals(Role.STUDENT)) {
             user.setUserState(UserState.INPUT_TEXT);
-            return SelectTimetableTeacherHandler.start(userService.save(user));
+            return TimetableTeacherHandler.start(userService.save(user));
         } else {
             user.setUserState(UserState.SELECT_COURSE);
-            return SelectTimetableGroupHandler.start(userService.save(user));
+            return TimetableGroupHandler.start(userService.save(user));
         }
     }
 
@@ -69,7 +68,6 @@ public class MainHandler implements Handler {
         StringBuilder message = new StringBuilder();
         GroupOrTeacher data = HandlerHelper.getData(user);
         Role role = user.getRole();
-
         message.append("Расписание ").append("<b>").append(data.getName()).append("</b>:").append("\n");
         data.getLessons().stream()
                 .map(Lesson::getDay)

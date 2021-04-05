@@ -17,7 +17,7 @@ import java.util.List;
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class SelectTimetableTeacherHandler implements Handler {
+public class TimetableTeacherHandler implements Handler {
     /**
      * Обработчик входящих сообщений пользователя.
      *
@@ -50,7 +50,8 @@ public class SelectTimetableTeacherHandler implements Handler {
     @Override
     public List<UserState> operatedUserSate() {
         return List.of(
-
+                UserState.INPUT_TEXT,
+                UserState.SELECT_TEACHER
         );
     }
 }

@@ -31,7 +31,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @Log4j2
 @Component
 @RequiredArgsConstructor
-public class SelectTimetableGroupHandler implements Handler {
+public class TimetableGroupHandler implements Handler {
     private final HandlerHelper helper;
     private final GroupService groupService;
     private final UserService userService;

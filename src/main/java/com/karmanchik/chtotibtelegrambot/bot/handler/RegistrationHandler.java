@@ -137,12 +137,13 @@ public class RegistrationHandler implements Handler {
         return sendMessageNotFound(user);
     }
 
+
     private List<PartialBotApiMethod<? extends Serializable>> sendMessageItIsYou(User user,
                                                                                  InlineKeyboardMarkup markup1,
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Это вы")
+                        .setText("Веберите педагога")
                         .setReplyMarkup(markup1),
                 TelegramUtil.createMessageTemplate(user)
                         .setText("...?")
@@ -150,7 +151,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> sendMessageNotFound(User user) {
-        String outMessage = "По запросу ник";
+        String outMessage = "Педагог не найден";
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText(outMessage)
