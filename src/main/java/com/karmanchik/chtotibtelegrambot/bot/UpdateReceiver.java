@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
+import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import lombok.extern.log4j.Log4j2;
@@ -49,7 +50,7 @@ public class UpdateReceiver {
                 return getHandlerByState(user).handle(user, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException | ResourceNotFoundException e) {
             log.error(e.getMessage(), e);
             return Collections.emptyList();
         }

@@ -39,13 +39,15 @@ public class RegistrationHandler implements Handler {
     private final GroupService groupService;
     private final TeacherService teacherService;
 
+    private final HandlerHelper helper;
+
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
         try {
             UserState state = user.getUserState();
             switch (state) {
                 case SELECT_COURSE:
-                    return selectGroup(user, message);
+                    return helper.selectGroup(user, message);
                 case SELECT_GROUP:
                     return selectGroupOrAccept(user, message);
                 case SELECT_ROLE:
@@ -84,30 +86,10 @@ public class RegistrationHandler implements Handler {
                 "Введите фамилию..."));
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
-        if (Courses.containsKey(message)) {
-            String s = Courses.get(message);
-            Integer academicYear = TelegramUtil.getAcademicYear(s);
-            int beginIndex = 2;
-            String academicYearSuffix = academicYear.toString().substring(beginIndex);
-            List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
-
-
-            user.setUserState(UserState.SELECT_GROUP);
-            return List.of(
-                    TelegramUtil.createMessageTemplate(userService.save(user))
-                            .setText("Выбери группу...")
-                            .setReplyMarkup(new InlineKeyboardMarkup()
-                                    .setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
-                            ));
-        }
-        return Collections.emptyList();
-    }
-
     private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(User user, String message) throws ResourceNotFoundException {
 
         if (Courses.containsKey(message)) {
-            return selectGroup(user, message);
+            return helper.selectGroup(user, message);
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);

@@ -44,8 +44,8 @@ public class MainHandler implements Handler {
                     return getTimetableNextDay(user);
                 case COMMAND_2:
                     return getTimetableFull(user);
-//                case COMMAND_3:
-//                    return getTimetableOther(user);
+                case COMMAND_3:
+                    return getTimetableOther(user);
                 case COMMAND_4:
                     return editProfile(user);
             }

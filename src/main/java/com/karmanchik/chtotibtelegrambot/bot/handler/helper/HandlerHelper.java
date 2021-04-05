@@ -1,27 +1,41 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
+import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.jpa.models.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
+import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.model.Courses;
+import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
-import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.*;
 
+@Log4j2
+@Component
 public class HandlerHelper {
-    private HandlerHelper() {
+    private final GroupService groupService;
+    private final UserService userService;
+
+    public HandlerHelper(GroupService groupService, UserService userService) {
+        this.groupService = groupService;
+        this.userService = userService;
     }
 
 
@@ -81,6 +95,26 @@ public class HandlerHelper {
                                 "3.\tУзнать расписание группы\n" +
                                 "4.\tИзменить анкету")
                         .setReplyMarkup(markup);
+    }
+
+    public List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
+        if (Courses.containsKey(message)) {
+            String s = Courses.get(message);
+            Integer academicYear = TelegramUtil.getAcademicYear(s);
+            int beginIndex = 2;
+            String academicYearSuffix = academicYear.toString().substring(beginIndex);
+            List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
+
+
+            user.setUserState(UserState.SELECT_GROUP);
+            return List.of(
+                    TelegramUtil.createMessageTemplate(userService.save(user))
+                            .setText("Выбери группу...")
+                            .setReplyMarkup(new InlineKeyboardMarkup()
+                                    .setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
+                            ));
+        }
+        return Collections.emptyList();
     }
 
     public static boolean isNumeric(String strNum) {
