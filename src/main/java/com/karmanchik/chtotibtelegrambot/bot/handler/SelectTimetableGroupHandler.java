@@ -12,6 +12,7 @@ import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
+import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
 import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 public class SelectTimetableGroupHandler implements Handler {
     private final HandlerHelper helper;
     private final GroupService groupService;
+    private final UserService userService;
 
     /**
      * Обработчик входящих сообщений пользователя.
@@ -72,6 +74,7 @@ public class SelectTimetableGroupHandler implements Handler {
     private PartialBotApiMethod<? extends Serializable> getTimetable(User user, GroupOrTeacher groupOrTeacher) {
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
+        user.setUserState(UserState.NONE);
 
         message.append("Расписание ").append("<b>").append(groupOrTeacher.getName()).append("</b>:").append("\n");
         groupOrTeacher.getLessons().stream()
@@ -94,7 +97,7 @@ public class SelectTimetableGroupHandler implements Handler {
                                         .append("\n");
                             });
                 });
-        return TelegramUtil.createMessageTemplate(user)
+        return TelegramUtil.createMessageTemplate(userService.save(user))
                 .setText(message.toString());
     }
 
@@ -109,6 +112,9 @@ public class SelectTimetableGroupHandler implements Handler {
 
     @Override
     public List<UserState> operatedUserSate() {
-        return null;
+        return List.of(
+                UserState.SELECT_COURSE,
+                UserState.SELECT_GROUP
+        );
     }
 }
