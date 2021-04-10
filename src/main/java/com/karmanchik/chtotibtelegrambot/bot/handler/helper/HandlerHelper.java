@@ -9,8 +9,10 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.entity.models.IdGroupName;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -28,14 +30,11 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 
 @Log4j2
 @Component
+@RequiredArgsConstructor
 public class HandlerHelper {
     private final JpaGroupRepository groupRepository;
     private final JpaUserRepository userRepository;
-
-    public HandlerHelper(JpaGroupRepository groupRepository, JpaUserRepository userRepository) {
-        this.groupRepository = groupRepository;
-        this.userRepository = userRepository;
-    }
+    private final JpaTeacherRepository teacherRepository;
 
 
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
@@ -58,14 +57,16 @@ public class HandlerHelper {
                 .enableMarkdown(true);
     }
 
-    public static GroupOrTeacher getData(User user) {
+    public GroupOrTeacher getData(User user) {
         if (user == null)
             return null;
         switch (user.getRole()) {
             case STUDENT:
-                return user.getGroup();
+                return groupRepository.findByUser(user)
+                        .orElseThrow();
             case TEACHER:
-                return user.getTeacher();
+                return teacherRepository.findByUser(user)
+                        .orElseThrow();
         }
         return null;
     }

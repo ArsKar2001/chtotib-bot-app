@@ -1,6 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
 import com.karmanchik.chtotibtelegrambot.entity.Teacher;
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +26,6 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
                     "WHERE lower(t.name) LIKE '%' || lower(?1) || '%'" +
                     "ORDER BY t.name")
     List<IdTeacherName> getAllIdTeacherNameByName(String message);
+
+    Optional<Teacher> findByUser(User user);
 }

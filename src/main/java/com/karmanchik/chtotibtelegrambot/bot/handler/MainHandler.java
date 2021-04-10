@@ -11,6 +11,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class MainHandler implements Handler {
     private final JpaUserRepository userRepository;
+    private final HandlerHelper helper;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
@@ -63,9 +65,10 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
+
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
-        GroupOrTeacher data = HandlerHelper.getData(user);
+        GroupOrTeacher data = helper.getData(user);
         Role role = user.getRole();
         message.append("Расписание ").append("<b>").append(data.getName()).append("</b>:").append("\n");
         data.getLessons().stream()
@@ -94,7 +97,7 @@ public class MainHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        GroupOrTeacher data = HandlerHelper.getData(user);
+        GroupOrTeacher data = helper.getData(user);
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
         String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
