@@ -1,9 +1,9 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -20,29 +20,25 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Teacher extends BaseEntity implements GroupOrTeacher {
-    @Setter
-    @Getter
     @Column(name = "name")
     @NotNull
     private String name;
 
-    @Setter
     @JsonBackReference
     @OneToOne(mappedBy = "teacher")
     private User user;
 
-    @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "teacher")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
     @OrderBy("day, pairNumber ASC")
+    @MapsId("teachersId")
     private List<Lesson> lessons;
 
-    @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "teacher")
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OrderBy(value = "date, pairNumber ASC")
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
+    @OrderBy("date, pairNumber ASC")
     private List<Replacement> replacements;
 
     public static TeacherBuilder builder(String name) {

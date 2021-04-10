@@ -1,9 +1,9 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
@@ -24,32 +24,29 @@ import java.util.List;
         })
 @EqualsAndHashCode(callSuper = true)
 @Getter
+@Setter
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Builder(builderMethodName = "hiddenBuilder")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group extends BaseEntity implements GroupOrTeacher {
-    @Setter
     @Column(name = "name", unique = true)
     @NotNull
     private String name;
 
-    @Setter
     @JsonBackReference
     @OneToOne(mappedBy = "group")
     private User user;
 
-    @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "group")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @OrderBy("day, pairNumber ASC")
     private List<Lesson> lessons;
 
-    @Setter
     @JsonManagedReference
-    @OneToMany(mappedBy = "group")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.TRUE)
     @OrderBy(value = "date, pairNumber ASC")
     private List<Replacement> replacements;
 

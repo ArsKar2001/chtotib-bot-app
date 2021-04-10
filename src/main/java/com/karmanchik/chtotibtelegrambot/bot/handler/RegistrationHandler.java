@@ -3,18 +3,17 @@ package com.karmanchik.chtotibtelegrambot.bot.handler;
 import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.entity.Group;
+import com.karmanchik.chtotibtelegrambot.entity.Teacher;
+import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Teacher;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.models.IdGroupName;
-import com.karmanchik.chtotibtelegrambot.jpa.models.IdTeacherName;
-import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
-import com.karmanchik.chtotibtelegrambot.jpa.service.TeacherService;
-import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -35,9 +34,9 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class RegistrationHandler implements Handler {
 
-    private final UserService userService;
-    private final GroupService groupService;
-    private final TeacherService teacherService;
+    private final JpaUserRepository userRepository;
+    private final JpaGroupRepository groupRepository;
+    private final JpaTeacherRepository teacherRepository;
 
     private final HandlerHelper helper;
 
@@ -70,7 +69,7 @@ public class RegistrationHandler implements Handler {
         if (message.equalsIgnoreCase(ROLE_STUDENT)) {
             user.setUserState(UserState.SELECT_COURSE);
             user.setRole(Role.STUDENT);
-            User save = userService.save(user);
+            User save = userRepository.save(user);
             return TelegramUtil.createSelectCourseButtonPanel(save);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
             user.setRole(Role.TEACHER);
@@ -82,7 +81,7 @@ public class RegistrationHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(User user) {
         user.setUserState(UserState.INPUT_TEXT);
         return List.of(HandlerHelper.inputMessage(
-                userService.save(user),
+                userRepository.save(user),
                 "Введите фамилию..."));
     }
 
@@ -93,7 +92,7 @@ public class RegistrationHandler implements Handler {
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
-            Group group = groupService.findById(id)
+            Group group = groupRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
             user.setGroup(group);
             return List.of(
@@ -108,7 +107,7 @@ public class RegistrationHandler implements Handler {
             return inputTeacherName(user);
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
-            Teacher teacher = teacherService.findById(id)
+            Teacher teacher = teacherRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Teacher.class));
             user.setTeacher(teacher);
             return List.of(
@@ -119,10 +118,10 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<IdTeacherName> teacherNames = teacherService.getAllIdTeacherNameByName(message);
+        List<IdTeacherName> teacherNames = teacherRepository.getAllIdTeacherNameByName(message);
         if (!teacherNames.isEmpty()) {
             user.setUserState(UserState.SELECT_TEACHER);
-            User save = userService.save(user);
+            User save = userRepository.save(user);
 
             final InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
             markup1.setKeyboard(TelegramUtil.createInlineKeyboardButtons(teacherNames, 2));
@@ -163,14 +162,14 @@ public class RegistrationHandler implements Handler {
     private PartialBotApiMethod<? extends Serializable> accept(User user) {
         user.setUserState(UserState.NONE);
         user.setBotState(BotState.AUTHORIZED);
-        User save = userService.save(user);
+        User save = userRepository.save(user);
         return HandlerHelper.mainMessage(save);
     }
 
     private PartialBotApiMethod<? extends Serializable> cancel(User user) {
         user.setUserState(UserState.SELECT_ROLE);
         user.setBotState(BotState.REG);
-        final User saveUser = userService.save(user);
+        final User saveUser = userRepository.save(user);
         return HandlerHelper.selectRole(saveUser);
     }
 

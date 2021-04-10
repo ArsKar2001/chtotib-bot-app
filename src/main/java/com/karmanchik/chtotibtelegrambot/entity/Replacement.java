@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
@@ -8,58 +8,40 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "replacement")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Builder
+@Table(name = "replacement")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Replacement extends BaseEntity {
-
-    @Getter
-    @Setter
     @Column(name = "pair_number")
     @NotNull
     private String pairNumber;
 
-    @Getter
-    @Setter
     @Column(name = "discipline")
     @NotNull
     private String discipline;
 
-    @Getter
-    @Setter
     @Column(name = "auditorium")
     @NotNull
     private String auditorium;
 
-    @Setter
-    @Getter
-    @Column(name = "group_name", nullable = false)
-    private String groupName;
-
-    @Setter
-    @Getter
-    @Column(name = "teacher_name", nullable = false)
-    private String teacherName;
-
-    @Getter
-    @Setter
     @Column(name = "date_value")
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "group_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Teacher> teachers;
 
     @Override
     public String toString() {
@@ -67,9 +49,9 @@ public class Replacement extends BaseEntity {
                 "pairNumber='" + pairNumber + '\'' +
                 ", discipline='" + discipline + '\'' +
                 ", auditorium='" + auditorium + '\'' +
-                ", groupName='" + groupName + '\'' +
-                ", teacherName='" + teacherName + '\'' +
                 ", date=" + date +
+                ", group=" + group +
+                ", teachers=" + teachers +
                 ", id=" + id +
                 '}';
     }

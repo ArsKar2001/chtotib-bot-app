@@ -1,9 +1,9 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
@@ -34,26 +34,27 @@ public class User extends BaseEntity {
     @JoinTable(name = "user_teacher",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)})
-    private Teacher teacher;
+    private Teacher teacher = null;
 
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "user_group",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id", nullable = false)})
-    private Group group;
+    private Group group = null;
 
 
     @Column(name = "role_id")
-    private Role role;
+    @NotNull
+    private Role role = Role.NONE;
 
     @Column(name = "user_state_id")
     @NotNull
-    private UserState userState;
+    private UserState userState = UserState.NONE;
 
     @Column(name = "bot_state_id")
     @NotNull
-    private BotState botState;
+    private BotState botState = BotState.START;
 
     public static UserBuilder builder(Integer chatId, String userName) {
         return new UserBuilder().chatId(chatId).userName(userName);

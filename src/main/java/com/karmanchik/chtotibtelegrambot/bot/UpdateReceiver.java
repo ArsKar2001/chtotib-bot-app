@@ -1,9 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
+import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -19,11 +19,11 @@ import java.util.List;
 @Component
 public class UpdateReceiver {
     private final List<Handler> handlers;
-    private final UserService userService;
+    private final JpaUserRepository userRepository;
 
-    public UpdateReceiver(List<Handler> handlers, UserService userService) {
+    public UpdateReceiver(List<Handler> handlers, JpaUserRepository userRepository) {
         this.handlers = handlers;
-        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
@@ -35,7 +35,10 @@ public class UpdateReceiver {
                 log.info("Chat Id - {}", chatId);
                 String userName = message.getChat().getUserName();
                 log.info("UserName - {}", userName);
-                User user = userService.findByChatIdAndUserName(chatId, userName);
+                User user = userRepository.findByChatIdAndUserName(chatId, userName)
+                        .orElseGet(() -> userRepository.save(User
+                                .builder(chatId, userName)
+                                .build()));
                 log.info("User - {}", user);
                 return getHandlerByState(user).handle(user, message.getText());
             } else if (update.hasCallbackQuery()) {
@@ -45,7 +48,10 @@ public class UpdateReceiver {
                 log.info("Chat Id - {}", chatId);
                 String userName = callbackQuery.getMessage().getChat().getUserName();
                 log.info("UserName - {}", userName);
-                User user = userService.findByChatIdAndUserName(chatId, userName);
+                User user = userRepository.findByChatIdAndUserName(chatId, userName)
+                        .orElseGet(() -> userRepository.save(User
+                                .builder(chatId, userName)
+                                .build()));
                 log.info("User - {}", user);
                 return getHandlerByState(user).handle(user, callbackQuery.getData());
             }

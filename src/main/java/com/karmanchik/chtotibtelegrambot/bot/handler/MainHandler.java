@@ -4,14 +4,14 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper.MainCommand;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +24,6 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.MESSAGE_SPLIT;
 
@@ -32,7 +31,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @Component
 @RequiredArgsConstructor
 public class MainHandler implements Handler {
-    private final UserService userService;
+    private final JpaUserRepository userRepository;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
@@ -56,10 +55,10 @@ public class MainHandler implements Handler {
         Role role = user.getRole();
         if (role.equals(Role.STUDENT)) {
             user.setUserState(UserState.INPUT_TEXT);
-            return TimetableTeacherHandler.start(userService.save(user));
+            return TimetableTeacherHandler.start(userRepository.save(user));
         } else {
             user.setUserState(UserState.SELECT_COURSE);
-            return TimetableGroupHandler.start(userService.save(user));
+            return TimetableGroupHandler.start(userRepository.save(user));
         }
     }
 
@@ -84,11 +83,8 @@ public class MainHandler implements Handler {
                                 message.append("\t")
                                         .append(number).append("\t<b>|</b>\t")
                                         .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                                        .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                        .append(role.equals(Role.STUDENT) ?
-                                                lesson.getTeacherName() :
-                                                lesson.getGroupName())
-                                        .append("\n");
+                                        .append(lesson.getAuditorium()).append("\t<b>|</b>\t");
+                                HandlerHelper.setGroupOrTeachers(role, message, lesson);
                             });
                 });
         return List.of(TelegramUtil.createMessageTemplate(user)
@@ -116,25 +112,28 @@ public class MainHandler implements Handler {
                     message.append("\t")
                             .append(number).append("\t<b>|</b>\t")
                             .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                            .append(role.equals(Role.STUDENT) ?
-                                    lesson.getTeacherName() :
-                                    lesson.getGroupName())
-                            .append("\n");
+                            .append(lesson.getAuditorium()).append("\t<b>|</b>\t");
+                    HandlerHelper.setGroupOrTeachers(role, message, lesson);
                 });
         if (!data.getReplacements().isEmpty()) {
             message.append(MESSAGE_SPLIT).append("\n")
                     .append("Замена:").append("\n")
                     .append(MESSAGE_SPLIT).append("\n");
-            data.getReplacements().forEach(replacement -> message.append("\t")
-                    .append(replacement.getDate()).append("\t<b>|</b>\t")
-                    .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
-                    .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
-                    .append(replacement.getAuditorium()).append("\t<b>|</b>\t")
-                    .append(role.equals(Role.STUDENT) ?
-                            replacement.getTeacherName() :
-                            replacement.getGroupName())
-                    .append("\n"));
+            data.getReplacements().forEach(replacement -> {
+                message.append("\t")
+                        .append(replacement.getDate()).append("\t<b>|</b>\t")
+                        .append(replacement.getPairNumber()).append("\t<b>|</b>\t")
+                        .append(replacement.getDiscipline()).append("\t<b>|</b>\t")
+                        .append(replacement.getAuditorium()).append("\t<b>|</b>\t");
+                if (role.equals(Role.STUDENT)) {
+                    replacement.getTeachers()
+                            .forEach(t -> message.append(t.getName())
+                                    .append(" "));
+                } else {
+                    message.append(replacement.getGroup().getName());
+                }
+                message.append("\n");
+            });
         }
         return List.of(TelegramUtil.createMessageTemplate(user)
                         .setText(message.toString()),
@@ -146,7 +145,7 @@ public class MainHandler implements Handler {
         user.setBotState(BotState.REG);
         user.setUserState(UserState.SELECT_ROLE);
         return List.of(
-                HandlerHelper.selectRole(userService.save(user)));
+                HandlerHelper.selectRole(userRepository.save(user)));
     }
 
     private boolean isCommand(String message) {

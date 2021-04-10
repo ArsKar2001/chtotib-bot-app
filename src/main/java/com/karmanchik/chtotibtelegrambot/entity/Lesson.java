@@ -1,65 +1,47 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "lessons")
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lesson extends BaseEntity {
-    @Setter
-    @Getter
     @Column(name = "pair_number")
     @NotNull
     private Integer pairNumber;
 
-    @Setter
-    @Getter
     @Column(name = "day")
     @NotNull
     private Integer day;
 
-    @Setter
-    @Getter
     @Column(name = "discipline", nullable = false)
     private String discipline;
 
-    @Setter
-    @Getter
     @Column(name = "auditorium", nullable = false)
     private String auditorium;
 
-    @Setter
-    @Getter
-    @Column(name = "group_name", nullable = false)
-    private String groupName;
-
-    @Setter
-    @Getter
-    @Column(name = "teacher_name", nullable = false)
-    private String teacherName;
-
-    @Setter
-    @Getter
     @Column(name = "week_type")
     @NotNull
     private WeekType weekType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Teacher> teachers;
 
     @Override
     public String toString() {
@@ -68,9 +50,9 @@ public class Lesson extends BaseEntity {
                 ", day=" + day +
                 ", discipline='" + discipline + '\'' +
                 ", auditorium='" + auditorium + '\'' +
-                ", groupName='" + groupName + '\'' +
-                ", teacherName='" + teacherName + '\'' +
                 ", weekType=" + weekType +
+                ", group=" + group +
+                ", teachers=" + teachers +
                 ", id=" + id +
                 '}';
     }

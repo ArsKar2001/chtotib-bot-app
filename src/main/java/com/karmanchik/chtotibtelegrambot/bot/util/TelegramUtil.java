@@ -1,11 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.util;
 
-import com.google.inject.internal.cglib.core.$Customizer;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.BaseEntity;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.models.BaseModel;
+import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.models.BaseModel;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -17,7 +13,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TelegramUtil {
     private TelegramUtil() {

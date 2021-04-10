@@ -1,17 +1,16 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.jpa.models.IdGroupName;
-import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
-import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.entity.models.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
-import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -20,22 +19,22 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
 
-import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.*;
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
+import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
 
 @Log4j2
 @Component
 public class HandlerHelper {
-    private final GroupService groupService;
-    private final UserService userService;
+    private final JpaGroupRepository groupRepository;
+    private final JpaUserRepository userRepository;
 
-    public HandlerHelper(GroupService groupService, UserService userService) {
-        this.groupService = groupService;
-        this.userService = userService;
+    public HandlerHelper(JpaGroupRepository groupRepository, JpaUserRepository userRepository) {
+        this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -103,12 +102,12 @@ public class HandlerHelper {
             Integer academicYear = TelegramUtil.getAcademicYear(s);
             int beginIndex = 2;
             String academicYearSuffix = academicYear.toString().substring(beginIndex);
-            List<IdGroupName> groups = groupService.getAllGroupNameByYearSuffix(academicYearSuffix);
+            List<IdGroupName> groups = groupRepository.getAllGroupNameByYearSuffix(academicYearSuffix);
 
 
             user.setUserState(UserState.SELECT_GROUP);
             return List.of(
-                    TelegramUtil.createMessageTemplate(userService.save(user))
+                    TelegramUtil.createMessageTemplate(userRepository.save(user))
                             .setText("Выбери группу...")
                             .setReplyMarkup(new InlineKeyboardMarkup()
                                     .setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
@@ -119,12 +118,23 @@ public class HandlerHelper {
 
     public static boolean isNumeric(String strNum) {
         if (strNum != null) try {
-            int i = Integer.parseInt(strNum);
+            Integer.parseInt(strNum);
             return true;
         } catch (NumberFormatException nfe) {
             return false;
         }
         else return false;
+    }
+
+    public static void setGroupOrTeachers(Role role, StringBuilder message, Lesson lesson) {
+        if (role.equals(Role.STUDENT)) {
+            lesson.getTeachers()
+                    .forEach(t -> message.append(t.getName())
+                            .append(" "));
+        } else {
+            message.append(lesson.getGroup().getName());
+        }
+        message.append("\n");
     }
 
     public enum MainCommand {

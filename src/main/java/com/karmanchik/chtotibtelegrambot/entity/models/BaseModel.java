@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.jpa.models;
+package com.karmanchik.chtotibtelegrambot.entity.models;
 
 public interface BaseModel {
     Integer getId();

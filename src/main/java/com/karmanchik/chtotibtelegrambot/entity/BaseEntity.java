@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.jpa.entity;
+package com.karmanchik.chtotibtelegrambot.entity;
 
 import lombok.Getter;
 import lombok.Setter;

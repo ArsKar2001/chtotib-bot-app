@@ -1,7 +1,7 @@
-package com.karmanchik.chtotibtelegrambot.jpa.converter;
+package com.karmanchik.chtotibtelegrambot.entity.converter;
 
 
-import com.karmanchik.chtotibtelegrambot.jpa.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

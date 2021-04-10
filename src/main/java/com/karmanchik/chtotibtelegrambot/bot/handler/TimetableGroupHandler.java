@@ -3,16 +3,17 @@ package com.karmanchik.chtotibtelegrambot.bot.handler;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.entity.Group;
+import com.karmanchik.chtotibtelegrambot.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.User;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.BotState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.jpa.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.jpa.service.GroupService;
-import com.karmanchik.chtotibtelegrambot.jpa.service.UserService;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
 import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +34,8 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class TimetableGroupHandler implements Handler {
     private final HandlerHelper helper;
-    private final GroupService groupService;
-    private final UserService userService;
+    private final JpaGroupRepository groupRepository;
+    private final JpaUserRepository userRepository;
 
     /**
      * Обработчик входящих сообщений пользователя.
@@ -61,7 +62,7 @@ public class TimetableGroupHandler implements Handler {
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
-            GroupOrTeacher group = groupService.findById(id)
+            GroupOrTeacher group = groupRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
             return List.of(
                     getTimetable(user, group),
@@ -92,12 +93,11 @@ public class TimetableGroupHandler implements Handler {
                                 message.append("\t")
                                         .append(number).append("\t<b>|</b>\t")
                                         .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                                        .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                                        .append(lesson.getTeacherName())
-                                        .append("\n");
+                                        .append(lesson.getAuditorium()).append("\t<b>|</b>\t");
+                                HandlerHelper.setGroupOrTeachers(Role.TEACHER, message, lesson);
                             });
                 });
-        return TelegramUtil.createMessageTemplate(userService.save(user))
+        return TelegramUtil.createMessageTemplate(userRepository.save(user))
                 .setText(message.toString());
     }
 

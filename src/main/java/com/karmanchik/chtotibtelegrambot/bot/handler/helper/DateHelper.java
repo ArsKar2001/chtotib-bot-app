@@ -1,6 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
-import com.karmanchik.chtotibtelegrambot.jpa.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

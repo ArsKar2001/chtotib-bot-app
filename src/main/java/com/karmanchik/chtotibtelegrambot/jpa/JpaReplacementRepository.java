@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Group;
-import com.karmanchik.chtotibtelegrambot.jpa.entity.Replacement;
+import com.karmanchik.chtotibtelegrambot.entity.Group;
+import com.karmanchik.chtotibtelegrambot.entity.Replacement;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

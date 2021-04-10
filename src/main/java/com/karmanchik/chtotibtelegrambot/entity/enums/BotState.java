@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.jpa.enums;
+package com.karmanchik.chtotibtelegrambot.entity.enums;
 
 public enum BotState {
     START(100),

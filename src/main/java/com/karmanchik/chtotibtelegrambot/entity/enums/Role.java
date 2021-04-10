@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.jpa.enums;
+package com.karmanchik.chtotibtelegrambot.entity.enums;
 
 public enum Role {
     STUDENT(102), TEACHER(101), NONE(100);
