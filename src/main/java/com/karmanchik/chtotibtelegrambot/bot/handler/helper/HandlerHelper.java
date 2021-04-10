@@ -1,10 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
-import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.entity.Teacher;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.*;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
@@ -59,22 +56,6 @@ public class HandlerHelper {
         return TelegramUtil.createMessageTemplate(user)
                 .setText(text)
                 .enableMarkdown(true);
-    }
-
-    public List<Lesson> getLessonsByUser(User user) {
-        if (user == null)
-            return null;
-        switch (user.getRole()) {
-            case STUDENT:
-                return groupRepository.findByUser(user)
-                        .map(lessonsRepository::findByGroupOrderByDayAscPairNumberAsc)
-                        .orElseThrow();
-            case TEACHER:
-                return teacherRepository.findByUser(user)
-                        .map(lessonsRepository::findByTeacherOrderByDayAscPairNumberAsc)
-                        .orElseThrow();
-        }
-        return null;
     }
 
 
@@ -151,15 +132,43 @@ public class HandlerHelper {
             case STUDENT:
                 Group group = groupRepository.findByUser(user)
                         .orElseThrow();
-                group.setLessons(
-                        lessonsRepository.findByGroupOrderByDayAscPairNumberAsc(group)
-                );
-                return group;
+                List<Lesson> lessons1 = lessonsRepository.findByGroupOrderByDayAscPairNumberAsc(group);
+                return new GroupOrTeacher() {
+                    @Override
+                    public String getName() {
+                        return group.getName();
+                    }
+
+                    @Override
+                    public List<Lesson> getLessons() {
+                        return lessons1;
+                    }
+
+                    @Override
+                    public List<Replacement> getReplacements() {
+                        return null;
+                    }
+                };
             case TEACHER:
                 Teacher teacher = teacherRepository.findByUser(user)
                         .orElseThrow();
-                teacher.setLessons(lessonsRepository.findByTeacherOrderByDayAscPairNumberAsc(teacher));
-                return teacher;
+                List<Lesson> lessons2 = lessonsRepository.findByTeacherId(teacher.getId());
+                return new GroupOrTeacher() {
+                    @Override
+                    public String getName() {
+                        return teacher.getName();
+                    }
+
+                    @Override
+                    public List<Lesson> getLessons() {
+                        return lessons2;
+                    }
+
+                    @Override
+                    public List<Replacement> getReplacements() {
+                        return null;
+                    }
+                };
         }
         return null;
     }

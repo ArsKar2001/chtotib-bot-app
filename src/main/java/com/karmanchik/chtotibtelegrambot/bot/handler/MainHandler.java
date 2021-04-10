@@ -71,7 +71,7 @@ public class MainHandler implements Handler {
         GroupOrTeacher data = helper.getData(user);
         Role role = user.getRole();
         message.append("Расписание ").append("<b>").append(data.getName()).append("</b>:").append("\n");
-        helper.getLessonsByUser(user).stream()
+        data.getLessons().stream()
                 .map(Lesson::getDay)
                 .distinct()
                 .forEach(day -> {
@@ -98,7 +98,6 @@ public class MainHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
         GroupOrTeacher data = helper.getData(user);
-        List<Lesson> lessons = helper.getLessonsByUser(user);
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
         String name = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
@@ -108,7 +107,7 @@ public class MainHandler implements Handler {
         StringBuilder message = new StringBuilder()
                 .append("Расписание ").append("<b>").append(data.getName()).append("</b>").append(" на ").append("<b>").append(date).append("</b>").append(" (").append(name).append("):").append("\n")
                 .append(MESSAGE_SPLIT).append("\n");
-        lessons.stream()
+        data.getLessons().stream()
                 .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())
                 .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
                 .forEach(lesson -> {
