@@ -2,6 +2,9 @@ package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
 import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +41,9 @@ public class UpdateReceiver {
                 User user = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(User
                                 .builder(chatId, userName)
+                                .botState(BotState.START)
+                                .userState(UserState.NONE)
+                                .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
                 return getHandlerByState(user).handle(user, message.getText());
@@ -51,6 +57,9 @@ public class UpdateReceiver {
                 User user = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(User
                                 .builder(chatId, userName)
+                                .botState(BotState.START)
+                                .userState(UserState.NONE)
+                                .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
                 return getHandlerByState(user).handle(user, callbackQuery.getData());
