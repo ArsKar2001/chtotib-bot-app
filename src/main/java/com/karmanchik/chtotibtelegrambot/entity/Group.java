@@ -58,6 +58,7 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     public String toString() {
         return "Group{" +
                 "name='" + name + '\'' +
+                ", user=" + user +
                 ", lessons=" + lessons +
                 ", replacements=" + replacements +
                 ", id=" + id +
