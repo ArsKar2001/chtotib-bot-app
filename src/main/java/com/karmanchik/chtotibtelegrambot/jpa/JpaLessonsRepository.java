@@ -19,10 +19,4 @@ public interface JpaLessonsRepository extends JpaRepository<Lesson, Integer> {
                                                      @NotNull Integer day,
                                                      @NotNull Integer pairNumber);
 
-    List<Lesson> findByGroupOrderByDayAscPairNumberAsc(Group group);
-
-    @Query("SELECT l FROM Lesson l " +
-            "LEFT JOIN l.teachers AS t ON t.id = :tId " +
-            "ORDER BY l.day, l.pairNumber ASC")
-    List<Lesson> findByTeacherId(@Param("tId") Integer teacherId);
 }

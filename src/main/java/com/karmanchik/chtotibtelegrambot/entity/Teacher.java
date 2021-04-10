@@ -11,6 +11,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -29,17 +30,15 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     private User user;
 
     @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.EAGER)
     @OrderBy("day, pairNumber ASC")
     @MapsId("teachersId")
-    private List<Lesson> lessons;
+    private Set<Lesson> lessons;
 
     @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.EAGER)
     @OrderBy("date, pairNumber ASC")
-    private List<Replacement> replacements;
+    private Set<Replacement> replacements;
 
     public static TeacherBuilder builder(String name) {
         return hiddenBuilder().name(name);

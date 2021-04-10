@@ -4,9 +4,10 @@ import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.entity.Replacement;
 
 import java.util.List;
+import java.util.Set;
 
 public interface GroupOrTeacher {
     String getName();
-    List<Lesson> getLessons();
-    List<Replacement> getReplacements();
+    Set<Lesson> getLessons();
+    Set<Replacement> getReplacements();
 }

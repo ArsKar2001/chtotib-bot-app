@@ -1,18 +1,15 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(
@@ -39,16 +36,14 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     private User user;
 
     @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @OrderBy("day, pairNumber ASC")
-    private List<Lesson> lessons;
+    private Set<Lesson> lessons;
 
     @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @OrderBy(value = "date, pairNumber ASC")
-    private List<Replacement> replacements;
+    private Set<Replacement> replacements;
 
     public static GroupBuilder builder(String name) {
         return hiddenBuilder().name(name);
