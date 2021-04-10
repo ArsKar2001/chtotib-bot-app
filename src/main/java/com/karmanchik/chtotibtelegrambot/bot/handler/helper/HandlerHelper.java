@@ -130,45 +130,11 @@ public class HandlerHelper {
             return null;
         switch (user.getRole()) {
             case STUDENT:
-                Group group = groupRepository.findByUser(user)
+                return groupRepository.findByUser(user)
                         .orElseThrow();
-                List<Lesson> lessons1 = lessonsRepository.findByGroupOrderByDayAscPairNumberAsc(group);
-                return new GroupOrTeacher() {
-                    @Override
-                    public String getName() {
-                        return group.getName();
-                    }
-
-                    @Override
-                    public List<Lesson> getLessons() {
-                        return lessons1;
-                    }
-
-                    @Override
-                    public List<Replacement> getReplacements() {
-                        return null;
-                    }
-                };
             case TEACHER:
-                Teacher teacher = teacherRepository.findByUser(user)
+                return teacherRepository.findByUser(user)
                         .orElseThrow();
-                List<Lesson> lessons2 = lessonsRepository.findByTeacherId(teacher.getId());
-                return new GroupOrTeacher() {
-                    @Override
-                    public String getName() {
-                        return teacher.getName();
-                    }
-
-                    @Override
-                    public List<Lesson> getLessons() {
-                        return lessons2;
-                    }
-
-                    @Override
-                    public List<Replacement> getReplacements() {
-                        return null;
-                    }
-                };
         }
         return null;
     }
