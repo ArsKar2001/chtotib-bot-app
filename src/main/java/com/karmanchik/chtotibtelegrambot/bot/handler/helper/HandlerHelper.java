@@ -1,7 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -9,6 +11,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.entity.models.IdGroupName;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
@@ -35,6 +38,7 @@ public class HandlerHelper {
     private final JpaGroupRepository groupRepository;
     private final JpaUserRepository userRepository;
     private final JpaTeacherRepository teacherRepository;
+    private final JpaLessonsRepository lessonsRepository;
 
 
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
@@ -57,15 +61,17 @@ public class HandlerHelper {
                 .enableMarkdown(true);
     }
 
-    public GroupOrTeacher getData(User user) {
+    public List<Lesson> getLessonsByUser(User user) {
         if (user == null)
             return null;
         switch (user.getRole()) {
             case STUDENT:
                 return groupRepository.findByUser(user)
+                        .map(lessonsRepository::findByGroupOrderByDayAscPairNumberAsc)
                         .orElseThrow();
             case TEACHER:
                 return teacherRepository.findByUser(user)
+                        .map(lessonsRepository::findByTeacherOrderByDayAscPairNumberAsc)
                         .orElseThrow();
         }
         return null;
@@ -136,6 +142,26 @@ public class HandlerHelper {
             message.append(lesson.getGroup().getName());
         }
         message.append("\n");
+    }
+
+    public GroupOrTeacher getData(User user) {
+        if (user == null)
+            return null;
+        switch (user.getRole()) {
+            case STUDENT:
+                Group group = groupRepository.findByUser(user)
+                        .orElseThrow();
+                group.setLessons(
+                        lessonsRepository.findByGroupOrderByDayAscPairNumberAsc(group)
+                );
+                return group;
+            case TEACHER:
+                Teacher teacher = teacherRepository.findByUser(user)
+                        .orElseThrow();
+                teacher.setLessons(lessonsRepository.findByTeacherOrderByDayAscPairNumberAsc(teacher));
+                return teacher;
+        }
+        return null;
     }
 
     public enum MainCommand {

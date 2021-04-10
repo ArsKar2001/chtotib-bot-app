@@ -28,15 +28,13 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     @OneToOne(mappedBy = "teacher")
     private User user;
 
-    @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
     @OrderBy("day, pairNumber ASC")
     @MapsId("teachersId")
     private List<Lesson> lessons;
 
-    @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers")
     @OrderBy("date, pairNumber ASC")
     private List<Replacement> replacements;

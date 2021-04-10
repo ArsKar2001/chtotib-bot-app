@@ -38,14 +38,12 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     @OneToOne(mappedBy = "group")
     private User user;
 
-    @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @OrderBy("day, pairNumber ASC")
     private List<Lesson> lessons;
 
-    @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonIgnore
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @OrderBy(value = "date, pairNumber ASC")
     private List<Replacement> replacements;
