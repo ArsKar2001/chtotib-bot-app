@@ -49,7 +49,6 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     public String toString() {
         return "Teacher{" +
                 "name='" + name + '\'' +
-                ", user=" + user +
                 ", lessons=" + lessons +
                 ", replacements=" + replacements +
                 ", id=" + id +

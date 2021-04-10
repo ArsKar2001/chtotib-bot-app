@@ -39,14 +39,14 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     private User user;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("day, pairNumber ASC")
     private List<Lesson> lessons;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "date, pairNumber ASC")
     private List<Replacement> replacements;
 
@@ -58,7 +58,6 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     public String toString() {
         return "Group{" +
                 "name='" + name + '\'' +
-                ", user=" + user +
                 ", lessons=" + lessons +
                 ", replacements=" + replacements +
                 ", id=" + id +

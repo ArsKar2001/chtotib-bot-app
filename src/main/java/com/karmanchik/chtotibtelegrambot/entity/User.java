@@ -65,6 +65,8 @@ public class User extends BaseEntity {
         return "User{" +
                 "chatId=" + chatId +
                 ", userName='" + userName + '\'' +
+                ", teacher=" + teacher.getId() +
+                ", group=" + group.getId() +
                 ", role=" + role +
                 ", userState=" + userState +
                 ", botState=" + botState +
