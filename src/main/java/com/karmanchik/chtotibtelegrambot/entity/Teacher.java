@@ -26,13 +26,12 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     private String name;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "teacher")
+    @OneToOne(mappedBy = "teacher", fetch = FetchType.LAZY)
     private User user;
 
     @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.EAGER)
     @OrderBy("day, pairNumber ASC")
-    @MapsId("teachersId")
     private Set<Lesson> lessons;
 
     @JsonManagedReference
