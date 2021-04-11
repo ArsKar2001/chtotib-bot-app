@@ -1,10 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
+import com.karmanchik.chtotibtelegrambot.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,4 +18,7 @@ public interface JpaLessonsRepository extends JpaRepository<Lesson, Integer> {
                                                      @NotNull Integer day,
                                                      @NotNull Integer pairNumber);
 
+    @Query("SELECT l FROM Lesson l " +
+            "WHERE :teacher member of l.teachers")
+    List<Lesson> findByTeacher(Teacher teacher);
 }
