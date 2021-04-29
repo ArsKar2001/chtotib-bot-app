@@ -35,7 +35,6 @@ public class HandlerHelper {
     private final JpaGroupRepository groupRepository;
     private final JpaUserRepository userRepository;
     private final JpaTeacherRepository teacherRepository;
-    private final JpaLessonsRepository lessonsRepository;
 
 
     public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
