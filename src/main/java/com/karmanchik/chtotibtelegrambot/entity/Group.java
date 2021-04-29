@@ -29,7 +29,7 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     private String name;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "group")
+    @OneToOne(mappedBy = "group", fetch = FetchType.LAZY)
     private User user;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
