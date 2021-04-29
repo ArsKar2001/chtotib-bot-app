@@ -96,6 +96,7 @@ public class StudentHandler extends MainHandler {
         lessons.stream()
                 .map(Lesson::getDay)
                 .distinct()
+                .sorted()
                 .forEach(day -> {
                     String displayName = DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Helper.getLocale());
                     message.append(MESSAGE_SPLIT).append("\n")
