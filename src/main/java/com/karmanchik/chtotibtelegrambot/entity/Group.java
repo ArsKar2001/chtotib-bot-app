@@ -3,7 +3,6 @@ package com.karmanchik.chtotibtelegrambot.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
 
@@ -22,7 +21,6 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Builder(builderMethodName = "hiddenBuilder")
 @AllArgsConstructor
 @NoArgsConstructor

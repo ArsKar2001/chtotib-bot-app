@@ -1,9 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
