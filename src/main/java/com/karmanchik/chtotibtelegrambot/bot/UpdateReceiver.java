@@ -33,11 +33,8 @@ public class UpdateReceiver {
         try {
             if (isMessageWithText(update)) {
                 Message message = update.getMessage();
-                log.info("Message - {}", message);
                 Integer chatId = message.getFrom().getId();
-                log.info("Chat Id - {}", chatId);
                 String userName = message.getChat().getUserName();
-                log.info("UserName - {}", userName);
                 User user = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(User
                                 .builder(chatId, userName)
@@ -46,14 +43,11 @@ public class UpdateReceiver {
                                 .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
-                return getHandlerByState(user).handle(user, message.getText());
+                return getHandlerByUser(user).handle(user, message.getText());
             } else if (update.hasCallbackQuery()) {
                 CallbackQuery callbackQuery = update.getCallbackQuery();
-                log.info("CallbackQuery - {}", callbackQuery);
                 Integer chatId = callbackQuery.getFrom().getId();
-                log.info("Chat Id - {}", chatId);
                 String userName = callbackQuery.getMessage().getChat().getUserName();
-                log.info("UserName - {}", userName);
                 User user = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(User
                                 .builder(chatId, userName)
@@ -62,7 +56,7 @@ public class UpdateReceiver {
                                 .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
-                return getHandlerByState(user).handle(user, callbackQuery.getData());
+                return getHandlerByUser(user).handle(user, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException | ResourceNotFoundException e) {
@@ -71,9 +65,11 @@ public class UpdateReceiver {
         }
     }
 
-    private Handler getHandlerByState(User user) {
+    private Handler getHandlerByUser(User user) {
         return handlers.stream()
                 .filter(handler -> handler.operatedBotState() == user.getBotState())
+                .filter(handler -> handler.operatedUserRoles().stream()
+                        .anyMatch(role -> role == user.getRole()))
                 .filter(handler -> handler.operatedUserSate().stream()
                         .anyMatch(state -> state == user.getUserState()))
                 .findAny()

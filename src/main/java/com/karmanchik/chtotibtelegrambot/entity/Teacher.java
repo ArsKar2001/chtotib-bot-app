@@ -29,14 +29,12 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     @OneToOne(mappedBy = "teacher")
     private User user;
 
-    @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.LAZY)
     @OrderBy("day, pairNumber ASC")
     @MapsId("teachersId")
     private Set<Lesson> lessons;
 
-    @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.LAZY)
     @OrderBy("date, pairNumber ASC")
     private Set<Replacement> replacements;
 
@@ -48,8 +46,6 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     public String toString() {
         return "Teacher{" +
                 "name='" + name + '\'' +
-                ", lessons=" + lessons +
-                ", replacements=" + replacements +
                 ", id=" + id +
                 '}';
     }

@@ -4,6 +4,7 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,11 @@ public class StartHandler implements Handler {
     @Override
     public BotState operatedBotState() {
         return BotState.START;
+    }
+
+    @Override
+    public List<Role> operatedUserRoles() {
+        return List.of(Role.NONE);
     }
 
     @Override

@@ -32,12 +32,10 @@ public class Replacement extends BaseEntity {
     @NotNull
     private LocalDate date;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Teacher> teachers;
 

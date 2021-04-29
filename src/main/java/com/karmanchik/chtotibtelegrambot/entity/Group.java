@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import lombok.*;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,13 +32,11 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     @OneToOne(mappedBy = "group")
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @OrderBy("day, pairNumber ASC")
     private Set<Lesson> lessons;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @OrderBy(value = "date, pairNumber ASC")
     private Set<Replacement> replacements;
 
@@ -51,8 +48,6 @@ public class Group extends BaseEntity implements GroupOrTeacher {
     public String toString() {
         return "Group{" +
                 "name='" + name + '\'' +
-                ", lessons=" + lessons +
-                ", replacements=" + replacements +
                 ", id=" + id +
                 '}';
     }

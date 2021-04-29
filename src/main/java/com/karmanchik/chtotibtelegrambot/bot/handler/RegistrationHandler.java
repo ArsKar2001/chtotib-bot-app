@@ -179,6 +179,15 @@ public class RegistrationHandler implements Handler {
     }
 
     @Override
+    public List<Role> operatedUserRoles() {
+        return List.of(
+                Role.STUDENT,
+                Role.NONE,
+                Role.TEACHER
+        );
+    }
+
+    @Override
     public List<UserState> operatedUserSate() {
         return List.of(
                 UserState.SELECT_ROLE,

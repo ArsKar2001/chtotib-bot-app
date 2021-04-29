@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
+import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
@@ -20,6 +21,8 @@ public interface Handler {
     List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) throws ResourceNotFoundException;
 
     BotState operatedBotState();
+
+    List<Role> operatedUserRoles();
 
     List<UserState> operatedUserSate();
 }

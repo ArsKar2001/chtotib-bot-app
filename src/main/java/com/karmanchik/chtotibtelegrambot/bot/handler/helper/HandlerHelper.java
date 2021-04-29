@@ -1,5 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
+import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.*;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
@@ -12,6 +13,7 @@ import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
+import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
@@ -136,32 +140,5 @@ public class HandlerHelper {
                         .orElseThrow();
         }
         return null;
-    }
-
-    public enum MainCommand {
-        COMMAND_1,
-        COMMAND_2,
-        COMMAND_3,
-        COMMAND_4;
-        private static final Map<String, MainCommand> COMMAND_MAP = new HashMap<>();
-
-        static {
-            Arrays.stream(MainCommand.values()).forEach(c -> {
-                String key = String.valueOf(c.ordinal() + 1);
-                COMMAND_MAP.put(key, c);
-            });
-        }
-
-        public static List<String> getKeyAll() {
-            return new ArrayList<>(COMMAND_MAP.keySet());
-        }
-
-        public static MainCommand get(String key) {
-            return COMMAND_MAP.get(key);
-        }
-
-        public static Map<String, MainCommand> getMap() {
-            return COMMAND_MAP;
-        }
     }
 }

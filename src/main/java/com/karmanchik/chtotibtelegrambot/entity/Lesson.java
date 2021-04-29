@@ -35,12 +35,10 @@ public class Lesson extends BaseEntity {
     @NotNull
     private WeekType weekType;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Teacher> teachers;
 

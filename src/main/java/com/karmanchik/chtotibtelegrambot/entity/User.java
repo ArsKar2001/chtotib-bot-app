@@ -26,14 +26,12 @@ public class User extends BaseEntity {
     @NotNull
     private String userName;
 
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_teacher",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)})
     private Teacher teacher = null;
 
-    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinTable(name = "user_group",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)},
