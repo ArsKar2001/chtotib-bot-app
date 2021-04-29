@@ -2,6 +2,7 @@ package com.karmanchik.chtotibtelegrambot.bot.util;
 
 import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.models.BaseModel;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.model.Courses;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -48,7 +49,7 @@ public class TelegramUtil {
         return (now_month > Month.SEPTEMBER.getValue()) ? academicYear + 1 : academicYear;
     }
 
-    public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
+    public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends GroupOrTeacher> models, Integer countButtonInRow) {
         List<List<InlineKeyboardButton>> listList = new LinkedList<>();
         List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
 

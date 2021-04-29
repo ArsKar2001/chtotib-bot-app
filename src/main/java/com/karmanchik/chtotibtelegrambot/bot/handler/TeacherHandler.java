@@ -59,7 +59,7 @@ public class TeacherHandler extends MainHandler {
             lessons.stream()
                     .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())
                     .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                    .forEach(getLessonConsumer(message));
+                    .forEach(Helper.getLessonTeacher(message));
         } else {
             message.append("Пар на ").append("<b>").append(date).append("</b>").append(" нет.");
         }
@@ -104,7 +104,7 @@ public class TeacherHandler extends MainHandler {
                     lessons.stream()
                             .filter(lesson -> lesson.getDay().equals(day))
                             .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
-                            .forEach(getLessonConsumer(message));
+                            .forEach(Helper.getLessonTeacher(message));
                 });
         return List.of(TelegramUtil.createMessageTemplate(user)
                         .setText(message.toString()),
@@ -113,23 +113,17 @@ public class TeacherHandler extends MainHandler {
     }
 
     @Override
+    protected List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(User user) {
+        user.setUserState(UserState.SELECT_COURSE);
+        return TimetableGroupHandler.start(userRepository.save(user));
+    }
+
+    @Override
     public List<PartialBotApiMethod<? extends Serializable>> editProfile(User user) {
         user.setBotState(BotState.REG);
         user.setUserState(UserState.SELECT_ROLE);
         return List.of(
                 HandlerHelper.selectRole(userRepository.save(user)));
-    }
-
-    private Consumer<Lesson> getLessonConsumer(StringBuilder message) {
-        return lesson -> {
-            String number = NumberLesson.get(lesson.getPairNumber());
-            message.append("\t")
-                    .append(number).append("\t<b>|</b>\t")
-                    .append(lesson.getDiscipline()).append("\t<b>|</b>\t")
-                    .append(lesson.getAuditorium()).append("\t<b>|</b>\t")
-                    .append(lesson.getGroup().getName())
-                    .append("\n");
-        };
     }
 
     @Override
@@ -145,9 +139,7 @@ public class TeacherHandler extends MainHandler {
     @Override
     public List<UserState> operatedUserSate() {
         return List.of(
-                UserState.NONE,
-                UserState.SELECT_COURSE,
-                UserState.SELECT_GROUP
+                UserState.NONE
         );
     }
 }

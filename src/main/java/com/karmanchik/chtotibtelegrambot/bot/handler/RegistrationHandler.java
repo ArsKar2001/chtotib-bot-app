@@ -9,6 +9,7 @@ import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
+import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
@@ -118,7 +119,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<IdTeacherName> teacherNames = teacherRepository.getAllIdTeacherNameByName(message);
+        List<GroupOrTeacher> teacherNames = teacherRepository.getAllIdTeacherNameByName(message);
         if (!teacherNames.isEmpty()) {
             user.setUserState(UserState.SELECT_TEACHER);
             User save = userRepository.save(user);

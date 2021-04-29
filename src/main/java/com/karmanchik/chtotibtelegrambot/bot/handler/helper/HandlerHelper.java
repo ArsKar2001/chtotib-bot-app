@@ -93,7 +93,7 @@ public class HandlerHelper {
             Integer academicYear = TelegramUtil.getAcademicYear(s);
             int beginIndex = 2;
             String academicYearSuffix = academicYear.toString().substring(beginIndex);
-            List<IdGroupName> groups = groupRepository.getAllGroupNameByYearSuffix(academicYearSuffix);
+            List<GroupOrTeacher> groups = groupRepository.getAllGroupNameByYearSuffix(academicYearSuffix);
 
 
             user.setUserState(UserState.SELECT_GROUP);
