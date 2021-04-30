@@ -1,9 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot.util;
 
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.models.BaseModel;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.model.Courses;
+import com.karmanchik.chtotibtelegrambot.model.BaseModel;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.model.Course;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TelegramUtil {
     private TelegramUtil() {
@@ -34,22 +35,22 @@ public class TelegramUtil {
                 .setSelective(false);
     }
 
-    public static KeyboardRow createKeyboardRow(List<String> strings) {
+    public static KeyboardRow createKeyboardRow(List<String> values) {
         KeyboardRow row = new KeyboardRow();
-        row.addAll(strings);
+        row.addAll(values);
         return row;
     }
 
-    public static Integer getAcademicYear(String message) {
+    public static Integer getAcademicYear(Course course) {
         Calendar calendar = Calendar.getInstance();
-        int number = Integer.parseInt(message);
+        int number = course.getValue();
         int now_year = calendar.get(Calendar.YEAR);
         int now_month = calendar.get(Calendar.MONTH);
         int academicYear = now_year - number;
         return (now_month > Month.SEPTEMBER.getValue()) ? academicYear + 1 : academicYear;
     }
 
-    public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends GroupOrTeacher> models, Integer countButtonInRow) {
+    public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
         List<List<InlineKeyboardButton>> listList = new LinkedList<>();
         List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
 
@@ -73,11 +74,11 @@ public class TelegramUtil {
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(User user) {
-        List<String> values = Courses.getKeys();
-        Collections.sort(values);
+        List<String> names = Course.names();
+        Collections.sort(names);
 
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
-        KeyboardRow row = TelegramUtil.createKeyboardRow(values);
+        KeyboardRow row = TelegramUtil.createKeyboardRow(names);
         markup.setKeyboard(List.of(row));
 
         return List.of(TelegramUtil.createMessageTemplate(user)

@@ -1,9 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
+import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.Teacher;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
+import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,10 +23,13 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
             value = "SELECT t.id, t.name FROM teacher t")
     List<IdTeacherName> getAllNames();
 
-    @Query(value = "SELECT t FROM Teacher t " +
-            "WHERE lower(t.name) LIKE %:name%" +
+    @Query(nativeQuery = true,
+            value = "SELECT t.id, t.name FROM teacher t " +
+            "WHERE lower(t.name) LIKE '%' || lower(:name) || '%' " +
             "ORDER BY t.name")
-    List<GroupOrTeacher> getAllIdTeacherNameByName(@Param("name") String message);
+    List<IdTeacherName> findAllByName(@Param("name") String name);
 
-    Optional<Teacher> findByUser(User user);
+    @Query("SELECT g FROM Teacher g " +
+            "WHERE :user member of g.users")
+    Optional<Teacher> findByUsers(User user);
 }

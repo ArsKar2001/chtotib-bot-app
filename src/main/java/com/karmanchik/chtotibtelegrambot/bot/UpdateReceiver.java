@@ -43,7 +43,9 @@ public class UpdateReceiver {
                                 .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
-                return getHandlerByUser(user).handle(user, message.getText());
+                Handler handler = getHandlerByUser(user);
+                log.info("Handler - {}", handler.getName());
+                return handler.handle(user, message.getText());
             } else if (update.hasCallbackQuery()) {
                 CallbackQuery callbackQuery = update.getCallbackQuery();
                 Integer chatId = callbackQuery.getFrom().getId();
@@ -56,7 +58,9 @@ public class UpdateReceiver {
                                 .role(Role.NONE)
                                 .build()));
                 log.info("User - {}", user);
-                return getHandlerByUser(user).handle(user, callbackQuery.getData());
+                Handler handler = getHandlerByUser(user);
+                log.info("Handler - {}", handler.getName());
+                return handler.handle(user, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException | ResourceNotFoundException e) {

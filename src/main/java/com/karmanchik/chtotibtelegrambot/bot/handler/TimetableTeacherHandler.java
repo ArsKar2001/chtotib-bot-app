@@ -12,12 +12,13 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -60,12 +61,12 @@ public class TimetableTeacherHandler implements Handler {
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
                         .setText("Введите фамилию...")
-                        .enableMarkdown(false)
+                        .enableMarkdown(true)
         );
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<GroupOrTeacher> teacherNames = teacherRepository.getAllIdTeacherNameByName(message);
+        List<IdTeacherName> teacherNames = teacherRepository.findAllByName(message.toLowerCase());
         if (!teacherNames.isEmpty()) {
             user.setUserState(UserState.SELECT_TEACHER);
             User save = userRepository.save(user);
@@ -85,7 +86,8 @@ public class TimetableTeacherHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacherOrAccept(User user, String message) throws ResourceNotFoundException {
         if (message.equalsIgnoreCase(CANCEL)) {
-            return start(user);
+            user.setUserState(UserState.INPUT_TEXT);
+            return start(userRepository.save(user));
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             Teacher teacher = teacherRepository.findById(id)
@@ -126,7 +128,7 @@ public class TimetableTeacherHandler implements Handler {
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Веберите педагога")
+                        .setText("Выберите педагога")
                         .setReplyMarkup(markup1),
                 TelegramUtil.createMessageTemplate(user)
                         .setText("...")

@@ -1,12 +1,8 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import lombok.*;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,9 +21,8 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     @NotNull
     private String name;
 
-    @JsonBackReference
-    @OneToOne(mappedBy = "teacher", fetch = FetchType.LAZY)
-    private User user;
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    private List<User> users;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.LAZY)
     @OrderBy("day, pairNumber ASC")

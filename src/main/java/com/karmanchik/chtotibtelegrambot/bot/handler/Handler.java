@@ -25,4 +25,8 @@ public interface Handler {
     List<Role> operatedUserRoles();
 
     List<UserState> operatedUserSate();
+
+    default String getName() {
+        return this.getClass().getName();
+    }
 }

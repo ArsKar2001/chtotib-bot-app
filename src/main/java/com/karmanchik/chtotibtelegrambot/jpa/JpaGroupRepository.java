@@ -2,8 +2,8 @@ package com.karmanchik.chtotibtelegrambot.jpa;
 
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.entity.models.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
+import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,10 +24,13 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
             value = "SELECT g.id, g.name FROM groups g")
     List<IdGroupName> getAllGroupName();
 
-    @Query(value = "SELECT g FROM Group g " +
-            "WHERE g.name LIKE %:academicYearSuffix% " +
-            "ORDER BY g.name")
-    List<GroupOrTeacher> getAllGroupNameByYearSuffix(@Param("academicYearSuffix") String academicYearSuffix);
+    @Query(nativeQuery = true,
+            value = "SELECT g.id, g.name FROM groups g " +
+                    "WHERE lower(g.name) LIKE '%' || :academicYearSuffix || '%' " +
+                    "ORDER BY g.name")
+    List<IdGroupName> findAllByYearSuffix(@Param("academicYearSuffix") String academicYearSuffix);
 
-    Optional<Group> findByUser(User user);
+    @Query("SELECT g FROM Group g " +
+            "WHERE :user member of g.users")
+    Optional<Group> findByUsers(User user);
 }

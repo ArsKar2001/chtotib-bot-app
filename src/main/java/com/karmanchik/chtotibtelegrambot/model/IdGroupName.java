@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.entity.models;
+package com.karmanchik.chtotibtelegrambot.model;
 
 public interface IdGroupName extends BaseModel {
     @Override

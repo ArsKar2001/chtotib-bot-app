@@ -1,4 +1,4 @@
-package com.karmanchik.chtotibtelegrambot.entity.models;
+package com.karmanchik.chtotibtelegrambot.model;
 
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.entity.Replacement;

@@ -6,14 +6,12 @@ import com.karmanchik.chtotibtelegrambot.entity.*;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.entity.models.IdGroupName;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
-import com.karmanchik.chtotibtelegrambot.model.Courses;
-import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
+import com.karmanchik.chtotibtelegrambot.model.Course;
+import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -26,8 +24,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_STUDENT;
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
@@ -88,12 +84,12 @@ public class HandlerHelper {
     }
 
     public List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
-        if (Courses.containsKey(message)) {
-            String s = Courses.get(message);
-            Integer academicYear = TelegramUtil.getAcademicYear(s);
+        if (Course.isCourse(message)) {
+            Course course = Course.valueOf(message);
+            Integer academicYear = TelegramUtil.getAcademicYear(course);
             int beginIndex = 2;
             String academicYearSuffix = academicYear.toString().substring(beginIndex);
-            List<GroupOrTeacher> groups = groupRepository.getAllGroupNameByYearSuffix(academicYearSuffix);
+            List<IdGroupName> groups = groupRepository.findAllByYearSuffix(academicYearSuffix);
 
 
             user.setUserState(UserState.SELECT_GROUP);
@@ -133,10 +129,10 @@ public class HandlerHelper {
             return null;
         switch (user.getRole()) {
             case STUDENT:
-                return groupRepository.findByUser(user)
+                return groupRepository.findByUsers(user)
                         .orElseThrow();
             case TEACHER:
-                return teacherRepository.findByUser(user)
+                return teacherRepository.findByUsers(user)
                         .orElseThrow();
         }
         return null;

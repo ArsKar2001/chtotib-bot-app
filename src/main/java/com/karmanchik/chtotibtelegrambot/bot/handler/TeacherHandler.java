@@ -16,7 +16,6 @@ import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaReplacementRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
-import com.karmanchik.chtotibtelegrambot.model.NumberLesson;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -27,7 +26,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.MESSAGE_SPLIT;
 
@@ -42,7 +40,7 @@ public class TeacherHandler extends MainHandler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Teacher teacher = teacherRepository.findByUser(user)
+        Teacher teacher = teacherRepository.findByUsers(user)
                 .orElseThrow();
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
@@ -86,7 +84,7 @@ public class TeacherHandler extends MainHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
 
-        Teacher teacher = teacherRepository.findByUser(user)
+        Teacher teacher = teacherRepository.findByUsers(user)
                 .orElseThrow();
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();

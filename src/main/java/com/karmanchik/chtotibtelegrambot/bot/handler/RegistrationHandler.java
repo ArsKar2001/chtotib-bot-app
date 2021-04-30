@@ -9,13 +9,13 @@ import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.entity.models.GroupOrTeacher;
-import com.karmanchik.chtotibtelegrambot.entity.models.IdTeacherName;
+import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
-import com.karmanchik.chtotibtelegrambot.model.Courses;
+import com.karmanchik.chtotibtelegrambot.model.Course;
+import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -88,7 +88,7 @@ public class RegistrationHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(User user, String message) throws ResourceNotFoundException {
 
-        if (Courses.containsKey(message)) {
+        if (Course.isCourse(message)) {
             return helper.selectGroup(user, message);
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
@@ -119,7 +119,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
-        List<GroupOrTeacher> teacherNames = teacherRepository.getAllIdTeacherNameByName(message);
+        List<IdTeacherName> teacherNames = teacherRepository.findAllByName(message.toLowerCase());
         if (!teacherNames.isEmpty()) {
             user.setUserState(UserState.SELECT_TEACHER);
             User save = userRepository.save(user);
@@ -143,7 +143,7 @@ public class RegistrationHandler implements Handler {
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
                 TelegramUtil.createMessageTemplate(user)
-                        .setText("Веберите педагога")
+                        .setText("Выберите педагога")
                         .setReplyMarkup(markup1),
                 TelegramUtil.createMessageTemplate(user)
                         .setText("...?")
