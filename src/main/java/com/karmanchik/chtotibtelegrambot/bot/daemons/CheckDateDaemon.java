@@ -5,6 +5,8 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
+import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,8 @@ public class CheckDateDaemon {
             if (nextDate.getDayOfYear() > now.getDayOfYear()) {
                 List<User> users = userRepository.findAll();
                 users.parallelStream()
+                        .filter(user -> user.getBotState() == BotState.AUTHORIZED)
+                        .filter(user -> user.getUserState() == UserState.NONE)
                         .forEach(user -> {
                             try {
                                 bot.execute(TelegramUtil.createMessageTemplate(user)
