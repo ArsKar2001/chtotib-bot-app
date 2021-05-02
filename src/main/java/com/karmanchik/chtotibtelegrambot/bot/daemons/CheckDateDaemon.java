@@ -51,6 +51,6 @@ public class CheckDateDaemon {
                             }
                         });
             }
-        }, 12, 1, TimeUnit.HOURS);
+        }, 4, 24, TimeUnit.HOURS);
     }
 }
