@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
@@ -37,7 +37,7 @@ public class RegistrationHandler implements Handler {
     private final JpaGroupRepository groupRepository;
     private final JpaTeacherRepository teacherRepository;
 
-    private final HandlerHelper helper;
+    private final HandlerHelperService helper;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) {
@@ -81,7 +81,7 @@ public class RegistrationHandler implements Handler {
 
     private List<PartialBotApiMethod<? extends Serializable>> inputTeacherName(ChatUser chatUser) {
         chatUser.setUserState(UserState.INPUT_TEXT);
-        return List.of(HandlerHelper.inputMessage(
+        return List.of(HandlerHelperService.inputMessage(
                 userRepository.save(chatUser),
                 "Введите фамилию..."));
     }
@@ -90,7 +90,7 @@ public class RegistrationHandler implements Handler {
 
         if (Course.isCourse(message)) {
             return helper.selectGroup(chatUser, message);
-        } else if (HandlerHelper.isNumeric(message)) {
+        } else if (HandlerHelperService.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
             Group group = groupRepository.findById(id)
@@ -106,7 +106,7 @@ public class RegistrationHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> selectTeacherOrAccept(ChatUser chatUser, String message) throws ResourceNotFoundException {
         if (message.equalsIgnoreCase(CANCEL)) {
             return inputTeacherName(chatUser);
-        } else if (HandlerHelper.isNumeric(message)) {
+        } else if (HandlerHelperService.isNumeric(message)) {
             int id = Integer.parseInt(message);
             Teacher teacher = teacherRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Teacher.class));
@@ -166,14 +166,14 @@ public class RegistrationHandler implements Handler {
         chatUser.setUserState(UserState.NONE);
         chatUser.setBotState(BotState.AUTHORIZED);
         ChatUser save = userRepository.save(chatUser);
-        return HandlerHelper.mainMessage(save);
+        return HandlerHelperService.mainMessage(save);
     }
 
     private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {
         chatUser.setUserState(UserState.SELECT_ROLE);
         chatUser.setBotState(BotState.REG);
         final ChatUser saveChatUser = userRepository.save(chatUser);
-        return HandlerHelper.selectRole(saveChatUser);
+        return HandlerHelperService.selectRole(saveChatUser);
     }
 
     @Override

@@ -20,7 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Log4j2
-@Service
+@Service("checkDateDaemon")
 public class CheckDateDaemon {
     private final JpaChatUserRepository userRepository;
     private static final List<ChatUser> TEMP_CHAT_USERS = new ArrayList<>();
@@ -42,7 +42,7 @@ public class CheckDateDaemon {
             LocalDate nowDate = LocalDate.now();
 
             if (nextDate.getDayOfYear() > nowDate.getDayOfYear()) {
-                var users = userRepository.findAllById(List.of(120595));
+                var users = userRepository.findAll();
                 users.stream()
                         .filter(TEMP_CHAT_USERS::contains)
                         .filter(user -> user.getUserState() == UserState.NONE)
@@ -66,6 +66,6 @@ public class CheckDateDaemon {
                 TEMP_CHAT_USERS.clear();
             }
 
-        }, 0, period, TimeUnit.SECONDS);
+        }, 0, period, TimeUnit.HOURS);
     }
 }

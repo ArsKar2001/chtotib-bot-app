@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
@@ -77,7 +77,7 @@ public class TeacherHandler extends MainHandler {
         }
         return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .text(message.toString()).build(),
-                HandlerHelper.mainMessage(chatUser)
+                HandlerHelperService.mainMessage(chatUser)
         );
     }
 
@@ -106,7 +106,7 @@ public class TeacherHandler extends MainHandler {
                 });
         return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .text(message.toString()).build(),
-                HandlerHelper.mainMessage(chatUser)
+                HandlerHelperService.mainMessage(chatUser)
         );
     }
 
@@ -121,7 +121,7 @@ public class TeacherHandler extends MainHandler {
         chatUser.setBotState(BotState.REG);
         chatUser.setUserState(UserState.SELECT_ROLE);
         return List.of(
-                HandlerHelper.selectRole(userRepository.save(chatUser)));
+                HandlerHelperService.selectRole(userRepository.save(chatUser)));
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -28,9 +29,9 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler.ROLE_TEACHER;
 
 @Log4j2
-@Component
+@Service("handlerHelperService")
 @RequiredArgsConstructor
-public class HandlerHelper {
+public class HandlerHelperService {
     private final JpaGroupRepository groupRepository;
     private final JpaChatUserRepository userRepository;
 

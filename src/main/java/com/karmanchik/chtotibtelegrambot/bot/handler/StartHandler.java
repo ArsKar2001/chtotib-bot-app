@@ -1,6 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
@@ -43,7 +43,7 @@ public class StartHandler implements Handler {
     private List<PartialBotApiMethod<? extends Serializable>> startMessage(ChatUser chatUser) {
         chatUser.setBotState(BotState.REG);
         chatUser.setUserState(UserState.SELECT_ROLE);
-        return List.of(HandlerHelper.selectRole(userRepository.save(chatUser)));
+        return List.of(HandlerHelperService.selectRole(userRepository.save(chatUser)));
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> welcomeMessage(ChatUser chatUser) {

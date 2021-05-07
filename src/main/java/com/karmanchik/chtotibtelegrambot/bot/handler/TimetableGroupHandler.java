@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
@@ -34,7 +34,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class TimetableGroupHandler implements Handler {
     private final JpaChatUserRepository userRepository;
-    private final HandlerHelper helper;
+    private final HandlerHelperService helper;
     private final JpaGroupRepository groupRepository;
     private final JpaLessonsRepository lessonsRepository;
 
@@ -60,7 +60,7 @@ public class TimetableGroupHandler implements Handler {
 
         if (Course.isCourse(message)) {
             return helper.selectGroup(chatUser, message);
-        } else if (HandlerHelper.isNumeric(message)) {
+        } else if (HandlerHelperService.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
             Group group = groupRepository.findById(id)
@@ -99,7 +99,7 @@ public class TimetableGroupHandler implements Handler {
 
     private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {
         chatUser.setUserState(UserState.NONE);
-        return HandlerHelper.mainMessage(userRepository.save(chatUser));
+        return HandlerHelperService.mainMessage(userRepository.save(chatUser));
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsHandler;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
@@ -84,7 +84,7 @@ public class TimetableTeacherHandler implements Handler {
         if (message.equalsIgnoreCase(CANCEL)) {
             chatUser.setUserState(UserState.INPUT_TEXT);
             return start(userRepository.save(chatUser));
-        } else if (HandlerHelper.isNumeric(message)) {
+        } else if (HandlerHelperService.isNumeric(message)) {
             int id = Integer.parseInt(message);
             Teacher teacher = teacherRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Teacher.class));
@@ -142,7 +142,7 @@ public class TimetableTeacherHandler implements Handler {
 
     private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {
         chatUser.setUserState(UserState.NONE);
-        return HandlerHelper.mainMessage(userRepository.save(chatUser));
+        return HandlerHelperService.mainMessage(userRepository.save(chatUser));
     }
 
     public BotState operatedBotState() {

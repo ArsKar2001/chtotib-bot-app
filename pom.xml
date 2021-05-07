@@ -10,12 +10,12 @@
     </parent>
     <groupId>com.karmanchik</groupId>
     <artifactId>chtotib-telegram-bot</artifactId>
-    <version>1.01</version>
+    <version>1.2.0</version>
     <name>chtotib-telegram-bot</name>
     <description>Diplom project for Spring Boot</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>15</java.version>
     </properties>
 
     <dependencies>

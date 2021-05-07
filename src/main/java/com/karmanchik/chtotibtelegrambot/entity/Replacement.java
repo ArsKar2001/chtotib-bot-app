@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;

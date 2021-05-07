@@ -9,6 +9,7 @@ import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -19,12 +20,12 @@ import java.util.Collections;
 import java.util.List;
 
 @Log4j2
-@Component
-public class UpdateReceiver {
+@Service("updateReceiverService")
+public class UpdateReceiverService {
     private final List<Handler> handlers;
     private final JpaChatUserRepository userRepository;
 
-    public UpdateReceiver(List<Handler> handlers, JpaChatUserRepository userRepository) {
+    public UpdateReceiverService(List<Handler> handlers, JpaChatUserRepository userRepository) {
         this.handlers = handlers;
         this.userRepository = userRepository;
     }

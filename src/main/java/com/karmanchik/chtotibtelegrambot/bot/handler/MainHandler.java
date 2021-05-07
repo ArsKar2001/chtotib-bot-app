@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.command.MainCommand;
-import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
+import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelperService;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 
@@ -23,7 +23,7 @@ public abstract class MainHandler implements Handler {
                     return editProfile(chatUser);
             }
         }
-        return List.of(HandlerHelper.mainMessage(chatUser));
+        return List.of(HandlerHelperService.mainMessage(chatUser));
     }
 
     protected abstract List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(ChatUser chatUser);
