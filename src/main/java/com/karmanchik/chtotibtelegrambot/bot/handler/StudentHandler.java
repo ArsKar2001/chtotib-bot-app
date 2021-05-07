@@ -37,8 +37,8 @@ public class StudentHandler extends MainHandler {
     private final JpaUserRepository userRepository;
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Group group = groupRepository.findByUsers(user)
+    public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(ChatUser chatUser) {
+        Group group = groupRepository.findByUsers(chatUser)
                 .orElseThrow();
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
@@ -75,16 +75,16 @@ public class StudentHandler extends MainHandler {
         } else {
             message.append("Замены на ").append("<b>").append(date).append("</b>").append(" нет.");
         }
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .setText(message.toString()),
-                HandlerHelper.mainMessage(user)
+                HandlerHelper.mainMessage(chatUser)
         );
     }
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
+    public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(ChatUser chatUser) {
 
-        Group group = groupRepository.findByUsers(user)
+        Group group = groupRepository.findByUsers(chatUser)
                 .orElseThrow();
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
@@ -104,24 +104,24 @@ public class StudentHandler extends MainHandler {
                             .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
                             .forEach(Helper.getLessonGroup(message));
                 });
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .setText(message.toString()),
-                HandlerHelper.mainMessage(user)
+                HandlerHelper.mainMessage(chatUser)
         );
     }
 
     @Override
-    protected List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(User user) {
-        user.setUserState(UserState.INPUT_TEXT);
-        return TimetableTeacherHandler.start(userRepository.save(user));
+    protected List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(ChatUser chatUser) {
+        chatUser.setUserState(UserState.INPUT_TEXT);
+        return TimetableTeacherHandler.start(userRepository.save(chatUser));
     }
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> editProfile(User user) {
-        user.setBotState(BotState.REG);
-        user.setUserState(UserState.SELECT_ROLE);
+    public List<PartialBotApiMethod<? extends Serializable>> editProfile(ChatUser chatUser) {
+        chatUser.setBotState(BotState.REG);
+        chatUser.setUserState(UserState.SELECT_ROLE);
         return List.of(
-                HandlerHelper.selectRole(userRepository.save(user)));
+                HandlerHelper.selectRole(userRepository.save(chatUser)));
     }
 
     @Override

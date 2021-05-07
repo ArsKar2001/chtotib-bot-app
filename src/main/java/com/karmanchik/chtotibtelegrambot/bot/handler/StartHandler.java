@@ -2,7 +2,7 @@ package com.karmanchik.chtotibtelegrambot.bot.handler;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -29,32 +29,32 @@ public class StartHandler implements Handler {
     private String botUsername;
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) {
-        UserState state = user.getUserState();
+    public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) {
+        UserState state = chatUser.getUserState();
         switch (state) {
             case NONE:
-                return welcomeMessage(user);
+                return welcomeMessage(chatUser);
             case START:
-                return startMessage(user);
+                return startMessage(chatUser);
         }
         return Collections.emptyList();
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> startMessage(User user) {
-        user.setBotState(BotState.REG);
-        user.setUserState(UserState.SELECT_ROLE);
-        return List.of(HandlerHelper.selectRole(userRepository.save(user)));
+    private List<PartialBotApiMethod<? extends Serializable>> startMessage(ChatUser chatUser) {
+        chatUser.setBotState(BotState.REG);
+        chatUser.setUserState(UserState.SELECT_ROLE);
+        return List.of(HandlerHelper.selectRole(userRepository.save(chatUser)));
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> welcomeMessage(User user) {
-        user.setUserState(UserState.START);
-        userRepository.save(user);
-        log.info("Set user({}): user_state - {}", user.getId(), UserState.START);
+    private List<PartialBotApiMethod<? extends Serializable>> welcomeMessage(ChatUser chatUser) {
+        chatUser.setUserState(UserState.START);
+        userRepository.save(chatUser);
+        log.info("Set chatUser({}): user_state - {}", chatUser.getId(), UserState.START);
 
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                 .setText(String.format("Привет %s!!!%nМеня зовут @%s :D%n" +
                         "Я был создан для работы со студентами и педагогами ЧТОТиБ.%n" +
-                        "Давай создадим твою анкету?!", user.getUserName(), botUsername))
+                        "Давай создадим твою анкету?!", chatUser.getUserName(), botUsername))
                 .setReplyMarkup(TelegramUtil.createReplyKeyboardMarkup()
                         .setKeyboard(List.of(TelegramUtil.createKeyboardRow(List.of(CREATE)))))
                 .enableMarkdown(true));

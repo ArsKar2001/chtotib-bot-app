@@ -37,7 +37,7 @@ public class HandlerHelper {
     private final JpaTeacherRepository teacherRepository;
 
 
-    public static PartialBotApiMethod<? extends Serializable> selectRole(User user) {
+    public static PartialBotApiMethod<? extends Serializable> selectRole(ChatUser chatUser) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow row = TelegramUtil.createKeyboardRow(List.of(
                 ROLE_STUDENT,
@@ -46,36 +46,36 @@ public class HandlerHelper {
         markup.setKeyboard(List.of(row));
         markup.setOneTimeKeyboard(true);
 
-        return TelegramUtil.createMessageTemplate(user)
+        return TelegramUtil.createMessageTemplate(chatUser)
                 .setText("Кто ты?")
                 .setReplyMarkup(markup);
     }
 
-    public static PartialBotApiMethod<? extends Serializable> inputMessage(User user, String text) {
-        return TelegramUtil.createMessageTemplate(user)
+    public static PartialBotApiMethod<? extends Serializable> inputMessage(ChatUser chatUser, String text) {
+        return TelegramUtil.createMessageTemplate(chatUser)
                 .setText(text)
                 .enableMarkdown(true);
     }
 
 
-    public static PartialBotApiMethod<? extends Serializable> mainMessage(User user) {
+    public static PartialBotApiMethod<? extends Serializable> mainMessage(ChatUser chatUser) {
         ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         LocalDate nextSchoolDate = DateHelper.getNextSchoolDate();
         String weekType = DateHelper.getWeekType().equals(WeekType.DOWN) ? "нижняя" : "верхняя";
         String name = nextSchoolDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.forLanguageTag("ru"));
-        Role role = user.getRole();
+        Role role = chatUser.getRole();
 
 
         markup.setKeyboard(List.of(
                 TelegramUtil.createKeyboardRow(MainCommand.getKeyAll())));
         return role.equals(Role.STUDENT) ?
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
                                 "2.\tРасписание на эту неделю (" + weekType + ")\n" +
                                 "3.\tУзнать расписание педагога\n" +
                                 "4.\tИзменить анкету")
                         .setReplyMarkup(markup) :
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
                                 "2.\tРасписание на эту неделю (" + weekType + ")\n" +
                                 "3.\tУзнать расписание группы\n" +
@@ -83,7 +83,7 @@ public class HandlerHelper {
                         .setReplyMarkup(markup);
     }
 
-    public List<PartialBotApiMethod<? extends Serializable>> selectGroup(User user, String message) {
+    public List<PartialBotApiMethod<? extends Serializable>> selectGroup(ChatUser chatUser, String message) {
         if (Course.isCourse(message)) {
             Course course = Course.valueOf(message);
             Integer academicYear = TelegramUtil.getAcademicYear(course);
@@ -92,9 +92,9 @@ public class HandlerHelper {
             List<IdGroupName> groups = groupRepository.findAllByYearSuffix(academicYearSuffix);
 
 
-            user.setUserState(UserState.SELECT_GROUP);
+            chatUser.setUserState(UserState.SELECT_GROUP);
             return List.of(
-                    TelegramUtil.createMessageTemplate(userRepository.save(user))
+                    TelegramUtil.createMessageTemplate(userRepository.save(chatUser))
                             .setText("Выбери группу...")
                             .setReplyMarkup(new InlineKeyboardMarkup()
                                     .setKeyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
@@ -124,15 +124,15 @@ public class HandlerHelper {
         message.append("\n");
     }
 
-    public GroupOrTeacher getData(User user) {
-        if (user == null)
+    public GroupOrTeacher getData(ChatUser chatUser) {
+        if (chatUser == null)
             return null;
-        switch (user.getRole()) {
+        switch (chatUser.getRole()) {
             case STUDENT:
-                return groupRepository.findByUsers(user)
+                return groupRepository.findByUsers(chatUser)
                         .orElseThrow();
             case TEACHER:
-                return teacherRepository.findByUsers(user)
+                return teacherRepository.findByUsers(chatUser)
                         .orElseThrow();
         }
         return null;

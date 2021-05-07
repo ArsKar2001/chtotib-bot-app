@@ -1,7 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot;
 
 import com.karmanchik.chtotibtelegrambot.bot.handler.Handler;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -35,32 +35,32 @@ public class UpdateReceiver {
                 Message message = update.getMessage();
                 Integer chatId = message.getFrom().getId();
                 String userName = message.getChat().getUserName();
-                User user = userRepository.findByChatIdAndUserName(chatId, userName)
-                        .orElseGet(() -> userRepository.save(User
+                ChatUser chatUser = userRepository.findByChatIdAndUserName(chatId, userName)
+                        .orElseGet(() -> userRepository.save(ChatUser
                                 .builder(chatId, userName)
                                 .botState(BotState.START)
                                 .userState(UserState.NONE)
                                 .role(Role.NONE)
                                 .build()));
-                log.info("User - {}", user);
-                Handler handler = getHandlerByUser(user);
+                log.info("ChatUser - {}", chatUser);
+                Handler handler = getHandlerByUser(chatUser);
                 log.info("Handler - {}", handler.getName());
-                return handler.handle(user, message.getText());
+                return handler.handle(chatUser, message.getText());
             } else if (update.hasCallbackQuery()) {
                 CallbackQuery callbackQuery = update.getCallbackQuery();
                 Integer chatId = callbackQuery.getFrom().getId();
                 String userName = callbackQuery.getMessage().getChat().getUserName();
-                User user = userRepository.findByChatIdAndUserName(chatId, userName)
-                        .orElseGet(() -> userRepository.save(User
+                ChatUser chatUser = userRepository.findByChatIdAndUserName(chatId, userName)
+                        .orElseGet(() -> userRepository.save(ChatUser
                                 .builder(chatId, userName)
                                 .botState(BotState.START)
                                 .userState(UserState.NONE)
                                 .role(Role.NONE)
                                 .build()));
-                log.info("User - {}", user);
-                Handler handler = getHandlerByUser(user);
+                log.info("ChatUser - {}", chatUser);
+                Handler handler = getHandlerByUser(chatUser);
                 log.info("Handler - {}", handler.getName());
-                return handler.handle(user, callbackQuery.getData());
+                return handler.handle(chatUser, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException | ResourceNotFoundException e) {
@@ -69,13 +69,13 @@ public class UpdateReceiver {
         }
     }
 
-    private Handler getHandlerByUser(User user) {
+    private Handler getHandlerByUser(ChatUser chatUser) {
         return handlers.stream()
-                .filter(handler -> handler.operatedBotState() == user.getBotState())
+                .filter(handler -> handler.operatedBotState() == chatUser.getBotState())
                 .filter(handler -> handler.operatedUserRoles().stream()
-                        .anyMatch(role -> role == user.getRole()))
+                        .anyMatch(role -> role == chatUser.getRole()))
                 .filter(handler -> handler.operatedUserSate().stream()
-                        .anyMatch(state -> state == user.getUserState()))
+                        .anyMatch(state -> state == chatUser.getUserState()))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }

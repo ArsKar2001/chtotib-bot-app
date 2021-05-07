@@ -15,10 +15,6 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface JpaLessonsRepository extends JpaRepository<Lesson, Integer> {
-    Optional<Lesson> getByGroupIdAndDayAndPairNumber(@NotNull Integer groupId,
-                                                     @NotNull Integer day,
-                                                     @NotNull Integer pairNumber);
-
     @Query("SELECT l FROM Lesson l " +
             "WHERE :teacher member of l.teachers " +
             "ORDER BY l.pairNumber ASC")

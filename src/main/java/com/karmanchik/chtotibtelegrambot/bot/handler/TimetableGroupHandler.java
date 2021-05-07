@@ -6,7 +6,7 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -39,42 +39,42 @@ public class TimetableGroupHandler implements Handler {
     private final JpaLessonsRepository lessonsRepository;
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) throws ResourceNotFoundException {
-        switch (user.getUserState()) {
+    public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) throws ResourceNotFoundException {
+        switch (chatUser.getUserState()) {
             case SELECT_COURSE:
-                return helper.selectGroup(user, message);
+                return helper.selectGroup(chatUser, message);
             case SELECT_GROUP:
-                return selectGroupOrAccept(user, message);
+                return selectGroupOrAccept(chatUser, message);
             default:
                 return List.of(
-                        cancel(user)
+                        cancel(chatUser)
                 );
         }
     }
 
-    public static List<PartialBotApiMethod<? extends Serializable>> start(User user) {
-        return TelegramUtil.createSelectCourseButtonPanel(user);
+    public static List<PartialBotApiMethod<? extends Serializable>> start(ChatUser chatUser) {
+        return TelegramUtil.createSelectCourseButtonPanel(chatUser);
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(User user, String message) throws ResourceNotFoundException {
+    private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(ChatUser chatUser, String message) throws ResourceNotFoundException {
 
         if (Course.isCourse(message)) {
-            return helper.selectGroup(user, message);
+            return helper.selectGroup(chatUser, message);
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             log.info("Find group by id: {} ...", id);
             Group group = groupRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Group.class));
-            user.setGroup(group);
+            chatUser.setGroup(group);
             return List.of(
-                    createMessage(user, group),
-                    cancel(user)
+                    createMessage(chatUser, group),
+                    cancel(chatUser)
             );
         }
         return Collections.emptyList();
     }
 
-    private PartialBotApiMethod<? extends Serializable> createMessage(User user, Group group) {
+    private PartialBotApiMethod<? extends Serializable> createMessage(ChatUser chatUser, Group group) {
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
 
@@ -93,13 +93,13 @@ public class TimetableGroupHandler implements Handler {
                             .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
                             .forEach(Helper.getLessonGroup(message));
                 });
-        return TelegramUtil.createMessageTemplate(user)
+        return TelegramUtil.createMessageTemplate(chatUser)
                 .setText(message.toString());
     }
 
-    private PartialBotApiMethod<? extends Serializable> cancel(User user) {
-        user.setUserState(UserState.NONE);
-        return HandlerHelper.mainMessage(userRepository.save(user));
+    private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {
+        chatUser.setUserState(UserState.NONE);
+        return HandlerHelper.mainMessage(userRepository.save(chatUser));
     }
 
     @Override

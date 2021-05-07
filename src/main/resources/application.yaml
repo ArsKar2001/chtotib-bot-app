@@ -1,6 +1,8 @@
 bot:
   name: 'chtotibBot'
   token: '1561541329:AAFr495joT5WNwzbx3vRPKHOGg7p__LhTKw'
+  daemons:
+    period: 1
 spring:
   datasource:
     url: jdbc:postgresql://ec2-34-200-158-205.compute-1.amazonaws.com:5432/d4l15ha0q7fik6?stringtype=unspecified

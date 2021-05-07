@@ -1,8 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.Group;
-import com.karmanchik.chtotibtelegrambot.entity.User;
-import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +30,6 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
     List<IdGroupName> findAllByYearSuffix(@Param("academicYearSuffix") String academicYearSuffix);
 
     @Query("SELECT g FROM Group g " +
-            "WHERE :user member of g.users")
-    Optional<Group> findByUsers(User user);
+            "WHERE :user member of g.chatUsers")
+    Optional<Group> findByUsers(ChatUser chatUser);
 }

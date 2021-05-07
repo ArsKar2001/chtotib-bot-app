@@ -4,10 +4,10 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.entity.Replacement;
 import com.karmanchik.chtotibtelegrambot.entity.Teacher;
-import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -39,8 +39,8 @@ public class TeacherHandler extends MainHandler {
     private final JpaReplacementRepository replacementRepository;
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(User user) {
-        Teacher teacher = teacherRepository.findByUsers(user)
+    public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(ChatUser chatUser) {
+        Teacher teacher = teacherRepository.findByUsers(chatUser)
                 .orElseThrow();
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
@@ -75,16 +75,16 @@ public class TeacherHandler extends MainHandler {
         } else {
             message.append("Замены на ").append("<b>").append(date).append("</b>").append(" нет.");
         }
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .setText(message.toString()),
-                HandlerHelper.mainMessage(user)
+                HandlerHelper.mainMessage(chatUser)
         );
     }
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(User user) {
+    public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(ChatUser chatUser) {
 
-        Teacher teacher = teacherRepository.findByUsers(user)
+        Teacher teacher = teacherRepository.findByUsers(chatUser)
                 .orElseThrow();
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
@@ -104,24 +104,24 @@ public class TeacherHandler extends MainHandler {
                             .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
                             .forEach(Helper.getLessonTeacher(message));
                 });
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                         .setText(message.toString()),
-                HandlerHelper.mainMessage(user)
+                HandlerHelper.mainMessage(chatUser)
         );
     }
 
     @Override
-    protected List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(User user) {
-        user.setUserState(UserState.SELECT_COURSE);
-        return TimetableGroupHandler.start(userRepository.save(user));
+    protected List<PartialBotApiMethod<? extends Serializable>> getTimetableOther(ChatUser chatUser) {
+        chatUser.setUserState(UserState.SELECT_COURSE);
+        return TimetableGroupHandler.start(userRepository.save(chatUser));
     }
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> editProfile(User user) {
-        user.setBotState(BotState.REG);
-        user.setUserState(UserState.SELECT_ROLE);
+    public List<PartialBotApiMethod<? extends Serializable>> editProfile(ChatUser chatUser) {
+        chatUser.setBotState(BotState.REG);
+        chatUser.setUserState(UserState.SELECT_ROLE);
         return List.of(
-                HandlerHelper.selectRole(userRepository.save(user)));
+                HandlerHelper.selectRole(userRepository.save(chatUser)));
     }
 
     @Override

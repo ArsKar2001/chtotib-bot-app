@@ -5,19 +5,17 @@ import com.karmanchik.chtotibtelegrambot.bot.handler.helper.DateHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.HandlerHelper;
 import com.karmanchik.chtotibtelegrambot.bot.handler.helper.Helper;
 import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.Lesson;
 import com.karmanchik.chtotibtelegrambot.entity.Teacher;
-import com.karmanchik.chtotibtelegrambot.entity.User;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
-import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
-import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -44,32 +42,32 @@ public class TimetableTeacherHandler implements Handler {
     private final JpaUserRepository userRepository;
     private final JpaLessonsRepository lessonsRepository;
 
-    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String message) throws ResourceNotFoundException {
-        switch (user.getUserState()) {
+    public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) throws ResourceNotFoundException {
+        switch (chatUser.getUserState()) {
             case SELECT_TEACHER:
-                return selectTeacherOrAccept(user, message);
+                return selectTeacherOrAccept(chatUser, message);
             case INPUT_TEXT:
-                return selectTeacher(user, message);
+                return selectTeacher(chatUser, message);
             default:
                 return List.of(
-                        cancel(user)
+                        cancel(chatUser)
                 );
         }
     }
 
-    public static List<PartialBotApiMethod<? extends Serializable>> start(User user) {
+    public static List<PartialBotApiMethod<? extends Serializable>> start(ChatUser chatUser) {
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText("Введите фамилию...")
                         .enableMarkdown(true)
         );
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(User user, String message) {
+    private List<PartialBotApiMethod<? extends Serializable>> selectTeacher(ChatUser chatUser, String message) {
         List<IdTeacherName> teacherNames = teacherRepository.findAllByName(message.toLowerCase());
         if (!teacherNames.isEmpty()) {
-            user.setUserState(UserState.SELECT_TEACHER);
-            User save = userRepository.save(user);
+            chatUser.setUserState(UserState.SELECT_TEACHER);
+            ChatUser save = userRepository.save(chatUser);
 
             final InlineKeyboardMarkup markup1 = new InlineKeyboardMarkup();
             markup1.setKeyboard(TelegramUtil.createInlineKeyboardButtons(teacherNames, 2));
@@ -81,26 +79,26 @@ public class TimetableTeacherHandler implements Handler {
 
             return sendMessageItIsYou(save, markup1, markup2);
         }
-        return sendMessageNotFound(user);
+        return sendMessageNotFound(chatUser);
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> selectTeacherOrAccept(User user, String message) throws ResourceNotFoundException {
+    private List<PartialBotApiMethod<? extends Serializable>> selectTeacherOrAccept(ChatUser chatUser, String message) throws ResourceNotFoundException {
         if (message.equalsIgnoreCase(CANCEL)) {
-            user.setUserState(UserState.INPUT_TEXT);
-            return start(userRepository.save(user));
+            chatUser.setUserState(UserState.INPUT_TEXT);
+            return start(userRepository.save(chatUser));
         } else if (HandlerHelper.isNumeric(message)) {
             int id = Integer.parseInt(message);
             Teacher teacher = teacherRepository.findById(id)
                     .orElseThrow(() -> new ResourceNotFoundException(id, Teacher.class));
             return List.of(
-                    createMessage(teacher, user),
-                    cancel(user)
+                    createMessage(teacher, chatUser),
+                    cancel(chatUser)
             );
         }
         return Collections.emptyList();
     }
 
-    private PartialBotApiMethod<? extends Serializable> createMessage(Teacher teacher, User user) {
+    private PartialBotApiMethod<? extends Serializable> createMessage(Teacher teacher, ChatUser chatUser) {
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();
 
@@ -119,35 +117,35 @@ public class TimetableTeacherHandler implements Handler {
                             .filter(lesson -> lesson.getWeekType() == weekType || lesson.getWeekType() == WeekType.NONE)
                             .forEach(Helper.getLessonTeacher(message));
                 });
-        return TelegramUtil.createMessageTemplate(user)
+        return TelegramUtil.createMessageTemplate(chatUser)
                 .setText(message.toString());
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> sendMessageItIsYou(User user,
+    private List<PartialBotApiMethod<? extends Serializable>> sendMessageItIsYou(ChatUser chatUser,
                                                                                  InlineKeyboardMarkup markup1,
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText("Выберите педагога")
                         .setReplyMarkup(markup1),
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText("...")
                         .setReplyMarkup(markup2));
     }
 
-    private List<PartialBotApiMethod<? extends Serializable>> sendMessageNotFound(User user) {
+    private List<PartialBotApiMethod<? extends Serializable>> sendMessageNotFound(ChatUser chatUser) {
         String outMessage = "Педагог не найден";
         return List.of(
-                TelegramUtil.createMessageTemplate(user)
+                TelegramUtil.createMessageTemplate(chatUser)
                         .setText(outMessage)
                         .enableMarkdown(false),
-                cancel(user)
+                cancel(chatUser)
         );
     }
 
-    private PartialBotApiMethod<? extends Serializable> cancel(User user) {
-        user.setUserState(UserState.NONE);
-        return HandlerHelper.mainMessage(userRepository.save(user));
+    private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {
+        chatUser.setUserState(UserState.NONE);
+        return HandlerHelper.mainMessage(userRepository.save(chatUser));
     }
 
     public BotState operatedBotState() {

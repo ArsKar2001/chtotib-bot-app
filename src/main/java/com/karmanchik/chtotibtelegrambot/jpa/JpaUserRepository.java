@@ -1,6 +1,6 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface JpaUserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByChatIdAndUserName(@NotNull Integer chatId, @NotNull String userName);
+public interface JpaUserRepository extends JpaRepository<ChatUser, Integer> {
+    Optional<ChatUser> findByChatIdAndUserName(@NotNull Integer chatId, @NotNull String userName);
 }

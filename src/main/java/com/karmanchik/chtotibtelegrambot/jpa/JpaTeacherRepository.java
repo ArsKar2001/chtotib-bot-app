@@ -1,8 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.jpa;
 
-import com.karmanchik.chtotibtelegrambot.entity.Group;
 import com.karmanchik.chtotibtelegrambot.entity.Teacher;
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,6 +29,6 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
     List<IdTeacherName> findAllByName(@Param("name") String name);
 
     @Query("SELECT g FROM Teacher g " +
-            "WHERE :user member of g.users")
-    Optional<Teacher> findByUsers(User user);
+            "WHERE :user member of g.chatUsers")
+    Optional<Teacher> findByUsers(ChatUser chatUser);
 }

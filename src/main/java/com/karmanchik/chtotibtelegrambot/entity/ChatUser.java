@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
@@ -11,13 +10,13 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "chat_users")
 @Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class ChatUser extends BaseEntity {
     @Column(name = "chat_id", unique = true)
     @NotNull
     private Integer chatId;
@@ -51,13 +50,13 @@ public class User extends BaseEntity {
     @NotNull
     private BotState botState = BotState.START;
 
-    public static UserBuilder builder(Integer chatId, String userName) {
-        return new UserBuilder().chatId(chatId).userName(userName);
+    public static ChatUserBuilder builder(Integer chatId, String userName) {
+        return new ChatUserBuilder().chatId(chatId).userName(userName);
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "ChatUser{" +
                 "chatId=" + chatId +
                 ", userName='" + userName + '\'' +
                 ", role=" + role +

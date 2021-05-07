@@ -1,6 +1,5 @@
 package com.karmanchik.chtotibtelegrambot.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import lombok.*;
 
@@ -22,7 +21,7 @@ public class Teacher extends BaseEntity implements GroupOrTeacher {
     private String name;
 
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
-    private List<User> users;
+    private List<ChatUser> chatUsers;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "teachers",fetch = FetchType.LAZY)
     @OrderBy("day, pairNumber ASC")

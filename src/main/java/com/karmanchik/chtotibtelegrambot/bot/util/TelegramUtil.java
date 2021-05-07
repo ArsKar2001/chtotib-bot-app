@@ -1,8 +1,7 @@
 package com.karmanchik.chtotibtelegrambot.bot.util;
 
-import com.karmanchik.chtotibtelegrambot.entity.User;
+import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.model.BaseModel;
-import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.model.Course;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -14,14 +13,13 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import java.io.Serializable;
 import java.time.Month;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TelegramUtil {
     private TelegramUtil() {
     }
 
-    public static SendMessage createMessageTemplate(User user) {
-        String chatId = user.getChatId().toString();
+    public static SendMessage createMessageTemplate(ChatUser chatUser) {
+        String chatId = chatUser.getChatId().toString();
         return new SendMessage()
                 .setChatId(chatId)
                 .enableMarkdown(false)
@@ -73,7 +71,7 @@ public class TelegramUtil {
                 .setCallbackData(command);
     }
 
-    public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(User user) {
+    public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(ChatUser chatUser) {
         List<String> names = Course.names();
         Collections.sort(names);
 
@@ -81,7 +79,7 @@ public class TelegramUtil {
         KeyboardRow row = TelegramUtil.createKeyboardRow(names);
         markup.setKeyboard(List.of(row));
 
-        return List.of(TelegramUtil.createMessageTemplate(user)
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
                 .setText("Выбери курс...")
                 .setReplyMarkup(markup));
     }
