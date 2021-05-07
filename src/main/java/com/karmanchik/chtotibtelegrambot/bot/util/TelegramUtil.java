@@ -6,31 +6,36 @@ import com.karmanchik.chtotibtelegrambot.model.Course;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage.SendMessageBuilder;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup.ReplyKeyboardMarkupBuilder;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton.InlineKeyboardButtonBuilder;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
 import java.time.Month;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 public class TelegramUtil {
     private TelegramUtil() {
     }
 
-    public static SendMessage createMessageTemplate(ChatUser chatUser) {
+    public static SendMessageBuilder createMessageTemplate(ChatUser chatUser) {
         String chatId = chatUser.getChatId().toString();
-        return new SendMessage()
-                .setChatId(chatId)
-                .enableMarkdown(false)
-                .setParseMode(ParseMode.HTML);
+        return SendMessage.builder()
+                .chatId(chatId)
+                .parseMode(ParseMode.HTML);
     }
 
-    public static ReplyKeyboardMarkup createReplyKeyboardMarkup() {
-        return new ReplyKeyboardMarkup()
-                .setResizeKeyboard(true)
-                .setOneTimeKeyboard(false)
-                .setSelective(false);
+    public static ReplyKeyboardMarkupBuilder createReplyKeyboardMarkup() {
+        return ReplyKeyboardMarkup.builder()
+                .resizeKeyboard(true)
+                .oneTimeKeyboard(false)
+                .selective(false);
     }
 
     public static KeyboardRow createKeyboardRow(List<String> values) {
@@ -49,15 +54,15 @@ public class TelegramUtil {
     }
 
     public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
-        List<List<InlineKeyboardButton>> listList = new LinkedList<>();
-        List<InlineKeyboardButton> buttonsLine = new LinkedList<>();
+        List<List<InlineKeyboardButton>> listList = new ArrayList<>();
+        List<InlineKeyboardButton> buttonsLine = new ArrayList<>();
 
         models.stream()
-                .map(model -> TelegramUtil.createInlineKeyboardButton(model.getName(), model.getId().toString()))
+                .map(model -> TelegramUtil.createInlineKeyboardButton(model.getName(), model.getId().toString()).build())
                 .forEach(button -> {
                     buttonsLine.add(button);
                     if (buttonsLine.size() % countButtonInRow == 0) {
-                        listList.add(new LinkedList<>(buttonsLine));
+                        listList.add(new ArrayList<>(buttonsLine));
                         buttonsLine.clear();
                     }
                 });
@@ -65,22 +70,22 @@ public class TelegramUtil {
         return listList;
     }
 
-    public static InlineKeyboardButton createInlineKeyboardButton(String text, String command) {
-        return new InlineKeyboardButton()
-                .setText(text)
-                .setCallbackData(command);
+    public static InlineKeyboardButtonBuilder createInlineKeyboardButton(String text, String command) {
+        return InlineKeyboardButton.builder()
+                .text(text)
+                .callbackData(command);
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(ChatUser chatUser) {
         List<String> names = Course.names();
         Collections.sort(names);
-
-        ReplyKeyboardMarkup markup = TelegramUtil.createReplyKeyboardMarkup();
         KeyboardRow row = TelegramUtil.createKeyboardRow(names);
-        markup.setKeyboard(List.of(row));
 
         return List.of(TelegramUtil.createMessageTemplate(chatUser)
-                .setText("Выбери курс...")
-                .setReplyMarkup(markup));
+                .text("Выбери курс...")
+                .replyMarkup(TelegramUtil.createReplyKeyboardMarkup()
+                        .keyboardRow(row)
+                        .build())
+                .build());
     }
 }

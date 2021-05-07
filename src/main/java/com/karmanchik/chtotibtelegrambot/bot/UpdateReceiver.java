@@ -33,7 +33,7 @@ public class UpdateReceiver {
         try {
             if (isMessageWithText(update)) {
                 Message message = update.getMessage();
-                Integer chatId = message.getFrom().getId();
+                Long chatId = message.getFrom().getId();
                 String userName = message.getChat().getUserName();
                 ChatUser chatUser = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(ChatUser
@@ -48,7 +48,7 @@ public class UpdateReceiver {
                 return handler.handle(chatUser, message.getText());
             } else if (update.hasCallbackQuery()) {
                 CallbackQuery callbackQuery = update.getCallbackQuery();
-                Integer chatId = callbackQuery.getFrom().getId();
+                Long chatId = callbackQuery.getFrom().getId();
                 String userName = callbackQuery.getMessage().getChat().getUserName();
                 ChatUser chatUser = userRepository.findByChatIdAndUserName(chatId, userName)
                         .orElseGet(() -> userRepository.save(ChatUser

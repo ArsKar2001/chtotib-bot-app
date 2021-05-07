@@ -51,13 +51,13 @@ public class CheckDateDaemon {
                             try {
                                 TEMP_CHAT_USERS.add(user);
                                 bot.execute(TelegramUtil.createMessageTemplate(user)
-                                        .setText("Доступно расписание на следующий учебный день.\n" +
+                                        .text("Доступно расписание на следующий учебный день.\n" +
                                                 "Чтобы узнать, нажми кнопку - \"1\".")
-                                        .setReplyMarkup(TelegramUtil.createReplyKeyboardMarkup()
-                                                .setOneTimeKeyboard(false)
-                                                .setKeyboard(List.of(TelegramUtil.createKeyboardRow(List.of(
-                                                        "Понятно"
-                                                ))))));
+                                        .replyMarkup(TelegramUtil.createReplyKeyboardMarkup()
+                                                .oneTimeKeyboard(false)
+                                                .keyboardRow(TelegramUtil.createKeyboardRow(List.of("Понятно")))
+                                                .build())
+                                        .build());
                             } catch (TelegramApiException e) {
                                 log.error(e.getMessage(), e);
                             }

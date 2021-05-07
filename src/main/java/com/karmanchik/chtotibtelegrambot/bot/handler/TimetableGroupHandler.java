@@ -94,7 +94,7 @@ public class TimetableGroupHandler implements Handler {
                             .forEach(Helper.getLessonGroup(message));
                 });
         return TelegramUtil.createMessageTemplate(chatUser)
-                .setText(message.toString());
+                .text(message.toString()).build();
     }
 
     private PartialBotApiMethod<? extends Serializable> cancel(ChatUser chatUser) {

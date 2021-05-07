@@ -76,7 +76,7 @@ public class StudentHandler extends MainHandler {
             message.append("Замены на ").append("<b>").append(date).append("</b>").append(" нет.");
         }
         return List.of(TelegramUtil.createMessageTemplate(chatUser)
-                        .setText(message.toString()),
+                        .text(message.toString()).build(),
                 HandlerHelper.mainMessage(chatUser)
         );
     }
@@ -105,7 +105,7 @@ public class StudentHandler extends MainHandler {
                             .forEach(Helper.getLessonGroup(message));
                 });
         return List.of(TelegramUtil.createMessageTemplate(chatUser)
-                        .setText(message.toString()),
+                        .text(message.toString()).build(),
                 HandlerHelper.mainMessage(chatUser)
         );
     }

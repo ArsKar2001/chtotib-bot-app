@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.telegram.telegrambots.ApiContextInitializer;
 
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
@@ -17,7 +16,6 @@ public class Application {
     private final CheckDateDaemon dateDaemon;
 
     public static void main(String[] args) {
-        ApiContextInitializer.init();
         SpringApplication.run(Application.class, args);
     }
 

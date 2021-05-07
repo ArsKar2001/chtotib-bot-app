@@ -37,6 +37,17 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
+    @Override
+    public void onUpdatesReceived(List<Update> updates) {
+        updates.parallelStream().forEach(update -> {
+            log.info("Получили новый update: {}", update.toString());
+            List<PartialBotApiMethod<? extends Serializable>> messagesToSend = updateReceiver.handle(update);
+            if (messagesToSend != null && !messagesToSend.isEmpty()) {
+                messagesToSend.forEach(this::executeWithExceptionCheck);
+            }
+        });
+    }
+
     private void executeWithExceptionCheck(Object response) {
         final var method = (BotApiMethod<? extends Serializable>) response;
         log.info("Новый объект для отправки: {}", response.toString());

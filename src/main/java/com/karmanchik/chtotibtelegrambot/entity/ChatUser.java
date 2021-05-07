@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 public class ChatUser extends BaseEntity {
     @Column(name = "chat_id", unique = true)
     @NotNull
-    private Integer chatId;
+    private Long chatId;
 
     @Column(name = "user_name", unique = true)
     @NotNull
@@ -50,7 +50,7 @@ public class ChatUser extends BaseEntity {
     @NotNull
     private BotState botState = BotState.START;
 
-    public static ChatUserBuilder builder(Integer chatId, String userName) {
+    public static ChatUserBuilder builder(Long chatId, String userName) {
         return new ChatUserBuilder().chatId(chatId).userName(userName);
     }
 
