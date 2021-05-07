@@ -15,7 +15,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaReplacementRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -33,14 +33,14 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @Component
 @RequiredArgsConstructor
 public class TeacherHandler extends MainHandler {
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private final JpaTeacherRepository teacherRepository;
     private final JpaLessonsRepository lessonsRepository;
     private final JpaReplacementRepository replacementRepository;
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> getTimetableNextDay(ChatUser chatUser) {
-        Teacher teacher = teacherRepository.findByUsers(chatUser)
+        Teacher teacher = teacherRepository.findByChatUser(chatUser)
                 .orElseThrow();
         LocalDate date = DateHelper.getNextSchoolDate();
         WeekType weekType = DateHelper.getWeekType();
@@ -84,7 +84,7 @@ public class TeacherHandler extends MainHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> getTimetableFull(ChatUser chatUser) {
 
-        Teacher teacher = teacherRepository.findByUsers(chatUser)
+        Teacher teacher = teacherRepository.findByChatUser(chatUser)
                 .orElseThrow();
         WeekType weekType = DateHelper.getWeekType();
         StringBuilder message = new StringBuilder();

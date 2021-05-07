@@ -15,7 +15,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -39,7 +39,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class TimetableTeacherHandler implements Handler {
     private final JpaTeacherRepository teacherRepository;
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private final JpaLessonsRepository lessonsRepository;
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) throws ResourceNotFoundException {

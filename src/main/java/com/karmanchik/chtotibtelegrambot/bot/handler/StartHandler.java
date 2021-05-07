@@ -6,7 +6,7 @@ import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +23,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @Component
 @RequiredArgsConstructor
 public class StartHandler implements Handler {
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
 
     @Value("${bot.name}")
     private String botUsername;

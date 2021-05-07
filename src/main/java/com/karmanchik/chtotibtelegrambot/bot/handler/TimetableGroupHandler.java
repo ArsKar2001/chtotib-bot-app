@@ -14,7 +14,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaLessonsRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Course;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -33,7 +33,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @Component
 @RequiredArgsConstructor
 public class TimetableGroupHandler implements Handler {
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private final HandlerHelper helper;
     private final JpaGroupRepository groupRepository;
     private final JpaLessonsRepository lessonsRepository;

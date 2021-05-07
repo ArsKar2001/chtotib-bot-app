@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-public interface JpaUserRepository extends JpaRepository<ChatUser, Integer> {
+public interface JpaChatUserRepository extends JpaRepository<ChatUser, Integer> {
     Optional<ChatUser> findByChatIdAndUserName(@NotNull Integer chatId, @NotNull String userName);
 }

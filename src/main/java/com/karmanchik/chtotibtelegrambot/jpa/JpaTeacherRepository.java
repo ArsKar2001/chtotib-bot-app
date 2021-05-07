@@ -29,6 +29,6 @@ public interface JpaTeacherRepository extends JpaRepository<Teacher, Integer> {
     List<IdTeacherName> findAllByName(@Param("name") String name);
 
     @Query("SELECT g FROM Teacher g " +
-            "WHERE :user member of g.chatUsers")
-    Optional<Teacher> findByUsers(ChatUser chatUser);
+            "WHERE :chatUser member of g.chatUsers")
+    Optional<Teacher> findByChatUser(ChatUser chatUser);
 }

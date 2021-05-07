@@ -30,6 +30,6 @@ public interface JpaGroupRepository extends JpaRepository<Group, Integer> {
     List<IdGroupName> findAllByYearSuffix(@Param("academicYearSuffix") String academicYearSuffix);
 
     @Query("SELECT g FROM Group g " +
-            "WHERE :user member of g.chatUsers")
-    Optional<Group> findByUsers(ChatUser chatUser);
+            "WHERE :chatUser member of g.chatUsers")
+    Optional<Group> findByChatUser(ChatUser chatUser);
 }

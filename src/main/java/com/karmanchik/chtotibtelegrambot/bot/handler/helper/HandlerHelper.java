@@ -9,7 +9,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
 import com.karmanchik.chtotibtelegrambot.model.GroupOrTeacher;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Course;
 import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class HandlerHelper {
     private final JpaGroupRepository groupRepository;
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private final JpaTeacherRepository teacherRepository;
 
 
@@ -129,10 +129,10 @@ public class HandlerHelper {
             return null;
         switch (chatUser.getRole()) {
             case STUDENT:
-                return groupRepository.findByUsers(chatUser)
+                return groupRepository.findByChatUser(chatUser)
                         .orElseThrow();
             case TEACHER:
-                return teacherRepository.findByUsers(chatUser)
+                return teacherRepository.findByChatUser(chatUser)
                         .orElseThrow();
         }
         return null;

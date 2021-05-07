@@ -6,7 +6,7 @@ import com.karmanchik.chtotibtelegrambot.bot.util.TelegramUtil;
 import com.karmanchik.chtotibtelegrambot.entity.ChatUser;
 import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,14 +22,14 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 @Service
 public class CheckDateDaemon {
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private static final List<ChatUser> TEMP_CHAT_USERS = new ArrayList<>();
     private final Bot bot;
 
     @Value("${bot.daemons.period}")
     private int period;
 
-    public CheckDateDaemon(Bot bot, JpaUserRepository userRepository) {
+    public CheckDateDaemon(Bot bot, JpaChatUserRepository userRepository) {
         this.bot = bot;
         this.userRepository = userRepository;
     }

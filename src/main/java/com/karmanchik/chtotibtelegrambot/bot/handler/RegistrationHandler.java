@@ -12,7 +12,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaGroupRepository;
 import com.karmanchik.chtotibtelegrambot.jpa.JpaTeacherRepository;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import com.karmanchik.chtotibtelegrambot.model.Course;
 import com.karmanchik.chtotibtelegrambot.model.IdTeacherName;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ import static com.karmanchik.chtotibtelegrambot.bot.handler.constants.ConstantsH
 @RequiredArgsConstructor
 public class RegistrationHandler implements Handler {
 
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
     private final JpaGroupRepository groupRepository;
     private final JpaTeacherRepository teacherRepository;
 

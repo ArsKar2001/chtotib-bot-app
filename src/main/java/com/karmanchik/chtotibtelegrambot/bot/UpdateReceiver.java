@@ -6,7 +6,7 @@ import com.karmanchik.chtotibtelegrambot.entity.enums.BotState;
 import com.karmanchik.chtotibtelegrambot.entity.enums.Role;
 import com.karmanchik.chtotibtelegrambot.entity.enums.UserState;
 import com.karmanchik.chtotibtelegrambot.exception.ResourceNotFoundException;
-import com.karmanchik.chtotibtelegrambot.jpa.JpaUserRepository;
+import com.karmanchik.chtotibtelegrambot.jpa.JpaChatUserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
@@ -22,9 +22,9 @@ import java.util.List;
 @Component
 public class UpdateReceiver {
     private final List<Handler> handlers;
-    private final JpaUserRepository userRepository;
+    private final JpaChatUserRepository userRepository;
 
-    public UpdateReceiver(List<Handler> handlers, JpaUserRepository userRepository) {
+    public UpdateReceiver(List<Handler> handlers, JpaChatUserRepository userRepository) {
         this.handlers = handlers;
         this.userRepository = userRepository;
     }
