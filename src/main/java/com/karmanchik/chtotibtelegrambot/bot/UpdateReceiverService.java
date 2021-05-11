@@ -56,7 +56,7 @@ public class UpdateReceiverService {
                                 .role(Role.NONE)
                                 .build()));
                 log.info("ChatUser - {}", chatUser);
-                return getHandlerByUser(chatUser).handle(chatUser, callbackQuery.getMessage().getText());
+                return getHandlerByUser(chatUser).handle(chatUser, callbackQuery.getData());
             }
             throw new UnsupportedOperationException();
         } catch (UnsupportedOperationException | ResourceNotFoundException e) {

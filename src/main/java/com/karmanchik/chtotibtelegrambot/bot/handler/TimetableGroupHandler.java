@@ -50,7 +50,7 @@ public class TimetableGroupHandler implements Handler {
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> start(ChatUser chatUser) {
-        return TelegramUtil.createSelectCourseButtonPanel(chatUser);
+        return HandlerHelperService.createSelectCourseButtonPanel(chatUser);
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(ChatUser chatUser, String message) throws ResourceNotFoundException {

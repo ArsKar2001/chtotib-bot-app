@@ -66,7 +66,7 @@ public class RegistrationHandler implements Handler {
             chatUser.setUserState(UserState.SELECT_COURSE);
             chatUser.setRole(Role.STUDENT);
             ChatUser save = userRepository.save(chatUser);
-            return TelegramUtil.createSelectCourseButtonPanel(save);
+            return HandlerHelperService.createSelectCourseButtonPanel(save);
         } else if (message.equalsIgnoreCase(ROLE_TEACHER)) {
             chatUser.setRole(Role.TEACHER);
             return inputTeacherName(chatUser);
@@ -82,7 +82,6 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> selectGroupOrAccept(ChatUser chatUser, String message) throws ResourceNotFoundException {
-
         if (Course.isCourse(message)) {
             return helper.selectGroup(chatUser, message);
         } else if (HandlerHelperService.isNumeric(message)) {
@@ -138,7 +137,7 @@ public class RegistrationHandler implements Handler {
                                                                                  ReplyKeyboardMarkup markup2) {
         return List.of(
                 TelegramUtil.createMessageTemplate(chatUser)
-                        .text("Выберите педагога")
+                        .text("Выберите педагога:")
                         .replyMarkup(markup1)
                         .build(),
                 TelegramUtil.createMessageTemplate(chatUser)
@@ -148,7 +147,7 @@ public class RegistrationHandler implements Handler {
     }
 
     private List<PartialBotApiMethod<? extends Serializable>> sendMessageNotFound(ChatUser chatUser) {
-        String outMessage = "Педагог не найден";
+        String outMessage = "Никого не нашел :(";
         return List.of(
                 TelegramUtil.createMessageTemplate(chatUser)
                         .text(outMessage)

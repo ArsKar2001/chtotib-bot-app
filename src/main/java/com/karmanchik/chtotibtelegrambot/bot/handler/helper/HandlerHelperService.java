@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -67,13 +68,13 @@ public class HandlerHelperService {
                 TelegramUtil.createKeyboardRow(MainCommand.getKeyAll())));
         return role.equals(Role.STUDENT) ?
                 TelegramUtil.createMessageTemplate(chatUser)
-                        .text("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
+                        .text("1.\tРасписание на " + "<b>" + nextSchoolDate.format(DateTimeFormatter.ofPattern("dd MMMM", Helper.getLocale())) + "</b>" + " (" + name + ")\n" +
                                 "2.\tРасписание на эту неделю (" + weekType + ")\n" +
                                 "3.\tУзнать расписание педагога\n" +
                                 "4.\tИзменить анкету")
                         .replyMarkup(markup).build() :
                 TelegramUtil.createMessageTemplate(chatUser)
-                        .text("1.\tРасписание на " + "<b>" + nextSchoolDate + "</b>" + " (" + name + ")\n" +
+                        .text("1.\tРасписание на " + "<b>" + nextSchoolDate.format(DateTimeFormatter.ofPattern("dd MMMM", Helper.getLocale())) + "</b>" + " (" + name + ")\n" +
                                 "2.\tРасписание на эту неделю (" + weekType + ")\n" +
                                 "3.\tУзнать расписание группы\n" +
                                 "4.\tИзменить анкету")
@@ -91,13 +92,26 @@ public class HandlerHelperService {
             chatUser.setUserState(UserState.SELECT_GROUP);
             return List.of(
                     TelegramUtil.createMessageTemplate(userRepository.save(chatUser))
-                            .text("Выбери группу...")
+                            .text("Выбери группу:")
                             .replyMarkup(InlineKeyboardMarkup.builder()
                                     .keyboard(TelegramUtil.createInlineKeyboardButtons(groups, 3))
                                     .build())
                             .build());
         }
         return Collections.emptyList();
+    }
+
+    public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(ChatUser chatUser) {
+        List<String> names = Course.names();
+        Collections.sort(names);
+        KeyboardRow row = TelegramUtil.createKeyboardRow(names);
+
+        return List.of(TelegramUtil.createMessageTemplate(chatUser)
+                .text("Выбери курс:")
+                .replyMarkup(TelegramUtil.createReplyKeyboardMarkup()
+                        .keyboardRow(row)
+                        .build())
+                .build());
     }
 
     public static boolean isNumeric(String strNum) {

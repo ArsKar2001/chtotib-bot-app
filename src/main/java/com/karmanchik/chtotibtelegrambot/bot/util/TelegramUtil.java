@@ -64,17 +64,4 @@ public class TelegramUtil {
                 .text(text)
                 .callbackData(command);
     }
-
-    public static List<PartialBotApiMethod<? extends Serializable>> createSelectCourseButtonPanel(ChatUser chatUser) {
-        List<String> names = Course.names();
-        Collections.sort(names);
-        KeyboardRow row = TelegramUtil.createKeyboardRow(names);
-
-        return List.of(TelegramUtil.createMessageTemplate(chatUser)
-                .text("Выбери курс...")
-                .replyMarkup(TelegramUtil.createReplyKeyboardMarkup()
-                        .keyboardRow(row)
-                        .build())
-                .build());
-    }
 }
