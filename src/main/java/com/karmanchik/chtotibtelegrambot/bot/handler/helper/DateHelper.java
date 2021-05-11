@@ -1,11 +1,9 @@
 package com.karmanchik.chtotibtelegrambot.bot.handler.helper;
 
 import com.karmanchik.chtotibtelegrambot.entity.enums.WeekType;
+import com.karmanchik.chtotibtelegrambot.model.Course;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalField;
+import java.time.*;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
@@ -24,10 +22,19 @@ public class DateHelper {
         return now.toLocalDate();
     }
 
+    public static Year getAcademicYearByCourse(Course course) {
+        LocalDate now = LocalDate.now();
+        Month nowMonth = now.getMonth();
+        int value = course.getValue();
+        int diffYear = Year.now().getValue() - value;
+        return nowMonth.getValue() > Month.SEPTEMBER.getValue() ?
+                Year.of(diffYear + 1) :
+                Year.of(diffYear);
+    }
+
     public static WeekType getWeekType() {
         LocalDate now = LocalDate.now();
-        TemporalField weekOfYear = WeekFields.of(Locale.getDefault()).weekOfYear();
-        int weekNumber = now.get(weekOfYear);
+        int weekNumber = now.get(WeekFields.of(Locale.getDefault()).weekOfYear());
         return weekNumber % 2 == 0 ? WeekType.UP : WeekType.DOWN;
     }
 }

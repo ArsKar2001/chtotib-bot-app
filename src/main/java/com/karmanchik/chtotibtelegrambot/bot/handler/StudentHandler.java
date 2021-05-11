@@ -21,6 +21,7 @@ import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +51,7 @@ public class StudentHandler extends MainHandler {
         StringBuilder message = new StringBuilder();
         if (!lessons.isEmpty()) {
             message.append(MESSAGE_SPLIT).append("\n")
-                    .append("Расписание ").append("<b>").append(group.getName()).append("</b>").append(" на ").append("<b>").append(date).append("</b>").append(" (").append(name).append("):").append("\n")
+                    .append("Расписание ").append("<b>").append(group.getName()).append("</b>").append(" на ").append("<b>").append(date.format(DateTimeFormatter.ofPattern("dd ММММ"))).append("</b>").append(" (").append(name).append("):").append("\n")
                     .append(MESSAGE_SPLIT).append("\n");
             lessons.stream()
                     .filter(lesson -> lesson.getDay() == date.getDayOfWeek().getValue())

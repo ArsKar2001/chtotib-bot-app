@@ -12,7 +12,6 @@ import com.karmanchik.chtotibtelegrambot.model.Course;
 import com.karmanchik.chtotibtelegrambot.model.IdGroupName;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -20,6 +19,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Collections;
 import java.util.List;
@@ -82,9 +83,8 @@ public class HandlerHelperService {
     public List<PartialBotApiMethod<? extends Serializable>> selectGroup(ChatUser chatUser, String message) {
         if (Course.isCourse(message)) {
             Course course = Course.valueOf(message);
-            Integer academicYear = TelegramUtil.getAcademicYear(course);
-            int beginIndex = 2;
-            String academicYearSuffix = academicYear.toString().substring(beginIndex);
+            String academicYearSuffix = DateHelper.getAcademicYearByCourse(course)
+                    .format(DateTimeFormatter.ofPattern("yy"));
             List<IdGroupName> groups = groupRepository.findAllByYearSuffix(academicYearSuffix);
 
 

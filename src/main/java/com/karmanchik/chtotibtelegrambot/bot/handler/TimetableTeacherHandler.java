@@ -42,16 +42,13 @@ public class TimetableTeacherHandler implements Handler {
     private final JpaLessonsRepository lessonsRepository;
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(ChatUser chatUser, String message) throws ResourceNotFoundException {
-        switch (chatUser.getUserState()) {
-            case SELECT_TEACHER:
-                return selectTeacherOrAccept(chatUser, message);
-            case INPUT_TEXT:
-                return selectTeacher(chatUser, message);
-            default:
-                return List.of(
-                        cancel(chatUser)
-                );
-        }
+        return switch (chatUser.getUserState()) {
+            case SELECT_TEACHER -> selectTeacherOrAccept(chatUser, message);
+            case INPUT_TEXT -> selectTeacher(chatUser, message);
+            default -> List.of(
+                    cancel(chatUser)
+            );
+        };
     }
 
     public static List<PartialBotApiMethod<? extends Serializable>> start(ChatUser chatUser) {

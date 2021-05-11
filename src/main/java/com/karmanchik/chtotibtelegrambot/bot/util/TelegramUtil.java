@@ -14,9 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.io.Serializable;
-import java.time.Month;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,15 +40,6 @@ public class TelegramUtil {
         KeyboardRow row = new KeyboardRow();
         row.addAll(values);
         return row;
-    }
-
-    public static Integer getAcademicYear(Course course) {
-        Calendar calendar = Calendar.getInstance();
-        int number = course.getValue();
-        int now_year = calendar.get(Calendar.YEAR);
-        int now_month = calendar.get(Calendar.MONTH);
-        int academicYear = now_year - number;
-        return (now_month > Month.SEPTEMBER.getValue()) ? academicYear + 1 : academicYear;
     }
 
     public static List<List<InlineKeyboardButton>> createInlineKeyboardButtons(List<? extends BaseModel> models, Integer countButtonInRow) {
